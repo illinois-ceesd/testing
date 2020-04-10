@@ -37,6 +37,7 @@ OPTION(ENABLE_HYDRA "Enable Hydra offloading support" OFF)
 OPTION(DISABLE_FAILING_TESTS "Disable running of tests that are known to fail." OFF)
 OPTION(ENABLE_THREAD_SANITIZER "Enable thread sanitizer thread debugger." OFF)
 OPTION(ENABLE_CUDA "Enable CUDA kernels and tests." OFF)
+OPTION(ENABLE_PROMETHEUS "Enable building new prometheus mechanisms" OFF)
 
 if (NOT CMAKE_BUILD_TYPE)
   message(STATUS "${Green}${PROJECT_NAME}: No build type selected, default to Release${ColorReset}")
@@ -48,9 +49,9 @@ SET(CMAKE_Fortran_FLAGS_RELEASE "-g1 -O2 -DNDEBUG")
 SET(CMAKE_C_FLAGS_RELEASE "-g1 -O3 -DNDEBUG")
 
 
-#IF(ENABLE_EOS_TIMERS)
-#  ADD_DEFINITIONS(-DEOS_TIMERS)
-#ENDIF()
+IF(ENABLE_EOS_TIMERS)
+  ADD_DEFINITIONS(-DEOS_TIMERS)
+ENDIF()
 
 
 IF(ENABLE_CUDA)
@@ -352,10 +353,17 @@ else()
 endif()
 
 # this is an order that satisfies build order dependence
-SET(JK_KernelSources kernels/Limits.f90 kernels/barebones.f90 kernels/Simple.f90 kernels/Special.f90
-                     kernels/NavierStokesUtil.f90 kernels/EOS.f90 ${kernel_prefix}/Operators.f90 
-                     kernels/Grid.f90 kernels/Euler.f90 kernels/Viscid.f90 ${kernel_prefix}/MetricOps.f90 
-                     ${kernel_prefix}/Roe.f90 kernels/SATUtil.f90 ${kernel_prefix}/NavierStokesRHSWENO.f90)
+SET (JK_KernelSources kernels/Limits.f90 kernels/barebones.f90 kernels/Simple.f90 kernels/Special.f90
+                      kernels/NavierStokesUtil.f90 kernels/EOS.f90 ${kernel_prefix}/Operators.f90 
+                      kernels/Grid.f90 kernels/Euler.f90 kernels/Viscid.f90 ${kernel_prefix}/MetricOps.f90 
+                      ${kernel_prefix}/Roe.f90 kernels/SATUtil.f90 ${kernel_prefix}/NavierStokesRHSWENO.f90)
+
+# Enable pre-built prometheus mechanisms
+SET (JK_EOSSources src/EOS.C Prometheus/mechanisms/src/ETHYLENE.cpp Prometheus/mechanisms/src/ETHYLENE_EXTENDED.cpp
+                   Prometheus/mechanisms/src/ETHYLENE_INERT.cpp Prometheus/mechanisms/src/ETHYLENE_INERT_EXT9.cpp
+                   Prometheus/mechanisms/src/N2O2_reacN7.cpp Prometheus/mechanisms/src/ETHYLENE_PLASMA.cpp
+                   Prometheus/mechanisms/src/SANDIEGO.cpp Prometheus/mechanisms/src/SANDIEGO_PLASMA.cpp
+                   Prometheus/mechanisms/src/PrometheusInterface.cpp)
 
 #if(ENABLE_HYDRA)
 #  # Add Tangram kernels
@@ -366,8 +374,8 @@ if(ENABLE_HYDRA)
   SET(JK_HydraSources src/Hydra.C)
 endif()
 
-#MESSAGE(STATUS "${Green}${PROJECT_NAME}: Library Sources: ${PlasCom2_LibSources}${ColorReset}")
 MESSAGE(STATUS "${Green}${PROJECT_NAME}: Kernel Sources: ${JK_KernelSources}${ColorReset}")
+MESSAGE(STATUS "${Green}${PROJECT_NAME}: EOS Sources:    ${JK_EOSSources}${ColorReset}")
 
 
 #
@@ -489,14 +497,19 @@ MESSAGE(STATUS "${Green}${PROJECT_NAME}: Kernel Sources: ${JK_KernelSources}${Co
 IF(STATIC_KERNELS) 
   if(ENABLE_HYDRA)
     CUDA_ADD_LIBRARY(JK STATIC ${JK_KernelSources})
+    CUDA_ADD_LIBRARY(EOS STATIC ${JK_EOSSources})
   else()
     ADD_LIBRARY(JK STATIC ${JK_KernelSources})
+    ADD_LIBRARY(EOS STATIC ${JK_EOSSources})
   endif()
 ELSE()
   ADD_LIBRARY(JK SHARED ${JK_KernelSources})
-ENDIF()
+  ADD_LIBRARY(EOS SHARED ${JK_EOSSources})
+ENDIF()# Enable pre-built prometheus mechanisms
+
+TARGET_INCLUDE_DIRECTORIES(EOS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Prometheus/mechanisms/include)
 SET_TARGET_PROPERTIES(JK PROPERTIES Fortran_MODULE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/include")
-INSTALL(TARGETS JK LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+INSTALL(TARGETS JK EOS LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
 
 if(ENABLE_HYDRA)
   ADD_LIBRARY(Hydra STATIC ${JK_HydraSources})
