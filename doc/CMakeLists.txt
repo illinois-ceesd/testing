@@ -1,4 +1,4 @@
-message("Building Kernel Documentation")
+message("Configuring Kernel Documentation")
 
 FIND_PACKAGE(Doxygen)
 IF(NOT DOXYGEN_FOUND)
@@ -25,7 +25,7 @@ CONFIGURE_FILE( ${doxyfile_in} ${doxyfile} @ONLY )
 ADD_CUSTOM_COMMAND( OUTPUT ${docdir}
                     COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
                     MAIN_DEPENDENCY ${doxyfile} ${doxyfile_in}
-                    DEPENDS OK ${doxy_extra_files} ${CMAKE_CURRENT_SOURCE_DIR}/*.dox
+                    DEPENDS JK ${doxy_extra_files} ${CMAKE_CURRENT_SOURCE_DIR}/*.dox
                     COMMENT "${PROJECT_NAME}: Generating documentation")
 
 ADD_CUSTOM_TARGET( documentation DEPENDS ${docdir} )

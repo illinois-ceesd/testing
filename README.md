@@ -1,4 +1,4 @@
-# OKLib
+# JustKernels
 
 This is a stand-alone library of simple computational kernels used in _PlasCom2_. It includes a stand-alone library of kernels 
 and self-contained kernelized implementation of the _PlasCom2_ Equation of State (EOS). All kernels, including the EOS, are 

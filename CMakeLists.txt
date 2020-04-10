@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(OKLib CXX C Fortran)
+project(JustKernels CXX C Fortran)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake/Modules")
 include(SetColors)
 
@@ -352,10 +352,10 @@ else()
 endif()
 
 # this is an order that satisfies build order dependence
-SET(PlasCom2_KernelSources kernels/Limits.f90 kernels/barebones.f90 kernels/Simple.f90 kernels/Special.f90
-                           kernels/NavierStokesUtil.f90 kernels/EOS.f90 ${kernel_prefix}/Operators.f90 
-                           kernels/Grid.f90 kernels/Euler.f90 kernels/Viscid.f90 ${kernel_prefix}/MetricOps.f90 
-                           ${kernel_prefix}/Roe.f90 kernels/SATUtil.f90 ${kernel_prefix}/NavierStokesRHSWENO.f90)
+SET(JK_KernelSources kernels/Limits.f90 kernels/barebones.f90 kernels/Simple.f90 kernels/Special.f90
+                     kernels/NavierStokesUtil.f90 kernels/EOS.f90 ${kernel_prefix}/Operators.f90 
+                     kernels/Grid.f90 kernels/Euler.f90 kernels/Viscid.f90 ${kernel_prefix}/MetricOps.f90 
+                     ${kernel_prefix}/Roe.f90 kernels/SATUtil.f90 ${kernel_prefix}/NavierStokesRHSWENO.f90)
 
 #if(ENABLE_HYDRA)
 #  # Add Tangram kernels
@@ -363,11 +363,11 @@ SET(PlasCom2_KernelSources kernels/Limits.f90 kernels/barebones.f90 kernels/Simp
 #endif()
 
 if(ENABLE_HYDRA)
-  SET(PlasCom2_HydraSources src/Hydra.C)
+  SET(JK_HydraSources src/Hydra.C)
 endif()
 
 #MESSAGE(STATUS "${Green}${PROJECT_NAME}: Library Sources: ${PlasCom2_LibSources}${ColorReset}")
-MESSAGE(STATUS "${Green}${PROJECT_NAME}: Kernel Sources: ${PlasCom2_KernelSources}${ColorReset}")
+MESSAGE(STATUS "${Green}${PROJECT_NAME}: Kernel Sources: ${JK_KernelSources}${ColorReset}")
 
 
 #
@@ -488,18 +488,18 @@ MESSAGE(STATUS "${Green}${PROJECT_NAME}: Kernel Sources: ${PlasCom2_KernelSource
 
 IF(STATIC_KERNELS) 
   if(ENABLE_HYDRA)
-    CUDA_ADD_LIBRARY(OK STATIC ${PlasCom2_KernelSources})
+    CUDA_ADD_LIBRARY(JK STATIC ${JK_KernelSources})
   else()
-    ADD_LIBRARY(OK STATIC ${PlasCom2_KernelSources})
+    ADD_LIBRARY(JK STATIC ${JK_KernelSources})
   endif()
 ELSE()
-  ADD_LIBRARY(OK SHARED ${PlasCom2_KernelSources})
+  ADD_LIBRARY(JK SHARED ${JK_KernelSources})
 ENDIF()
-SET_TARGET_PROPERTIES(OK PROPERTIES Fortran_MODULE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/include")
-INSTALL(TARGETS OK LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+SET_TARGET_PROPERTIES(JK PROPERTIES Fortran_MODULE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/include")
+INSTALL(TARGETS JK LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
 
 if(ENABLE_HYDRA)
-  ADD_LIBRARY(Hydra STATIC ${PlasCom2_HydraSources})
+  ADD_LIBRARY(Hydra STATIC ${JK_HydraSources})
   TARGET_INCLUDE_DIRECTORIES(Hydra
     PRIVATE
       ${CMAKE_CURRENT_SOURCE_DIR}/include
