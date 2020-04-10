@@ -8,23 +8,23 @@ available through a C and Fortran-compatible API.
 > git clone https:://github.com/illinois-ceesd/justkernels
 
 # Configuration
-Configuration requires _CMake_. Out-of-source builds are recommended. 
+Configuration requires [_CMake_](https://cmake.org). Out-of-source builds are recommended. 
 
-> mkdir /path/to/build
-> cd /path/to/build
-> cmake /path/to/justkernels
+> mkdir /path/to/build\
+> cd /path/to/build\
+> cmake /path/to/justkernels\
 
 # Building the kernels
 
 > make [-j]
 
 # Documentation
-Building documentation requires Doxygen, and GraphViz is recommended.
+Building documentation requires [Doxygen](https://doxygen.nl), and [GraphViz](https://graphviz.org) is recommended.
 
 > make documentation
 
 After building the documentation, point your browser at:
-(/path/to/build/docs/html/index.html). Choose *Computational Kernel Documentation* 
+`/path/to/build/docs/html/index.html`. Choose *Computational Kernel Documentation* 
 in the left browser menu.
 
 
