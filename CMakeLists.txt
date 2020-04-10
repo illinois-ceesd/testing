@@ -358,12 +358,21 @@ SET (JK_KernelSources kernels/Limits.f90 kernels/barebones.f90 kernels/Simple.f9
                       kernels/Grid.f90 kernels/Euler.f90 kernels/Viscid.f90 ${kernel_prefix}/MetricOps.f90 
                       ${kernel_prefix}/Roe.f90 kernels/SATUtil.f90 ${kernel_prefix}/NavierStokesRHSWENO.f90)
 
+
+MESSAGE(STATUS "${Green}${PROJECT_NAME}: Kernel Sources: ${JK_KernelSources}${ColorReset}")
+
 # Enable pre-built prometheus mechanisms
-SET (JK_EOSSources src/EOS.C Prometheus/mechanisms/src/ETHYLENE.cpp Prometheus/mechanisms/src/ETHYLENE_EXTENDED.cpp
-                   Prometheus/mechanisms/src/ETHYLENE_INERT.cpp Prometheus/mechanisms/src/ETHYLENE_INERT_EXT9.cpp
-                   Prometheus/mechanisms/src/N2O2_reacN7.cpp Prometheus/mechanisms/src/ETHYLENE_PLASMA.cpp
-                   Prometheus/mechanisms/src/SANDIEGO.cpp Prometheus/mechanisms/src/SANDIEGO_PLASMA.cpp
-                   Prometheus/mechanisms/src/PrometheusInterface.cpp)
+IF(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Prometheus/") 
+  SET(ENABLE_EOS "TRUE")
+ENDIF()
+IF(ENABLE_EOS) 
+  SET (JK_EOSSources src/EOS.C Prometheus/mechanisms/src/ETHYLENE.cpp Prometheus/mechanisms/src/ETHYLENE_EXTENDED.cpp
+                               Prometheus/mechanisms/src/ETHYLENE_INERT.cpp Prometheus/mechanisms/src/ETHYLENE_INERT_EXT9.cpp
+                               Prometheus/mechanisms/src/N2O2_reacN7.cpp Prometheus/mechanisms/src/ETHYLENE_PLASMA.cpp
+                               Prometheus/mechanisms/src/SANDIEGO.cpp Prometheus/mechanisms/src/SANDIEGO_PLASMA.cpp
+                               Prometheus/mechanisms/src/PrometheusInterface.cpp)
+  MESSAGE(STATUS "${Green}${PROJECT_NAME}: EOS Sources:    ${JK_EOSSources}${ColorReset}")
+ENDIF()
 
 #if(ENABLE_HYDRA)
 #  # Add Tangram kernels
@@ -374,8 +383,7 @@ if(ENABLE_HYDRA)
   SET(JK_HydraSources src/Hydra.C)
 endif()
 
-MESSAGE(STATUS "${Green}${PROJECT_NAME}: Kernel Sources: ${JK_KernelSources}${ColorReset}")
-MESSAGE(STATUS "${Green}${PROJECT_NAME}: EOS Sources:    ${JK_EOSSources}${ColorReset}")
+
 
 
 #
@@ -497,19 +505,31 @@ MESSAGE(STATUS "${Green}${PROJECT_NAME}: EOS Sources:    ${JK_EOSSources}${Color
 IF(STATIC_KERNELS) 
   if(ENABLE_HYDRA)
     CUDA_ADD_LIBRARY(JK STATIC ${JK_KernelSources})
-    CUDA_ADD_LIBRARY(EOS STATIC ${JK_EOSSources})
   else()
     ADD_LIBRARY(JK STATIC ${JK_KernelSources})
-    ADD_LIBRARY(EOS STATIC ${JK_EOSSources})
   endif()
 ELSE()
   ADD_LIBRARY(JK SHARED ${JK_KernelSources})
-  ADD_LIBRARY(EOS SHARED ${JK_EOSSources})
-ENDIF()# Enable pre-built prometheus mechanisms
+ENDIF() 
 
-TARGET_INCLUDE_DIRECTORIES(EOS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Prometheus/mechanisms/include)
 SET_TARGET_PROPERTIES(JK PROPERTIES Fortran_MODULE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/include")
-INSTALL(TARGETS JK EOS LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+INSTALL(TARGETS JK LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+
+IF(ENABLE_EOS) 
+  IF(STATIC_KERNELS) 
+    if(ENABLE_HYDRA)
+      CUDA_ADD_LIBRARY(EOS STATIC ${JK_EOSSources})
+    else()
+      ADD_LIBRARY(EOS STATIC ${JK_EOSSources})
+    endif()
+  ELSE()
+    ADD_LIBRARY(EOS SHARED ${JK_EOSSources})
+  ENDIF()
+
+  TARGET_INCLUDE_DIRECTORIES(EOS PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Prometheus/mechanisms/include)
+  INSTALL(TARGETS EOS LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+
+ENDIF()
 
 if(ENABLE_HYDRA)
   ADD_LIBRARY(Hydra STATIC ${JK_HydraSources})
