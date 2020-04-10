@@ -1,0 +1,158 @@
+.TH "SpecialKernels.H" 3 "Fri Apr 10 2020" "Version 1.0" "JustKernels" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+SpecialKernels.H \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'FC\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBFC_MODULE\fP (special, veclen, SPECIAL, VECLEN)(const int *\fBnumDim\fP"
+.br
+.ti -1c
+.RI "void \fBFC_MODULE\fP (special, determinant3x3, SPECIAL, DETERMINANT3X3)(size_t *\fBnumPoints\fP"
+.br
+.ti -1c
+.RI "void \fBFC_MODULE\fP (special, determinant2x2, SPECIAL, DETERMINANT2X2)(size_t *\fBnumPoints\fP"
+.br
+.ti -1c
+.RI "void \fBFC_MODULE\fP (special, metricsum4, SPECIAL, METRICSUM4)(int *\fBnumDim\fP"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "void const size_t * \fBnumPoints\fP"
+.br
+.ti -1c
+.RI "void const size_t const size_t * \fBbufferSize\fP"
+.br
+.ti -1c
+.RI "void const size_t const size_t const size_t * \fBbufferInterval\fP"
+.br
+.ti -1c
+.RI "void const size_t const size_t const size_t const int * \fBnumComp\fP"
+.br
+.ti -1c
+.RI "void const size_t const size_t const size_t const int const double * \fBV\fP"
+.br
+.ti -1c
+.RI "void const size_t const size_t const size_t const int const double double * \fBlenV\fP"
+.br
+.ti -1c
+.RI "void size_t size_t double * \fBinMatrix\fP"
+.br
+.ti -1c
+.RI "void size_t size_t double double * \fBmatrixDeterminant\fP"
+.br
+.ti -1c
+.RI "void size_t size_t size_t double * \fBbuf1\fP"
+.br
+.ti -1c
+.RI "void size_t size_t size_t double double * \fBbuf2\fP"
+.br
+.ti -1c
+.RI "void size_t size_t size_t double double double * \fBbuf3\fP"
+.br
+.ti -1c
+.RI "void size_t size_t size_t double double double double * \fBbuf4\fP"
+.br
+.ti -1c
+.RI "void size_t size_t size_t double double double double double * \fBbuf5\fP"
+.br
+.ti -1c
+.RI "void size_t size_t size_t double double double double double double * \fBbuf6\fP"
+.br
+.ti -1c
+.RI "void size_t size_t size_t double double double double double double double * \fBbuf7\fP"
+.br
+.ti -1c
+.RI "void size_t size_t size_t double double double double double double double double * \fBmetricSum\fP"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void FC_MODULE (special, veclen, SPECIAL, VECLEN) const"
+
+.SS "void FC_MODULE (special, determinant3x3, SPECIAL, DETERMINANT3X3)"
+
+.SS "void FC_MODULE (special, determinant2x2, SPECIAL, DETERMINANT2X2)"
+
+.SS "void FC_MODULE (special, metricsum4, SPECIAL, METRICSUM4)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "void size_t size_t size_t double* buf1"
+
+.PP
+Definition at line 22 of file SpecialKernels\&.H\&.
+.SS "void size_t size_t size_t double double* buf2"
+
+.PP
+Definition at line 22 of file SpecialKernels\&.H\&.
+.SS "void size_t size_t size_t double double double* buf3"
+
+.PP
+Definition at line 22 of file SpecialKernels\&.H\&.
+.SS "void size_t size_t size_t double double double double* buf4"
+
+.PP
+Definition at line 22 of file SpecialKernels\&.H\&.
+.SS "void size_t size_t size_t double double double double double* buf5"
+
+.PP
+Definition at line 22 of file SpecialKernels\&.H\&.
+.SS "void size_t size_t size_t double double double double double double* buf6"
+
+.PP
+Definition at line 22 of file SpecialKernels\&.H\&.
+.SS "void size_t size_t size_t double double double double double double double* buf7"
+
+.PP
+Definition at line 22 of file SpecialKernels\&.H\&.
+.SS "void size_t size_t size_t* bufferInterval"
+
+.PP
+Definition at line 9 of file SpecialKernels\&.H\&.
+.SS "void size_t size_t* bufferSize"
+
+.PP
+Definition at line 9 of file SpecialKernels\&.H\&.
+.SS "void size_t size_t double * inMatrix"
+
+.PP
+Definition at line 14 of file SpecialKernels\&.H\&.
+.SS "void const size_t const size_t const size_t const int const double double* lenV"
+
+.PP
+Definition at line 9 of file SpecialKernels\&.H\&.
+.SS "void size_t size_t double double * matrixDeterminant"
+
+.PP
+Definition at line 14 of file SpecialKernels\&.H\&.
+.SS "void size_t size_t size_t double double double double double double double double* metricSum"
+
+.PP
+Definition at line 22 of file SpecialKernels\&.H\&.
+.SS "void const size_t const size_t const size_t const int* numComp"
+
+.PP
+Definition at line 9 of file SpecialKernels\&.H\&.
+.SS "void size_t* numPoints"
+
+.PP
+Definition at line 9 of file SpecialKernels\&.H\&.
+.SS "void const size_t const size_t const size_t const int const double* V"
+
+.PP
+Definition at line 9 of file SpecialKernels\&.H\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for JustKernels from the source code\&.

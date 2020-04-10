@@ -1,0 +1,17 @@
+digraph "computecurvilineargridmetrics"
+{
+ // INTERACTIVE_SVG=YES
+  bgcolor="transparent";
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4 [label="computecurvilineargridmetrics",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="operators::applyoperator",height=0.2,width=0.4,color="black",URL="$namespaceoperators.html#aee961d7de8b2c319cd0270f5ae735de7",tooltip="applyoperator applies an operator specified as a stencil set to the provided state data ..."];
+  Node4 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="simple::assignmentxa",height=0.2,width=0.4,color="black",URL="$namespacesimple.html#a82c25cd0c1d999c2c6028a3bdce656a0",tooltip="ASSIGNMENTXA point-wise operator performing X = scalar a. "];
+  Node4 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="simple::assignmentyx",height=0.2,width=0.4,color="black",URL="$namespacesimple.html#add60911ad92b480355ff35648750c006",tooltip="ASSIGNMENTYX point-wise operator performing Y = X. "];
+  Node4 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="simple::yaxm1",height=0.2,width=0.4,color="black",URL="$namespacesimple.html#a11e2072409fc7bf72ea7abf6b32a6859",tooltip="YAXM1 point-wise operator performing Y = a/X (scalar a) "];
+}

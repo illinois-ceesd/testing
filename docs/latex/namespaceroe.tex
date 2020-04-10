@@ -1,0 +1,122 @@
+\hypertarget{namespaceroe}{}\section{roe Module Reference}
+\label{namespaceroe}\index{roe@{roe}}
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \hyperlink{namespaceroe_aa40cd6c8eebd973a90987a77c8efa884}{pointroestate2} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{SATKernels_8H_ac97409f480a745850ce5b215aabef12a}{num\+Scalar}, \hyperlink{RoeKernels_8H_a6d30a232f8df207a0a3655c728f0c396}{u\+Left}, dv\+Left, \hyperlink{RoeKernels_8H_ad7596a27f3010967e23b245f06eadfdd}{u\+Right}, dv\+Right, \hyperlink{RoeKernels_8H_a5624e61551b02c502a36c52d56b2350b}{u\+Roe})
+\item 
+subroutine \hyperlink{namespaceroe_a98a581399f474ceddad29a35b54824b7}{pointroestate} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{SATKernels_8H_ac97409f480a745850ce5b215aabef12a}{num\+Scalar}, \hyperlink{RoeKernels_8H_a1b97e89ad96c3195da39163d30857767}{u\+In}, \hyperlink{RoeKernels_8H_a24a50bb7f3155b1d6314eec79d33d669}{dv\+In}, \hyperlink{RoeKernels_8H_aa8ba2167c968e6f2da632acd106b7f88}{u\+Out}, \hyperlink{RoeKernels_8H_ac5fd034bc232848163b16d30e790e8b1}{dv\+Out}, \hyperlink{RoeKernels_8H_a5624e61551b02c502a36c52d56b2350b}{u\+Roe}, \hyperlink{RoeKernels_8H_a642571b2454da1bb84221249e107f82a}{dv\+Roe}, \hyperlink{RoeKernels_8H_a21369091011c3e247805004394055b28}{dv2\+Roe})
+\item 
+subroutine \hyperlink{namespaceroe_abdb2a52cc70419994c076b8f904a3450}{cross\+\_\+product1} (v1, v2, \hyperlink{SimpleKernels_8H_adbbc84da22c830df0837e7f82eff48d8}{y})
+\item 
+subroutine \hyperlink{namespaceroe_acb3b55f2bf22c43e91196d4915f7fecb}{eigenmatrices} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a653618c9ce0046e8ef3b30321ea41f98}{num\+Scalars}, \hyperlink{RoeKernels_8H_a1d673d40f8fa40c8e56ed0d69021e9dc}{q\+Roe}, \hyperlink{RoeKernels_8H_a642571b2454da1bb84221249e107f82a}{dv\+Roe}, \hyperlink{RoeKernels_8H_ac12401cc24ddbf8b003a0e6201826e90}{dp}, \hyperlink{RoeKernels_8H_ab66f723f3c3d8399c4428802a1142be0}{sound\+Speed}, grid\+Scale, \hyperlink{RoeKernels_8H_abc719b26d5e9b9d4a4f40ad4261c5f70}{metric\+Eigen\+Vectors}, \hyperlink{RoeKernels_8H_a15dafdc1823a1c1281057d840bfdcda6}{Pfor}, \hyperlink{RoeKernels_8H_a399ec13188834ab2fbeb1b2e02def95d}{Pinv}, \hyperlink{RoeKernels_8H_a89211c91f7e80725e4791ef58e043244}{lambda})
+\item 
+subroutine \hyperlink{namespaceroe_a320726375f2fb7ec2dccfe644063dae0}{form\+\_\+roe\+\_\+state} (ND, \hyperlink{WENOKernels_8H_a653618c9ce0046e8ef3b30321ea41f98}{num\+Scalars}, \hyperlink{RoeKernels_8H_a2bf6aff605796b2e670cbe75c3e872e2}{u\+\_\+in}, \hyperlink{RoeKernels_8H_aa81f1dc40301dafeb750cbf32d8d3833}{u\+\_\+out}, \hyperlink{RoeKernels_8H_aa94841cd8b113b2af1e594fe6b13c9ee}{gamma}, \hyperlink{RoeKernels_8H_a2f4a1dd2ebbf44fdb86ecebd7a4c2d0d}{norm}, \hyperlink{RoeKernels_8H_a5624e61551b02c502a36c52d56b2350b}{u\+Roe}, \hyperlink{RoeKernels_8H_a642571b2454da1bb84221249e107f82a}{dv\+Roe}, ucon, \hyperlink{RoeKernels_8H_a333c205cc8e2644d5201ac7099775c88}{c\+Roe}, \hyperlink{RoeKernels_8H_adb6f64e825dfbb4917994d2d1f934f17}{theta})
+\item 
+subroutine \hyperlink{namespaceroe_aeea833f881434abaa203060c46f57fa5}{form\+\_\+roe\+\_\+matrices} (ND, \hyperlink{RoeKernels_8H_a2bf6aff605796b2e670cbe75c3e872e2}{u\+\_\+in}, \hyperlink{RoeKernels_8H_aa81f1dc40301dafeb750cbf32d8d3833}{u\+\_\+out}, \hyperlink{RoeKernels_8H_aa94841cd8b113b2af1e594fe6b13c9ee}{gamma}, \hyperlink{RoeKernels_8H_a2f4a1dd2ebbf44fdb86ecebd7a4c2d0d}{norm}, \hyperlink{RoeKernels_8H_ae5000afe2aef5d2927a3f3ec02cb4e2e}{tmat}, \hyperlink{RoeKernels_8H_a9698f37ae98c96f7f647e1cf16a18ac3}{tinv}, \hyperlink{RoeKernels_8H_a89211c91f7e80725e4791ef58e043244}{lambda})
+\item 
+subroutine \hyperlink{namespaceroe_a2a5de1e6c84ae98f35621785e4c04770}{limitdp} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a653618c9ce0046e8ef3b30321ea41f98}{num\+Scalars}, q\+In, \hyperlink{RoeKernels_8H_a24a50bb7f3155b1d6314eec79d33d669}{dv\+In}, q\+Out, \hyperlink{RoeKernels_8H_ac5fd034bc232848163b16d30e790e8b1}{dv\+Out}, \hyperlink{RoeKernels_8H_a1d673d40f8fa40c8e56ed0d69021e9dc}{q\+Roe}, \hyperlink{RoeKernels_8H_a642571b2454da1bb84221249e107f82a}{dv\+Roe}, dp\+Roe)
+\item 
+subroutine \hyperlink{namespaceroe_a0c1152e75e536386090e98caedc622c2}{original\+\_\+frontmatter} (ND, \hyperlink{WENOKernels_8H_a653618c9ce0046e8ef3b30321ea41f98}{num\+Scalars}, \hyperlink{RoeKernels_8H_a2bf6aff605796b2e670cbe75c3e872e2}{u\+\_\+in}, \hyperlink{RoeKernels_8H_aa81f1dc40301dafeb750cbf32d8d3833}{u\+\_\+out}, p\+\_\+in, p\+\_\+out, \hyperlink{RoeKernels_8H_a5624e61551b02c502a36c52d56b2350b}{u\+Roe}, \hyperlink{RoeKernels_8H_a642571b2454da1bb84221249e107f82a}{dv\+Roe}, \hyperlink{RoeKernels_8H_aa94841cd8b113b2af1e594fe6b13c9ee}{gamma}, \hyperlink{RoeKernels_8H_a2f4a1dd2ebbf44fdb86ecebd7a4c2d0d}{norm}, M\+T1, alpha, beta, \hyperlink{RoeKernels_8H_adb6f64e825dfbb4917994d2d1f934f17}{theta}, phi2, b1, b2, metric\+EV)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\hypertarget{namespaceroe_abdb2a52cc70419994c076b8f904a3450}{}\label{namespaceroe_abdb2a52cc70419994c076b8f904a3450} 
+\index{roe@{roe}!cross\+\_\+product1@{cross\+\_\+product1}}
+\index{cross\+\_\+product1@{cross\+\_\+product1}!roe@{roe}}
+\subsubsection{\texorpdfstring{cross\+\_\+product1()}{cross\_product1()}}
+{\footnotesize\ttfamily subroutine roe\+::cross\+\_\+product1 (\begin{DoxyParamCaption}\item[{real(kind=8), dimension(3)}]{v1,  }\item[{real(kind=8), dimension(3)}]{v2,  }\item[{real(kind=8), dimension(3)}]{y }\end{DoxyParamCaption})}
+
+
+
+Definition at line 167 of file Roe.\+f90.
+
+\hypertarget{namespaceroe_acb3b55f2bf22c43e91196d4915f7fecb}{}\label{namespaceroe_acb3b55f2bf22c43e91196d4915f7fecb} 
+\index{roe@{roe}!eigenmatrices@{eigenmatrices}}
+\index{eigenmatrices@{eigenmatrices}!roe@{roe}}
+\subsubsection{\texorpdfstring{eigenmatrices()}{eigenmatrices()}}
+{\footnotesize\ttfamily subroutine roe\+::eigenmatrices (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=4), intent(in)}]{num\+Scalars,  }\item[{real(kind=8), dimension(numdim+2+numscalars), intent(in)}]{q\+Roe,  }\item[{real(kind=8), dimension(numdim+2), intent(in)}]{dv\+Roe,  }\item[{real(kind=8), dimension(2+numscalars), intent(in)}]{dp,  }\item[{real(kind=8), intent(in)}]{sound\+Speed,  }\item[{real(kind=8), intent(in)}]{grid\+Scale,  }\item[{real(kind=8), dimension(numdim$\ast$numdim), intent(in)}]{metric\+Eigen\+Vectors,  }\item[{real(kind=8), dimension(numdim+2+numscalars,numdim+2+numscalars), intent(out)}]{Pfor,  }\item[{real(kind=8), dimension(numdim+2+numscalars,numdim+2+numscalars), intent(out)}]{Pinv,  }\item[{real(kind=8), dimension(numdim+2+numscalars,numdim+2+numscalars), intent(out)}]{lambda }\end{DoxyParamCaption})}
+
+
+
+Definition at line 187 of file Roe.\+f90.
+
+
+
+References metricops\+::pointeigenvectorsgs().
+
+
+
+Referenced by satutil\+::farfield(), satutil\+::noslip\+\_\+isothermal(), and satutil\+::slip\+\_\+adiabatic().
+
+Here is the call graph for this function\+:
+% FIG 0
+Here is the caller graph for this function\+:
+% FIG 1
+\hypertarget{namespaceroe_aeea833f881434abaa203060c46f57fa5}{}\label{namespaceroe_aeea833f881434abaa203060c46f57fa5} 
+\index{roe@{roe}!form\+\_\+roe\+\_\+matrices@{form\+\_\+roe\+\_\+matrices}}
+\index{form\+\_\+roe\+\_\+matrices@{form\+\_\+roe\+\_\+matrices}!roe@{roe}}
+\subsubsection{\texorpdfstring{form\+\_\+roe\+\_\+matrices()}{form\_roe\_matrices()}}
+{\footnotesize\ttfamily subroutine roe\+::form\+\_\+roe\+\_\+matrices (\begin{DoxyParamCaption}\item[{integer(kind=4)}]{ND,  }\item[{real(8), dimension(nd+2)}]{u\+\_\+in,  }\item[{real(8), dimension(nd+2)}]{u\+\_\+out,  }\item[{real(8)}]{gamma,  }\item[{real(8), dimension(nd)}]{norm,  }\item[{real(8), dimension(nd+2,nd+2)}]{tmat,  }\item[{real(8), dimension(nd+2,nd+2)}]{tinv,  }\item[{real(8), dimension(nd+2,nd+2)}]{lambda }\end{DoxyParamCaption})}
+
+
+
+Definition at line 524 of file Roe.\+f90.
+
+\hypertarget{namespaceroe_a320726375f2fb7ec2dccfe644063dae0}{}\label{namespaceroe_a320726375f2fb7ec2dccfe644063dae0} 
+\index{roe@{roe}!form\+\_\+roe\+\_\+state@{form\+\_\+roe\+\_\+state}}
+\index{form\+\_\+roe\+\_\+state@{form\+\_\+roe\+\_\+state}!roe@{roe}}
+\subsubsection{\texorpdfstring{form\+\_\+roe\+\_\+state()}{form\_roe\_state()}}
+{\footnotesize\ttfamily subroutine roe\+::form\+\_\+roe\+\_\+state (\begin{DoxyParamCaption}\item[{integer(4), intent(in)}]{ND,  }\item[{integer(4), intent(in)}]{num\+Scalars,  }\item[{real(8), dimension(nd+2), intent(in)}]{u\+\_\+in,  }\item[{real(8), dimension(nd+2), intent(in)}]{u\+\_\+out,  }\item[{real(8), intent(in)}]{gamma,  }\item[{real(8), dimension(nd), intent(in)}]{norm,  }\item[{real(8), dimension(nd+2), intent(out)}]{u\+Roe,  }\item[{real(8), dimension(nd+3), intent(out)}]{dv\+Roe,  }\item[{real(8), intent(out)}]{ucon,  }\item[{real(8), intent(out)}]{c\+Roe,  }\item[{real(8), intent(out)}]{theta }\end{DoxyParamCaption})}
+
+
+
+Definition at line 440 of file Roe.\+f90.
+
+\hypertarget{namespaceroe_a2a5de1e6c84ae98f35621785e4c04770}{}\label{namespaceroe_a2a5de1e6c84ae98f35621785e4c04770} 
+\index{roe@{roe}!limitdp@{limitdp}}
+\index{limitdp@{limitdp}!roe@{roe}}
+\subsubsection{\texorpdfstring{limitdp()}{limitdp()}}
+{\footnotesize\ttfamily subroutine roe\+::limitdp (\begin{DoxyParamCaption}\item[{integer(4), intent(in)}]{num\+Dim,  }\item[{integer(4), intent(in)}]{num\+Scalars,  }\item[{real(8), dimension(numdim+2+numscalars), intent(in)}]{q\+In,  }\item[{real(8), dimension(numdim+2), intent(in)}]{dv\+In,  }\item[{real(8), dimension(numdim+2+numscalars), intent(in)}]{q\+Out,  }\item[{real(8), dimension(numdim+2), intent(in)}]{dv\+Out,  }\item[{real(8), dimension(numdim+2+numscalars), intent(in)}]{q\+Roe,  }\item[{real(8), dimension(numdim+2), intent(in)}]{dv\+Roe,  }\item[{real(8), dimension(numscalars+2), intent(inout)}]{dp\+Roe }\end{DoxyParamCaption})}
+
+
+
+Definition at line 733 of file Roe.\+f90.
+
+\hypertarget{namespaceroe_a0c1152e75e536386090e98caedc622c2}{}\label{namespaceroe_a0c1152e75e536386090e98caedc622c2} 
+\index{roe@{roe}!original\+\_\+frontmatter@{original\+\_\+frontmatter}}
+\index{original\+\_\+frontmatter@{original\+\_\+frontmatter}!roe@{roe}}
+\subsubsection{\texorpdfstring{original\+\_\+frontmatter()}{original\_frontmatter()}}
+{\footnotesize\ttfamily subroutine roe\+::original\+\_\+frontmatter (\begin{DoxyParamCaption}\item[{integer(4)}]{ND,  }\item[{integer(4)}]{num\+Scalars,  }\item[{real(8), dimension(\+:), pointer}]{u\+\_\+in,  }\item[{real(8), dimension(\+:), pointer}]{u\+\_\+out,  }\item[{real(8)}]{p\+\_\+in,  }\item[{real(8)}]{p\+\_\+out,  }\item[{real(8), dimension(nd+2+numscalars)}]{u\+Roe,  }\item[{real(8), dimension(nd+2)}]{dv\+Roe,  }\item[{real(8)}]{gamma,  }\item[{real(8), dimension(\+:), pointer}]{norm,  }\item[{real(8), dimension(\+:), pointer}]{M\+T1,  }\item[{real(8)}]{alpha,  }\item[{real(8)}]{beta,  }\item[{real(8)}]{theta,  }\item[{real(8)}]{phi2,  }\item[{real(8)}]{b1,  }\item[{real(8)}]{b2,  }\item[{real(8), dimension(\+:), pointer}]{metric\+EV }\end{DoxyParamCaption})}
+
+
+
+Definition at line 795 of file Roe.\+f90.
+
+\hypertarget{namespaceroe_a98a581399f474ceddad29a35b54824b7}{}\label{namespaceroe_a98a581399f474ceddad29a35b54824b7} 
+\index{roe@{roe}!pointroestate@{pointroestate}}
+\index{pointroestate@{pointroestate}!roe@{roe}}
+\subsubsection{\texorpdfstring{pointroestate()}{pointroestate()}}
+{\footnotesize\ttfamily subroutine roe\+::pointroestate (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=4), intent(in)}]{num\+Scalar,  }\item[{real(kind=8), dimension(numdim+2+numscalar), intent(in), target}]{u\+In,  }\item[{real(kind=8), dimension(numdim+2), intent(in), target}]{dv\+In,  }\item[{real(kind=8), dimension(numdim+2+numscalar), intent(in), target}]{u\+Out,  }\item[{real(kind=8), dimension(numdim+2), intent(in), target}]{dv\+Out,  }\item[{real(kind=8), dimension(numdim+2+numscalar), intent(inout), target}]{u\+Roe,  }\item[{real(kind=8), dimension(numdim+2), intent(inout), target}]{dv\+Roe,  }\item[{real(kind=8), dimension(3), intent(inout), target}]{dv2\+Roe }\end{DoxyParamCaption})}
+
+
+
+Definition at line 88 of file Roe.\+f90.
+
+\hypertarget{namespaceroe_aa40cd6c8eebd973a90987a77c8efa884}{}\label{namespaceroe_aa40cd6c8eebd973a90987a77c8efa884} 
+\index{roe@{roe}!pointroestate2@{pointroestate2}}
+\index{pointroestate2@{pointroestate2}!roe@{roe}}
+\subsubsection{\texorpdfstring{pointroestate2()}{pointroestate2()}}
+{\footnotesize\ttfamily subroutine roe\+::pointroestate2 (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=4), intent(in)}]{num\+Scalar,  }\item[{real(kind=8), dimension(numdim+2+numscalar), intent(in), target}]{u\+Left,  }\item[{real(kind=8), dimension(numdim+2), intent(in), target}]{dv\+Left,  }\item[{real(kind=8), dimension(numdim+2+numscalar), intent(in), target}]{u\+Right,  }\item[{real(kind=8), dimension(numdim+2), intent(in), target}]{dv\+Right,  }\item[{real(kind=8), dimension(numdim+2+numscalar), intent(inout), target}]{u\+Roe }\end{DoxyParamCaption})}
+
+
+
+Definition at line 20 of file Roe.\+f90.
+
+
+
+Referenced by satutil\+::farfield(), satutil\+::noslip\+\_\+isothermal(), and satutil\+::slip\+\_\+adiabatic().
+
+Here is the caller graph for this function\+:
+% FIG 2

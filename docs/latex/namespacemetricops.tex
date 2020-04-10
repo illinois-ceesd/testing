@@ -1,0 +1,200 @@
+\hypertarget{namespacemetricops}{}\section{metricops Module Reference}
+\label{namespacemetricops}\index{metricops@{metricops}}
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \hyperlink{namespacemetricops_ac9382d1e722d0417169f5a2f160ebfc7}{alphaweight} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{WENOKernels_8H_a302023d425dc22c2c647b4f9d8c78b0b}{buffer\+Sizes}, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{WENOKernels_8H_ab35a6cf312bb0fddda7097a149c3e946}{grid\+Type}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{MetricKernels_8H_a3d083d604bcbd48cccc0421f5328f574}{alpha\+Dir}, alphaW)
+\item 
+subroutine \hyperlink{namespacemetricops_abf449970c4b90017443108f34a3cf4d0}{alphaweight2} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{WENOKernels_8H_a302023d425dc22c2c647b4f9d8c78b0b}{buffer\+Sizes}, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{WENOKernels_8H_ab35a6cf312bb0fddda7097a149c3e946}{grid\+Type}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{SATKernels_8H_aaf1e04690bc21cac2a406748b963e345}{grid\+Jacobian}, \hyperlink{MetricKernels_8H_a3d083d604bcbd48cccc0421f5328f574}{alpha\+Dir}, alphaW)
+\item 
+subroutine \hyperlink{namespacemetricops_af0813d14ff29789b3c8f479b4bcecd3d}{vhatcomponent} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{WENOKernels_8H_a302023d425dc22c2c647b4f9d8c78b0b}{buffer\+Sizes}, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{WENOKernels_8H_ab35a6cf312bb0fddda7097a149c3e946}{grid\+Type}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{MetricKernels_8H_a25df08ad943d494c17a8ce1d64a0da8f}{vel\+Dir}, \hyperlink{MetricKernels_8H_ac09ce3f593a19c2dae1fe2c3ac95a673}{velocity}, vel\+Hat\+Component)
+\item 
+subroutine \hyperlink{namespacemetricops_a1ff97a9829721adfee8965698ac1a884}{ijkgradtoxyzdiv} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{ViscidKernels_8H_adf0bf75d0875d1bb42a5348bee7b7bfd}{num\+Points}, \hyperlink{ViscidKernels_8H_a969a5d6106eec8b7096250b27865b9ba}{grid\+Sizes}, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{WENOKernels_8H_ab35a6cf312bb0fddda7097a149c3e946}{grid\+Type}, \hyperlink{SATKernels_8H_aaf1e04690bc21cac2a406748b963e345}{grid\+Jacobian}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{MetricKernels_8H_a2b1827ebabaeeb58a5d4c7a8fe729bca}{grad\+V\+Buffer}, \hyperlink{MetricKernels_8H_ae5c340d8d4218077e9f63a96aa442d93}{div\+Buffer})
+\item 
+subroutine \hyperlink{namespacemetricops_a86a362c463e34f26d3ecc8034aa14cd5}{gradijktogradxyz} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{ViscidKernels_8H_adf0bf75d0875d1bb42a5348bee7b7bfd}{num\+Points}, \hyperlink{ViscidKernels_8H_a969a5d6106eec8b7096250b27865b9ba}{grid\+Sizes}, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{WENOKernels_8H_ab35a6cf312bb0fddda7097a149c3e946}{grid\+Type}, \hyperlink{SATKernels_8H_aaf1e04690bc21cac2a406748b963e345}{grid\+Jacobian}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{MetricKernels_8H_ad58f505f7d2d54962e14d93a8b3a2104}{grad\+I\+JK}, \hyperlink{MetricKernels_8H_a88d2da27b44f006b58b7cebd40406d58}{grad\+X\+YZ})
+\begin{DoxyCompactList}\small\item\em Converts Cartesian (computational) gradient to physical coordinates. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemetricops_abbd903fb1fbe7adf2ecf34571e380fa4}{getpointmetric} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{NSUtilKernels_8H_acde79891dbc4fd8e02d5c1ff00f990a5}{point\+ID}, \hyperlink{WENOKernels_8H_ab35a6cf312bb0fddda7097a149c3e946}{grid\+Type}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{RoeKernels_8H_a3ef779535ff22c94cec7a43794047e9d}{point\+Metric})
+\item 
+subroutine \hyperlink{namespacemetricops_a559dbfa02010196e008715e7a019a2cd}{boundarypointmetric} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_ab858ec0dee6bbc6698b28fe84576d1d1}{norm\+Dir}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{NSUtilKernels_8H_acde79891dbc4fd8e02d5c1ff00f990a5}{point\+ID}, \hyperlink{WENOKernels_8H_ab35a6cf312bb0fddda7097a149c3e946}{grid\+Type}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{RoeKernels_8H_a3ef779535ff22c94cec7a43794047e9d}{point\+Metric})
+\item 
+subroutine \hyperlink{namespacemetricops_af7524e334ad2b738e5ecd980dbc92041}{pointeigenvectors} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{RoeKernels_8H_a3ef779535ff22c94cec7a43794047e9d}{point\+Metric}, \hyperlink{MetricKernels_8H_afb43d750e3a6b4c1549a9589c0f2a7d6}{eigen\+Vectors}, \hyperlink{MetricKernels_8H_aba6c9360151f4fd828af1b31d0fe65b3}{metric\+Mags})
+\item 
+real(kind=8) function \hyperlink{namespacemetricops_a2ad1b3b390a1df3e16e258eb2bf0d37a}{vdot} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, u, v)
+\item 
+subroutine \hyperlink{namespacemetricops_a6cac925729827357652e938b64681663}{pointeigenvectorsgs} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{RoeKernels_8H_a3ef779535ff22c94cec7a43794047e9d}{point\+Metric}, \hyperlink{MetricKernels_8H_afb43d750e3a6b4c1549a9589c0f2a7d6}{eigen\+Vectors}, \hyperlink{MetricKernels_8H_ad7c998cbde26ccedfe008bbb660d59fe}{eigen\+Components})
+\end{DoxyCompactItemize}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\hypertarget{namespacemetricops_ac9382d1e722d0417169f5a2f160ebfc7}{}\label{namespacemetricops_ac9382d1e722d0417169f5a2f160ebfc7} 
+\index{metricops@{metricops}!alphaweight@{alphaweight}}
+\index{alphaweight@{alphaweight}!metricops@{metricops}}
+\subsubsection{\texorpdfstring{alphaweight()}{alphaweight()}}
+{\footnotesize\ttfamily subroutine metricops\+::alphaweight (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=8), intent(in)}]{num\+Points\+Buffer,  }\item[{integer(kind=8), dimension(numdim), intent(in)}]{buffer\+Sizes,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{integer(kind=4), intent(in)}]{grid\+Type,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer), intent(in), target}]{grid\+Metric,  }\item[{integer(kind=4), intent(in)}]{alpha\+Dir,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(out)}]{alphaW }\end{DoxyParamCaption})}
+
+
+
+Definition at line 15 of file Metric\+Ops.\+f90.
+
+
+
+References simple\+::assignmentxa(), simple\+::assignmentyabsx(), grid\+::rectilinear, and simple\+::veclen().
+
+Here is the call graph for this function\+:
+% FIG 0
+\hypertarget{namespacemetricops_abf449970c4b90017443108f34a3cf4d0}{}\label{namespacemetricops_abf449970c4b90017443108f34a3cf4d0} 
+\index{metricops@{metricops}!alphaweight2@{alphaweight2}}
+\index{alphaweight2@{alphaweight2}!metricops@{metricops}}
+\subsubsection{\texorpdfstring{alphaweight2()}{alphaweight2()}}
+{\footnotesize\ttfamily subroutine metricops\+::alphaweight2 (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=8), intent(in)}]{num\+Points\+Buffer,  }\item[{integer(kind=8), dimension(numdim), intent(in)}]{buffer\+Sizes,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{integer(kind=4), intent(in)}]{grid\+Type,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer), intent(in), target}]{grid\+Metric,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in), target}]{grid\+Jacobian,  }\item[{integer(kind=4), intent(in)}]{alpha\+Dir,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(out)}]{alphaW }\end{DoxyParamCaption})}
+
+
+
+Definition at line 60 of file Metric\+Ops.\+f90.
+
+
+
+References simple\+::assignmentxa(), simple\+::assignmentyabsx(), grid\+::rectilinear, simple\+::veclen(), and simple\+::yxy().
+
+Here is the call graph for this function\+:
+% FIG 1
+\hypertarget{namespacemetricops_a559dbfa02010196e008715e7a019a2cd}{}\label{namespacemetricops_a559dbfa02010196e008715e7a019a2cd} 
+\index{metricops@{metricops}!boundarypointmetric@{boundarypointmetric}}
+\index{boundarypointmetric@{boundarypointmetric}!metricops@{metricops}}
+\subsubsection{\texorpdfstring{boundarypointmetric()}{boundarypointmetric()}}
+{\footnotesize\ttfamily subroutine metricops\+::boundarypointmetric (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=4), intent(in)}]{norm\+Dir,  }\item[{integer(kind=8), intent(in)}]{num\+Points\+Buffer,  }\item[{integer(kind=8), intent(in)}]{point\+ID,  }\item[{integer(kind=4), intent(in)}]{grid\+Type,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer), intent(in)}]{grid\+Metric,  }\item[{real(kind=8), dimension(numdim$\ast$numdim), intent(out)}]{point\+Metric }\end{DoxyParamCaption})}
+
+
+
+Definition at line 353 of file Metric\+Ops.\+f90.
+
+
+
+References grid\+::curvilinear, and grid\+::rectilinear.
+
+
+
+Referenced by satutil\+::farfield(), satutil\+::noslip\+\_\+isothermal(), and satutil\+::slip\+\_\+adiabatic().
+
+Here is the caller graph for this function\+:
+% FIG 2
+\hypertarget{namespacemetricops_abbd903fb1fbe7adf2ecf34571e380fa4}{}\label{namespacemetricops_abbd903fb1fbe7adf2ecf34571e380fa4} 
+\index{metricops@{metricops}!getpointmetric@{getpointmetric}}
+\index{getpointmetric@{getpointmetric}!metricops@{metricops}}
+\subsubsection{\texorpdfstring{getpointmetric()}{getpointmetric()}}
+{\footnotesize\ttfamily subroutine metricops\+::getpointmetric (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=8), intent(in)}]{num\+Points\+Buffer,  }\item[{integer(kind=8), intent(in)}]{point\+ID,  }\item[{integer(kind=4), intent(in)}]{grid\+Type,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer), intent(in)}]{grid\+Metric,  }\item[{real(kind=8), dimension(numdim$\ast$numdim), intent(out)}]{point\+Metric }\end{DoxyParamCaption})}
+
+
+
+Definition at line 313 of file Metric\+Ops.\+f90.
+
+
+
+References grid\+::curvilinear, and grid\+::rectilinear.
+
+\hypertarget{namespacemetricops_a86a362c463e34f26d3ecc8034aa14cd5}{}\label{namespacemetricops_a86a362c463e34f26d3ecc8034aa14cd5} 
+\index{metricops@{metricops}!gradijktogradxyz@{gradijktogradxyz}}
+\index{gradijktogradxyz@{gradijktogradxyz}!metricops@{metricops}}
+\subsubsection{\texorpdfstring{gradijktogradxyz()}{gradijktogradxyz()}}
+{\footnotesize\ttfamily subroutine metricops\+::gradijktogradxyz (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=8), intent(in)}]{num\+Points,  }\item[{integer(kind=8), dimension(numdim), intent(in)}]{grid\+Sizes,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{integer(kind=4), intent(in)}]{grid\+Type,  }\item[{real(kind=8), dimension(numpoints), intent(in)}]{grid\+Jacobian,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpoints), intent(in), target}]{grid\+Metric,  }\item[{real(kind=8), dimension(numdim$\ast$numpoints), intent(in), target}]{grad\+I\+JK,  }\item[{real(kind=8), dimension(numdim$\ast$numpoints), intent(out), target}]{grad\+X\+YZ }\end{DoxyParamCaption})}
+
+
+
+Converts Cartesian (computational) gradient to physical coordinates. 
+
+
+
+Definition at line 240 of file Metric\+Ops.\+f90.
+
+
+
+References simple\+::assignmentxa(), grid\+::rectilinear, simple\+::yax(), simple\+::ywxpy(), simple\+::yxy(), and simple\+::zxy().
+
+Here is the call graph for this function\+:
+% FIG 3
+\hypertarget{namespacemetricops_a1ff97a9829721adfee8965698ac1a884}{}\label{namespacemetricops_a1ff97a9829721adfee8965698ac1a884} 
+\index{metricops@{metricops}!ijkgradtoxyzdiv@{ijkgradtoxyzdiv}}
+\index{ijkgradtoxyzdiv@{ijkgradtoxyzdiv}!metricops@{metricops}}
+\subsubsection{\texorpdfstring{ijkgradtoxyzdiv()}{ijkgradtoxyzdiv()}}
+{\footnotesize\ttfamily subroutine metricops\+::ijkgradtoxyzdiv (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=8), intent(in)}]{num\+Points,  }\item[{integer(kind=8), dimension(numdim), intent(in)}]{grid\+Sizes,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{integer(kind=4), intent(in)}]{grid\+Type,  }\item[{real(kind=8), dimension(numpoints), intent(in)}]{grid\+Jacobian,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpoints), intent(in), target}]{grid\+Metric,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpoints), intent(in), target}]{grad\+V\+Buffer,  }\item[{real(kind=8), dimension(numpoints), intent(out)}]{div\+Buffer }\end{DoxyParamCaption})}
+
+
+
+Definition at line 182 of file Metric\+Ops.\+f90.
+
+
+
+References grid\+::rectilinear, simple\+::xax(), simple\+::yaxpy(), simple\+::ywxpy(), and simple\+::yxy().
+
+Here is the call graph for this function\+:
+% FIG 4
+\hypertarget{namespacemetricops_af7524e334ad2b738e5ecd980dbc92041}{}\label{namespacemetricops_af7524e334ad2b738e5ecd980dbc92041} 
+\index{metricops@{metricops}!pointeigenvectors@{pointeigenvectors}}
+\index{pointeigenvectors@{pointeigenvectors}!metricops@{metricops}}
+\subsubsection{\texorpdfstring{pointeigenvectors()}{pointeigenvectors()}}
+{\footnotesize\ttfamily subroutine metricops\+::pointeigenvectors (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{real(kind=8), dimension(numdim$\ast$numdim), intent(in)}]{point\+Metric,  }\item[{real(kind=8), dimension(numdim$\ast$numdim), intent(out)}]{eigen\+Vectors,  }\item[{real(kind=8), dimension(numdim), intent(out)}]{metric\+Mags }\end{DoxyParamCaption})}
+
+
+
+Definition at line 406 of file Metric\+Ops.\+f90.
+
+
+
+Referenced by satutil\+::farfield(), satutil\+::noslip\+\_\+isothermal(), and satutil\+::slip\+\_\+adiabatic().
+
+Here is the caller graph for this function\+:
+% FIG 5
+\hypertarget{namespacemetricops_a6cac925729827357652e938b64681663}{}\label{namespacemetricops_a6cac925729827357652e938b64681663} 
+\index{metricops@{metricops}!pointeigenvectorsgs@{pointeigenvectorsgs}}
+\index{pointeigenvectorsgs@{pointeigenvectorsgs}!metricops@{metricops}}
+\subsubsection{\texorpdfstring{pointeigenvectorsgs()}{pointeigenvectorsgs()}}
+{\footnotesize\ttfamily subroutine metricops\+::pointeigenvectorsgs (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{real(kind=8), dimension(numdim$\ast$numdim), intent(in)}]{point\+Metric,  }\item[{real(kind=8), dimension(numdim$\ast$numdim), intent(out)}]{eigen\+Vectors,  }\item[{real(kind=8), dimension(numdim$\ast$numdim), intent(out)}]{eigen\+Components }\end{DoxyParamCaption})}
+
+
+
+Definition at line 453 of file Metric\+Ops.\+f90.
+
+
+
+References vdot().
+
+
+
+Referenced by roe\+::eigenmatrices().
+
+Here is the call graph for this function\+:
+% FIG 6
+Here is the caller graph for this function\+:
+% FIG 7
+\hypertarget{namespacemetricops_a2ad1b3b390a1df3e16e258eb2bf0d37a}{}\label{namespacemetricops_a2ad1b3b390a1df3e16e258eb2bf0d37a} 
+\index{metricops@{metricops}!vdot@{vdot}}
+\index{vdot@{vdot}!metricops@{metricops}}
+\subsubsection{\texorpdfstring{vdot()}{vdot()}}
+{\footnotesize\ttfamily real(kind=8) function metricops\+::vdot (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{real(kind=8), dimension(numdim), intent(in)}]{u,  }\item[{real(kind=8), dimension(numdim), intent(in)}]{v }\end{DoxyParamCaption})}
+
+
+
+Definition at line 433 of file Metric\+Ops.\+f90.
+
+
+
+Referenced by pointeigenvectorsgs().
+
+Here is the caller graph for this function\+:
+% FIG 8
+\hypertarget{namespacemetricops_af0813d14ff29789b3c8f479b4bcecd3d}{}\label{namespacemetricops_af0813d14ff29789b3c8f479b4bcecd3d} 
+\index{metricops@{metricops}!vhatcomponent@{vhatcomponent}}
+\index{vhatcomponent@{vhatcomponent}!metricops@{metricops}}
+\subsubsection{\texorpdfstring{vhatcomponent()}{vhatcomponent()}}
+{\footnotesize\ttfamily subroutine metricops\+::vhatcomponent (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=8), intent(in)}]{num\+Points\+Buffer,  }\item[{integer(kind=8), dimension(numdim), intent(in)}]{buffer\+Sizes,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{integer(kind=4), intent(in)}]{grid\+Type,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer), intent(in), target}]{grid\+Metric,  }\item[{integer(kind=4), intent(in)}]{vel\+Dir,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{velocity,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(out)}]{vel\+Hat\+Component }\end{DoxyParamCaption})}
+
+
+
+Definition at line 112 of file Metric\+Ops.\+f90.
+
+
+
+References grid\+::rectilinear, simple\+::yax(), simple\+::zxdoty(), and simple\+::zxy().
+
+Here is the call graph for this function\+:
+% FIG 9

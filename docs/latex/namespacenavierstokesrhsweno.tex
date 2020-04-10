@@ -1,0 +1,717 @@
+\hypertarget{namespacenavierstokesrhsweno}{}\section{navierstokesrhsweno Module Reference}
+\label{namespacenavierstokesrhsweno}\index{navierstokesrhsweno@{navierstokesrhsweno}}
+\subsection*{Data Types}
+\begin{DoxyCompactItemize}
+\item 
+type \hyperlink{structnavierstokesrhsweno_1_1characteristic__local}{characteristic\+\_\+local}
+\item 
+type \hyperlink{structnavierstokesrhsweno_1_1dissipation__local}{dissipation\+\_\+local}
+\item 
+type \hyperlink{structnavierstokesrhsweno_1_1upwinding__local}{upwinding\+\_\+local}
+\end{DoxyCompactItemize}
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_a0e801cde0142e2c2046191a109d64601}{allocate\+\_\+local\+\_\+types} (d\+\_\+local, c\+\_\+local, u\+\_\+local, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations}, \hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, n\+Aux\+Vars)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_abe3d17704e23fdee041cbc4a7c58d78b}{allocate\+\_\+upwinding\+\_\+local} (u\+\_\+local, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations})
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_a097089e1d0c132ad64a8c601319499bb}{deallocate\+\_\+local\+\_\+types} (d\+\_\+local, c\+\_\+local, u\+\_\+local)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_af0672aeaf819970b43963e86448c91ad}{deallocate\+\_\+upwinding\+\_\+local} (u\+\_\+local)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_a1df7b6e3020cca9787110b8f1f5a024f}{ns\+\_\+rhs\+\_\+weno} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a302023d425dc22c2c647b4f9d8c78b0b}{buffer\+Sizes}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{WENOKernels_8H_a653618c9ce0046e8ef3b30321ea41f98}{num\+Scalars}, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations}, \hyperlink{WENOKernels_8H_ac055ecf2f0c28b4f3676d05314d9840c}{dir}, \hyperlink{WENOKernels_8H_a84323f7f31a8db8ca9cb6ffd45f53a8a}{sconn}, dfluxbuffer, \hyperlink{WENOKernels_8H_a263d06ceac785fb9ccc396be5508a5d6}{inviscid\+Flux\+Buffer}, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{WENOKernels_8H_a683cd3089fd3d704d36a88a01154d7a7}{jacobian\+Determinant}, \hyperlink{WENOKernels_8H_a55f433dcd5ee1a2b6a9d73ce18fcaa58}{grid\+Coordinates}, \hyperlink{WENOKernels_8H_ab35a6cf312bb0fddda7097a149c3e946}{grid\+Type}, \hyperlink{WENOKernels_8H_a7f8551332dfedc9c12724ab3903db88c}{rho\+Buffer}, \hyperlink{WENOKernels_8H_aaddaafee4b407fa52d0756171ec50a51}{rho\+V\+Buffer}, \hyperlink{WENOKernels_8H_a355f99edd58be395aedbe083ffca12b0}{rho\+E\+Buffer}, \hyperlink{WENOKernels_8H_ad7fb6f5370938321db995446ba47c04b}{pressure\+Buffer}, \hyperlink{WENOKernels_8H_a81c39e1ec75a82e2a4ece4c61c356f36}{temperature\+Buffer}, \hyperlink{WENOKernels_8H_ad2e7242a5875e6d926fcdf5e83d45e41}{sos\+Buffer}, \hyperlink{WENOKernels_8H_ae53b6c0ad2686009b00d987ad35f4810}{scalar\+Buffer}, W\+E\+N\+O\+\_\+alpha, \hyperlink{WENOKernels_8H_ab0a9a4f63f5ec810f436c1071ccb6eea}{weno\+Options}, eos\+Gas\+Info, \hyperlink{WENOKernels_8H_ab086e80006b932eb5dadc76f88126367}{eos\+Non\+Dimen}, \hyperlink{WENOKernels_8H_ae3d0a391e4050ddaf66a42b2596fa3cd}{eos\+Gas\+Params})
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_a095da8b7b85aaaf8e6f6d77d12520819}{apply\+\_\+weno\+\_\+js\+\_\+consistent} (\hyperlink{WENOKernels_8H_ac055ecf2f0c28b4f3676d05314d9840c}{dir}, p\+\_\+map, smap, \hyperlink{WENOKernels_8H_a263d06ceac785fb9ccc396be5508a5d6}{inviscid\+Flux\+Buffer}, f\+\_\+face\+\_\+1d, index\+\_\+weno, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, have\+Axis, s)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_a915a5f75335f503106a55b3359b23e4f}{conserved\+\_\+variables\+\_\+single\+\_\+point} (u, \hyperlink{WENOKernels_8H_a7f8551332dfedc9c12724ab3903db88c}{rho\+Buffer}, \hyperlink{WENOKernels_8H_aaddaafee4b407fa52d0756171ec50a51}{rho\+V\+Buffer}, \hyperlink{WENOKernels_8H_a355f99edd58be395aedbe083ffca12b0}{rho\+E\+Buffer}, \hyperlink{WENOKernels_8H_ae53b6c0ad2686009b00d987ad35f4810}{scalar\+Buffer}, map, smap, \hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, naux\+Vars, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, have\+Axis)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_ae41d80693f0933b732f601a4c4b52697}{frozen\+\_\+incviscid\+\_\+flux} (f\+\_\+stencil, \hyperlink{namespacenavierstokesrhsweno_af00ac01da0553acc8e7382cfc4a5ca1b}{width}, \hyperlink{WENOKernels_8H_a7f8551332dfedc9c12724ab3903db88c}{rho\+Buffer}, \hyperlink{WENOKernels_8H_aaddaafee4b407fa52d0756171ec50a51}{rho\+V\+Buffer}, \hyperlink{WENOKernels_8H_a355f99edd58be395aedbe083ffca12b0}{rho\+E\+Buffer}, \hyperlink{WENOKernels_8H_ae53b6c0ad2686009b00d987ad35f4810}{scalar\+Buffer}, \hyperlink{WENOKernels_8H_ad7fb6f5370938321db995446ba47c04b}{pressure\+Buffer}, map, p\+\_\+map, smap, \hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, naux\+Vars, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, M\+T1\+\_\+freeze, have\+Axis)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_a99ebd5b1eaad99cba4958c639554bb7c}{characteristic\+\_\+velocity} (ws\+\_\+stencil, \hyperlink{namespacenavierstokesrhsweno_af00ac01da0553acc8e7382cfc4a5ca1b}{width}, i\+Left, i\+Right, \hyperlink{WENOKernels_8H_a7f8551332dfedc9c12724ab3903db88c}{rho\+Buffer}, \hyperlink{WENOKernels_8H_aaddaafee4b407fa52d0756171ec50a51}{rho\+V\+Buffer}, \hyperlink{WENOKernels_8H_a355f99edd58be395aedbe083ffca12b0}{rho\+E\+Buffer}, \hyperlink{WENOKernels_8H_ae53b6c0ad2686009b00d987ad35f4810}{scalar\+Buffer}, \hyperlink{WENOKernels_8H_ad7fb6f5370938321db995446ba47c04b}{pressure\+Buffer}, \hyperlink{WENOKernels_8H_a81c39e1ec75a82e2a4ece4c61c356f36}{temperature\+Buffer}, \hyperlink{WENOKernels_8H_ad2e7242a5875e6d926fcdf5e83d45e41}{sos\+Buffer}, map, p\+\_\+map, smap, \hyperlink{WENOKernels_8H_ac055ecf2f0c28b4f3676d05314d9840c}{dir}, \hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, naux\+Vars, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{WENOKernels_8H_a683cd3089fd3d704d36a88a01154d7a7}{jacobian\+Determinant}, \hyperlink{WENOKernels_8H_a9b67b225dd1b2bffc0623aa04a80bfc4}{eos\+Info}, \hyperlink{WENOKernels_8H_ab086e80006b932eb5dadc76f88126367}{eos\+Non\+Dimen}, \hyperlink{WENOKernels_8H_ae3d0a391e4050ddaf66a42b2596fa3cd}{eos\+Gas\+Params}, have\+Axis, c\+\_\+local)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_a4481b668ca0b9a3c6adf1ebc7649268f}{computecharacteristicvelocities} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{WENOKernels_8H_a302023d425dc22c2c647b4f9d8c78b0b}{buffer\+Sizes}, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations}, n\+Aux\+Vars, have\+Axis, \hyperlink{WENOKernels_8H_ac055ecf2f0c28b4f3676d05314d9840c}{dir}, velocity\+Buffer, \hyperlink{WENOKernels_8H_ad2e7242a5875e6d926fcdf5e83d45e41}{sos\+Buffer}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{WENOKernels_8H_a683cd3089fd3d704d36a88a01154d7a7}{jacobian\+Determinant}, char\+Vel)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_a218ed3a33c33cf47975e22571e34c3c3}{characteristic\+\_\+velocity\+\_\+old} (ws\+\_\+stencil, \hyperlink{namespacenavierstokesrhsweno_af00ac01da0553acc8e7382cfc4a5ca1b}{width}, i\+Left, i\+Right, \hyperlink{WENOKernels_8H_a7f8551332dfedc9c12724ab3903db88c}{rho\+Buffer}, \hyperlink{WENOKernels_8H_aaddaafee4b407fa52d0756171ec50a51}{rho\+V\+Buffer}, \hyperlink{WENOKernels_8H_a355f99edd58be395aedbe083ffca12b0}{rho\+E\+Buffer}, \hyperlink{WENOKernels_8H_ae53b6c0ad2686009b00d987ad35f4810}{scalar\+Buffer}, \hyperlink{WENOKernels_8H_ad7fb6f5370938321db995446ba47c04b}{pressure\+Buffer}, \hyperlink{WENOKernels_8H_a81c39e1ec75a82e2a4ece4c61c356f36}{temperature\+Buffer}, \hyperlink{WENOKernels_8H_ad2e7242a5875e6d926fcdf5e83d45e41}{sos\+Buffer}, map, p\+\_\+map, smap, \hyperlink{WENOKernels_8H_ac055ecf2f0c28b4f3676d05314d9840c}{dir}, \hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, naux\+Vars, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{WENOKernels_8H_a683cd3089fd3d704d36a88a01154d7a7}{jacobian\+Determinant}, \hyperlink{WENOKernels_8H_a9b67b225dd1b2bffc0623aa04a80bfc4}{eos\+Info}, \hyperlink{WENOKernels_8H_ab086e80006b932eb5dadc76f88126367}{eos\+Non\+Dimen}, \hyperlink{WENOKernels_8H_ae3d0a391e4050ddaf66a42b2596fa3cd}{eos\+Gas\+Params}, have\+Axis)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_a4a196ab534e2977d20c69a739e0e3eae}{apply\+\_\+weno\+\_\+js\+\_\+dissipation} (\hyperlink{WENOKernels_8H_ac055ecf2f0c28b4f3676d05314d9840c}{dir}, p\+\_\+map, smap, \hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations}, f\+\_\+face\+\_\+1d, index\+\_\+weno, W\+E\+N\+O\+\_\+alpha, n\+Aux\+Vars, W\+E\+N\+O\+\_\+\+S\+T\+R\+O\+N\+G\+S\+H\+O\+C\+KS, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{WENOKernels_8H_a7f8551332dfedc9c12724ab3903db88c}{rho\+Buffer}, \hyperlink{WENOKernels_8H_aaddaafee4b407fa52d0756171ec50a51}{rho\+V\+Buffer}, \hyperlink{WENOKernels_8H_a355f99edd58be395aedbe083ffca12b0}{rho\+E\+Buffer}, \hyperlink{WENOKernels_8H_ae53b6c0ad2686009b00d987ad35f4810}{scalar\+Buffer}, \hyperlink{WENOKernels_8H_ad7fb6f5370938321db995446ba47c04b}{pressure\+Buffer}, \hyperlink{WENOKernels_8H_a81c39e1ec75a82e2a4ece4c61c356f36}{temperature\+Buffer}, \hyperlink{WENOKernels_8H_ad2e7242a5875e6d926fcdf5e83d45e41}{sos\+Buffer}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{WENOKernels_8H_a683cd3089fd3d704d36a88a01154d7a7}{jacobian\+Determinant}, \hyperlink{WENOKernels_8H_a9b67b225dd1b2bffc0623aa04a80bfc4}{eos\+Info}, \hyperlink{WENOKernels_8H_ab086e80006b932eb5dadc76f88126367}{eos\+Non\+Dimen}, \hyperlink{WENOKernels_8H_ae3d0a391e4050ddaf66a42b2596fa3cd}{eos\+Gas\+Params}, \hyperlink{WENOKernels_8H_ab35a6cf312bb0fddda7097a149c3e946}{grid\+Type}, have\+Axis, d\+\_\+local, c\+\_\+local, u\+\_\+local)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_abbc2f98a7ca22919d8a11d92a72b67e3}{apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old} (\hyperlink{WENOKernels_8H_ac055ecf2f0c28b4f3676d05314d9840c}{dir}, p\+\_\+map, smap, \hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations}, f\+\_\+face\+\_\+1d, index\+\_\+weno, W\+E\+N\+O\+\_\+alpha, n\+Aux\+Vars, W\+E\+N\+O\+\_\+\+S\+T\+R\+O\+N\+G\+S\+H\+O\+C\+KS, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{WENOKernels_8H_a7f8551332dfedc9c12724ab3903db88c}{rho\+Buffer}, \hyperlink{WENOKernels_8H_aaddaafee4b407fa52d0756171ec50a51}{rho\+V\+Buffer}, \hyperlink{WENOKernels_8H_a355f99edd58be395aedbe083ffca12b0}{rho\+E\+Buffer}, \hyperlink{WENOKernels_8H_ae53b6c0ad2686009b00d987ad35f4810}{scalar\+Buffer}, \hyperlink{WENOKernels_8H_ad7fb6f5370938321db995446ba47c04b}{pressure\+Buffer}, \hyperlink{WENOKernels_8H_a81c39e1ec75a82e2a4ece4c61c356f36}{temperature\+Buffer}, \hyperlink{WENOKernels_8H_ad2e7242a5875e6d926fcdf5e83d45e41}{sos\+Buffer}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{WENOKernels_8H_a683cd3089fd3d704d36a88a01154d7a7}{jacobian\+Determinant}, \hyperlink{WENOKernels_8H_a9b67b225dd1b2bffc0623aa04a80bfc4}{eos\+Info}, \hyperlink{WENOKernels_8H_ab086e80006b932eb5dadc76f88126367}{eos\+Non\+Dimen}, \hyperlink{WENOKernels_8H_ae3d0a391e4050ddaf66a42b2596fa3cd}{eos\+Gas\+Params}, \hyperlink{WENOKernels_8H_ab35a6cf312bb0fddda7097a149c3e946}{grid\+Type}, have\+Axis)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_a5a6e0cc7f0cfcab7d3db0700b7eda393}{dissipation\+\_\+part\+\_\+by\+\_\+upwinding\+\_\+flux} (f\+\_\+stencil\+\_\+char\+\_\+sign, \hyperlink{WENOKernels_8H_ac055ecf2f0c28b4f3676d05314d9840c}{dir}, \hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations}, \hyperlink{namespacenavierstokesrhsweno_af00ac01da0553acc8e7382cfc4a5ca1b}{width}, sign\+\_\+flag, M\+T1\+\_\+freeze, f\+\_\+face\+\_\+1d\+\_\+char, u\+\_\+local)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_a3e70362602fa5641e6a5546530caa1fc}{ns\+\_\+rhs\+\_\+muscl} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a302023d425dc22c2c647b4f9d8c78b0b}{buffer\+Sizes}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{WENOKernels_8H_ab858ec0dee6bbc6698b28fe84576d1d1}{norm\+Dir}, \hyperlink{WENOKernels_8H_a84323f7f31a8db8ca9cb6ffd45f53a8a}{sconn}, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{WENOKernels_8H_ad1001168d5432b52e6d0636f4dc0e60c}{buffer\+Interval}, \hyperlink{WENOKernels_8H_ab35a6cf312bb0fddda7097a149c3e946}{grid\+Type}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{WENOKernels_8H_a683cd3089fd3d704d36a88a01154d7a7}{jacobian\+Determinant}, \hyperlink{WENOKernels_8H_a63e6aad5d271e5b535685e684cb4a11b}{bc\+Params}, \hyperlink{WENOKernels_8H_a4a903750b21cf9a330a9ec9a41617ff6}{gas\+Params}, \hyperlink{WENOKernels_8H_a653618c9ce0046e8ef3b30321ea41f98}{num\+Scalars}, \hyperlink{WENOKernels_8H_a7f8551332dfedc9c12724ab3903db88c}{rho\+Buffer}, \hyperlink{WENOKernels_8H_aaddaafee4b407fa52d0756171ec50a51}{rho\+V\+Buffer}, \hyperlink{WENOKernels_8H_a355f99edd58be395aedbe083ffca12b0}{rho\+E\+Buffer}, \hyperlink{WENOKernels_8H_ae53b6c0ad2686009b00d987ad35f4810}{scalar\+Buffer}, \hyperlink{WENOKernels_8H_ad7fb6f5370938321db995446ba47c04b}{pressure\+Buffer}, \hyperlink{WENOKernels_8H_a81c39e1ec75a82e2a4ece4c61c356f36}{temperature\+Buffer}, \hyperlink{WENOKernels_8H_ad2e7242a5875e6d926fcdf5e83d45e41}{sos\+Buffer}, \hyperlink{WENOKernels_8H_ad9842c03322c56f00f61876867bba3c6}{rho\+R\+H\+S\+Buffer}, \hyperlink{WENOKernels_8H_a128c5ac60a5f3c4902dd8fc9df37eb18}{rho\+V\+R\+H\+S\+Buffer}, \hyperlink{WENOKernels_8H_aba07a39911c6761f6f6a5b63b9258c39}{rho\+E\+R\+H\+S\+Buffer}, \hyperlink{WENOKernels_8H_ade287a7a2e34a50a6f0bfb71f1b7995d}{scalar\+R\+H\+S\+Buffer}, W\+E\+N\+O\+\_\+alpha, \hyperlink{WENOKernels_8H_ab0a9a4f63f5ec810f436c1071ccb6eea}{weno\+Options}, \hyperlink{WENOKernels_8H_a9b67b225dd1b2bffc0623aa04a80bfc4}{eos\+Info}, \hyperlink{WENOKernels_8H_ab086e80006b932eb5dadc76f88126367}{eos\+Non\+Dimen}, \hyperlink{WENOKernels_8H_ae3d0a391e4050ddaf66a42b2596fa3cd}{eos\+Gas\+Params})
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_adc0cae81dfd0f35fb63adedfe8e322ea}{muscl\+\_\+reconstruction} (f\+\_\+input, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations}, NpencilW, i1, i2, i3, side, f\+\_\+output)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_a31b872df779e6dca9565827209290ac4}{inviscidflux} (\hyperlink{WENOKernels_8H_a7f8551332dfedc9c12724ab3903db88c}{rho\+Buffer}, \hyperlink{WENOKernels_8H_aaddaafee4b407fa52d0756171ec50a51}{rho\+V\+Buffer}, \hyperlink{WENOKernels_8H_a355f99edd58be395aedbe083ffca12b0}{rho\+E\+Buffer}, \hyperlink{WENOKernels_8H_ad7fb6f5370938321db995446ba47c04b}{pressure\+Buffer}, \hyperlink{WENOKernels_8H_ae53b6c0ad2686009b00d987ad35f4810}{scalar\+Buffer}, p\+\_\+map, normdir, \hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a653618c9ce0046e8ef3b30321ea41f98}{num\+Scalars}, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, Npencil, f\+\_\+stencil)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_a55d470cff0a999fd7c1394776ce8153a}{inviscidflux\+\_\+freeze} (\hyperlink{WENOKernels_8H_a7f8551332dfedc9c12724ab3903db88c}{rho\+Buffer}, \hyperlink{WENOKernels_8H_aaddaafee4b407fa52d0756171ec50a51}{rho\+V\+Buffer}, \hyperlink{WENOKernels_8H_a355f99edd58be395aedbe083ffca12b0}{rho\+E\+Buffer}, \hyperlink{WENOKernels_8H_ad7fb6f5370938321db995446ba47c04b}{pressure\+Buffer}, \hyperlink{WENOKernels_8H_ae53b6c0ad2686009b00d987ad35f4810}{scalar\+Buffer}, p\+\_\+map, normdir, \hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a653618c9ce0046e8ef3b30321ea41f98}{num\+Scalars}, \hyperlink{WENOKernels_8H_a118b6c5063941671714ad42ce6ccf62e}{num\+Equations}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, M\+T1, Npencil, \hyperlink{namespacenavierstokesrhsweno_af00ac01da0553acc8e7382cfc4a5ca1b}{width}, f\+\_\+stencil)
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_ab262bb2c0604c826851c659a22ded494}{ns\+\_\+bc\+\_\+weno} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a302023d425dc22c2c647b4f9d8c78b0b}{buffer\+Sizes}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, norm\+Dir\+In, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{WENOKernels_8H_ad1001168d5432b52e6d0636f4dc0e60c}{buffer\+Interval}, \hyperlink{WENOKernels_8H_ab35a6cf312bb0fddda7097a149c3e946}{grid\+Type}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{SATKernels_8H_aaf1e04690bc21cac2a406748b963e345}{grid\+Jacobian}, M\+T2, \hyperlink{WENOKernels_8H_a487076dc9e8353b4914f8aba0e71ad93}{bc\+Type}, \hyperlink{WENOKernels_8H_a63e6aad5d271e5b535685e684cb4a11b}{bc\+Params}, gas\+Vars, \hyperlink{WENOKernels_8H_a653618c9ce0046e8ef3b30321ea41f98}{num\+Scalars}, \hyperlink{WENOKernels_8H_a7f8551332dfedc9c12724ab3903db88c}{rho\+Buffer}, \hyperlink{WENOKernels_8H_aaddaafee4b407fa52d0756171ec50a51}{rho\+V\+Buffer}, \hyperlink{WENOKernels_8H_a355f99edd58be395aedbe083ffca12b0}{rho\+E\+Buffer}, \hyperlink{WENOKernels_8H_ae53b6c0ad2686009b00d987ad35f4810}{scalar\+Buffer}, \hyperlink{WENOKernels_8H_ad7fb6f5370938321db995446ba47c04b}{pressure\+Buffer}, \hyperlink{WENOKernels_8H_a81c39e1ec75a82e2a4ece4c61c356f36}{temperature\+Buffer}, \hyperlink{WENOKernels_8H_ad2e7242a5875e6d926fcdf5e83d45e41}{sos\+Buffer}, \hyperlink{WENOKernels_8H_ad9842c03322c56f00f61876867bba3c6}{rho\+R\+H\+S\+Buffer}, \hyperlink{WENOKernels_8H_a128c5ac60a5f3c4902dd8fc9df37eb18}{rho\+V\+R\+H\+S\+Buffer}, \hyperlink{WENOKernels_8H_aba07a39911c6761f6f6a5b63b9258c39}{rho\+E\+R\+H\+S\+Buffer}, \hyperlink{WENOKernels_8H_ade287a7a2e34a50a6f0bfb71f1b7995d}{scalar\+R\+H\+S\+Buffer}, \hyperlink{WENOKernels_8H_a9b67b225dd1b2bffc0623aa04a80bfc4}{eos\+Info}, \hyperlink{WENOKernels_8H_ab086e80006b932eb5dadc76f88126367}{eos\+Non\+Dimen}, \hyperlink{WENOKernels_8H_ae3d0a391e4050ddaf66a42b2596fa3cd}{eos\+Gas\+Params})
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_a6a6c17f009939c4d47bb3c856785e8c1}{ns\+\_\+bc\+\_\+fixvalue} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a302023d425dc22c2c647b4f9d8c78b0b}{buffer\+Sizes}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, norm\+Dir\+In, \hyperlink{WENOKernels_8H_aad16c16fe24d418263e6217978cf2070}{num\+Patch\+Points\+Op}, \hyperlink{WENOKernels_8H_a437371152e737bf608b166f946c3bcf4}{patch\+Points\+Op}, \hyperlink{WENOKernels_8H_ab35a6cf312bb0fddda7097a149c3e946}{grid\+Type}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{SATKernels_8H_aaf1e04690bc21cac2a406748b963e345}{grid\+Jacobian}, \hyperlink{WENOKernels_8H_a487076dc9e8353b4914f8aba0e71ad93}{bc\+Type}, \hyperlink{WENOKernels_8H_a63e6aad5d271e5b535685e684cb4a11b}{bc\+Params}, gas\+Vars, \hyperlink{WENOKernels_8H_a653618c9ce0046e8ef3b30321ea41f98}{num\+Scalars}, \hyperlink{WENOKernels_8H_ad7fb6f5370938321db995446ba47c04b}{pressure\+Buffer}, \hyperlink{WENOKernels_8H_a81c39e1ec75a82e2a4ece4c61c356f36}{temperature\+Buffer}, \hyperlink{WENOKernels_8H_ad2e7242a5875e6d926fcdf5e83d45e41}{sos\+Buffer}, \hyperlink{WENOKernels_8H_a9b67b225dd1b2bffc0623aa04a80bfc4}{eos\+Info}, \hyperlink{WENOKernels_8H_ab086e80006b932eb5dadc76f88126367}{eos\+Non\+Dimen}, \hyperlink{WENOKernels_8H_ae3d0a391e4050ddaf66a42b2596fa3cd}{eos\+Gas\+Params}, \hyperlink{WENOKernels_8H_a65e35e96da987b91dd8e3df4434b6308}{rho\+Target}, \hyperlink{WENOKernels_8H_a69efdc45672ceb8fb33b5e7d1971a4d4}{rho\+V\+Target}, \hyperlink{WENOKernels_8H_ac62021f907a130aa7534b0cb7eb3d0b0}{rho\+E\+Target}, \hyperlink{WENOKernels_8H_a3680941feb6c14eadd3e8c5eb4c9eee5}{scalar\+Target}, \hyperlink{WENOKernels_8H_a7f8551332dfedc9c12724ab3903db88c}{rho\+Buffer}, \hyperlink{WENOKernels_8H_aaddaafee4b407fa52d0756171ec50a51}{rho\+V\+Buffer}, \hyperlink{WENOKernels_8H_a355f99edd58be395aedbe083ffca12b0}{rho\+E\+Buffer}, \hyperlink{WENOKernels_8H_ae53b6c0ad2686009b00d987ad35f4810}{scalar\+Buffer})
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_ab05f550a5f2fb0bbe1ed4e771c8e999e}{cross\+\_\+product} (v1, v2, \hyperlink{SimpleKernels_8H_adbbc84da22c830df0837e7f82eff48d8}{y})
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_af7f65e87016e0ba65e255f4f45bb0fa5}{ns\+\_\+rhs\+\_\+axisymmetric} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_a302023d425dc22c2c647b4f9d8c78b0b}{buffer\+Sizes}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{WENOKernels_8H_a653618c9ce0046e8ef3b30321ea41f98}{num\+Scalars}, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{WENOKernels_8H_a55f433dcd5ee1a2b6a9d73ce18fcaa58}{grid\+Coordinates}, \hyperlink{WENOKernels_8H_a7f8551332dfedc9c12724ab3903db88c}{rho\+Buffer}, \hyperlink{WENOKernels_8H_aaddaafee4b407fa52d0756171ec50a51}{rho\+V\+Buffer}, \hyperlink{WENOKernels_8H_a355f99edd58be395aedbe083ffca12b0}{rho\+E\+Buffer}, \hyperlink{WENOKernels_8H_ad7fb6f5370938321db995446ba47c04b}{pressure\+Buffer}, \hyperlink{WENOKernels_8H_ae53b6c0ad2686009b00d987ad35f4810}{scalar\+Buffer}, \hyperlink{WENOKernels_8H_ad9842c03322c56f00f61876867bba3c6}{rho\+R\+H\+S\+Buffer}, \hyperlink{WENOKernels_8H_a128c5ac60a5f3c4902dd8fc9df37eb18}{rho\+V\+R\+H\+S\+Buffer}, \hyperlink{WENOKernels_8H_aba07a39911c6761f6f6a5b63b9258c39}{rho\+E\+R\+H\+S\+Buffer}, \hyperlink{WENOKernels_8H_ade287a7a2e34a50a6f0bfb71f1b7995d}{scalar\+R\+H\+S\+Buffer})
+\item 
+subroutine \hyperlink{namespacenavierstokesrhsweno_abfdc9aec9f5858f83d007f57efc42de0}{ns\+\_\+rhs\+\_\+axisymmetric\+\_\+axis} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{WENOKernels_8H_ad1001168d5432b52e6d0636f4dc0e60c}{buffer\+Interval}, \hyperlink{WENOKernels_8H_a86c25ff33e6d9bccfabdf45dc5ddf24c}{num\+Points\+Buffer}, \hyperlink{WENOKernels_8H_a653618c9ce0046e8ef3b30321ea41f98}{num\+Scalars}, \hyperlink{WENOKernels_8H_ab858ec0dee6bbc6698b28fe84576d1d1}{norm\+Dir}, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, \hyperlink{WENOKernels_8H_a683cd3089fd3d704d36a88a01154d7a7}{jacobian\+Determinant}, \hyperlink{WENOKernels_8H_ab35a6cf312bb0fddda7097a149c3e946}{grid\+Type}, \hyperlink{WENOKernels_8H_a55f433dcd5ee1a2b6a9d73ce18fcaa58}{grid\+Coordinates}, \hyperlink{WENOKernels_8H_a7f8551332dfedc9c12724ab3903db88c}{rho\+Buffer}, \hyperlink{WENOKernels_8H_aaddaafee4b407fa52d0756171ec50a51}{rho\+V\+Buffer}, \hyperlink{WENOKernels_8H_a355f99edd58be395aedbe083ffca12b0}{rho\+E\+Buffer}, \hyperlink{WENOKernels_8H_ad7fb6f5370938321db995446ba47c04b}{pressure\+Buffer}, \hyperlink{WENOKernels_8H_ae53b6c0ad2686009b00d987ad35f4810}{scalar\+Buffer}, \hyperlink{WENOKernels_8H_ad9842c03322c56f00f61876867bba3c6}{rho\+R\+H\+S\+Buffer}, \hyperlink{WENOKernels_8H_a128c5ac60a5f3c4902dd8fc9df37eb18}{rho\+V\+R\+H\+S\+Buffer}, \hyperlink{WENOKernels_8H_aba07a39911c6761f6f6a5b63b9258c39}{rho\+E\+R\+H\+S\+Buffer}, \hyperlink{WENOKernels_8H_ade287a7a2e34a50a6f0bfb71f1b7995d}{scalar\+R\+H\+S\+Buffer})
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_acc03638c1b5de1b5efb5bf82d44bab60}{nscbc\+\_\+noslip\+\_\+isothermal} = 6
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_a61b688d5e56fecdb26047d0427b4180d}{nscbc\+\_\+slip\+\_\+adiabatic} = 7
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_a38d8dd65816be04f23b62b1a44902ad2}{nscbc\+\_\+inflow\+\_\+supersonic} = 8
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_a107aa9ceb3e9d2a5a94105422ed2ba17}{nscbc\+\_\+inflow\+\_\+subsonic} = 9
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_a5be437968972476e91d15252df952b44}{nscbc\+\_\+inflow\+\_\+veltemp} = 10
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_a44d1aa8c46aa6d879e759954abdbb1f6}{nscbc\+\_\+outflow\+\_\+nonreflection} = 11
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_a5d52dfb26d090fc1dd8555dbd4b41ea1}{nscbc\+\_\+axisymmetry} = 12
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_af011f25d6b892365a71782a1acc53cac}{weno\+\_\+central} = 1
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_aaea0ea1a649fc6e1c76d7e09afd83e17}{weno\+\_\+leftboundary1} = 4
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_abc7c2a47f826df42ffb4de7f3c3b9e0b}{weno\+\_\+leftboundary2} = 8
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_a5f3396ae1256ba3e5cbf718cbf261618}{weno\+\_\+rightboundary1} = 10
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_aedc66bac095d9c04f800491a6a77de56}{weno\+\_\+rightboundary2} = 14
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_af94f674d95f5f5ef6262da407a7fd4c8}{weno\+\_\+axisboundary1} = 20
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_a903f5f21fcefb6a5062f328e7a8b8164}{weno\+\_\+axisboundary2} = 26
+\item 
+integer, parameter \hyperlink{namespacenavierstokesrhsweno_a24a7b443382b45612203c265466399d4}{ns} = 3
+\item 
+integer(kind=4), parameter \hyperlink{namespacenavierstokesrhsweno_af00ac01da0553acc8e7382cfc4a5ca1b}{width} = 6
+\end{DoxyCompactItemize}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\hypertarget{namespacenavierstokesrhsweno_a0e801cde0142e2c2046191a109d64601}{}\label{namespacenavierstokesrhsweno_a0e801cde0142e2c2046191a109d64601} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!allocate\+\_\+local\+\_\+types@{allocate\+\_\+local\+\_\+types}}
+\index{allocate\+\_\+local\+\_\+types@{allocate\+\_\+local\+\_\+types}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{allocate\+\_\+local\+\_\+types()}{allocate\_local\_types()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::allocate\+\_\+local\+\_\+types (\begin{DoxyParamCaption}\item[{type(\hyperlink{structnavierstokesrhsweno_1_1dissipation__local}{dissipation\+\_\+local})}]{d\+\_\+local,  }\item[{type(\hyperlink{structnavierstokesrhsweno_1_1characteristic__local}{characteristic\+\_\+local})}]{c\+\_\+local,  }\item[{type(\hyperlink{structnavierstokesrhsweno_1_1upwinding__local}{upwinding\+\_\+local})}]{u\+\_\+local,  }\item[{integer, intent(in)}]{num\+Equations,  }\item[{integer, intent(in)}]{num\+Dim,  }\item[{integer, intent(in)}]{n\+Aux\+Vars }\end{DoxyParamCaption})}
+
+
+
+Definition at line 78 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+References allocate\+\_\+upwinding\+\_\+local(), and width.
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+weno().
+
+Here is the call graph for this function\+:
+% FIG 0
+Here is the caller graph for this function\+:
+% FIG 1
+\hypertarget{namespacenavierstokesrhsweno_abe3d17704e23fdee041cbc4a7c58d78b}{}\label{namespacenavierstokesrhsweno_abe3d17704e23fdee041cbc4a7c58d78b} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!allocate\+\_\+upwinding\+\_\+local@{allocate\+\_\+upwinding\+\_\+local}}
+\index{allocate\+\_\+upwinding\+\_\+local@{allocate\+\_\+upwinding\+\_\+local}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{allocate\+\_\+upwinding\+\_\+local()}{allocate\_upwinding\_local()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::allocate\+\_\+upwinding\+\_\+local (\begin{DoxyParamCaption}\item[{type(\hyperlink{structnavierstokesrhsweno_1_1upwinding__local}{upwinding\+\_\+local})}]{u\+\_\+local,  }\item[{integer, intent(in)}]{num\+Equations }\end{DoxyParamCaption})}
+
+
+
+Definition at line 119 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+References ns, and width.
+
+
+
+Referenced by allocate\+\_\+local\+\_\+types(), and apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old().
+
+Here is the caller graph for this function\+:
+% FIG 2
+\hypertarget{namespacenavierstokesrhsweno_a095da8b7b85aaaf8e6f6d77d12520819}{}\label{namespacenavierstokesrhsweno_a095da8b7b85aaaf8e6f6d77d12520819} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!apply\+\_\+weno\+\_\+js\+\_\+consistent@{apply\+\_\+weno\+\_\+js\+\_\+consistent}}
+\index{apply\+\_\+weno\+\_\+js\+\_\+consistent@{apply\+\_\+weno\+\_\+js\+\_\+consistent}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{apply\+\_\+weno\+\_\+js\+\_\+consistent()}{apply\_weno\_js\_consistent()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::apply\+\_\+weno\+\_\+js\+\_\+consistent (\begin{DoxyParamCaption}\item[{integer(kind=4)}]{dir,  }\item[{integer(kind=8), dimension(\+:)}]{p\+\_\+map,  }\item[{real(kind=8), dimension(\+:,\+:)}]{smap,  }\item[{real(kind=8), dimension(numequations$\ast$numpointsbuffer)}]{inviscid\+Flux\+Buffer,  }\item[{real(kind=8), dimension(\+:,\+:)}]{f\+\_\+face\+\_\+1d,  }\item[{integer(kind=8), dimension(2)}]{index\+\_\+weno,  }\item[{integer(kind=4)}]{num\+Equations,  }\item[{integer(kind=8)}]{num\+Points\+Buffer,  }\item[{integer(kind=4)}]{have\+Axis,  }\item[{integer, dimension(numequations)}]{s }\end{DoxyParamCaption})}
+
+
+
+Definition at line 453 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+weno().
+
+Here is the caller graph for this function\+:
+% FIG 3
+\hypertarget{namespacenavierstokesrhsweno_a4a196ab534e2977d20c69a739e0e3eae}{}\label{namespacenavierstokesrhsweno_a4a196ab534e2977d20c69a739e0e3eae} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!apply\+\_\+weno\+\_\+js\+\_\+dissipation@{apply\+\_\+weno\+\_\+js\+\_\+dissipation}}
+\index{apply\+\_\+weno\+\_\+js\+\_\+dissipation@{apply\+\_\+weno\+\_\+js\+\_\+dissipation}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{apply\+\_\+weno\+\_\+js\+\_\+dissipation()}{apply\_weno\_js\_dissipation()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::apply\+\_\+weno\+\_\+js\+\_\+dissipation (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{dir,  }\item[{integer(kind=8), dimension(\+:), intent(in)}]{p\+\_\+map,  }\item[{real(kind=8), dimension(\+:,\+:), intent(in)}]{smap,  }\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=4), intent(in)}]{num\+Equations,  }\item[{real(kind=8), dimension(\+:,\+:), intent(out)}]{f\+\_\+face\+\_\+1d,  }\item[{integer(kind=8), dimension(2), intent(in)}]{index\+\_\+weno,  }\item[{real(kind=8), intent(in)}]{W\+E\+N\+O\+\_\+alpha,  }\item[{integer(kind=4), intent(in)}]{n\+Aux\+Vars,  }\item[{integer(kind=4), intent(in)}]{W\+E\+N\+O\+\_\+\+S\+T\+R\+O\+N\+G\+S\+H\+O\+C\+KS,  }\item[{integer(kind=8), intent(in)}]{num\+Points\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{rho\+V\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+E\+Buffer,  }\item[{real(kind=8), dimension(nauxvars$\ast$numpointsbuffer), intent(in), target}]{scalar\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{pressure\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{temperature\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{sos\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer), intent(in)}]{grid\+Metric,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{jacobian\+Determinant,  }\item[{integer(kind=8), dimension(numgasinfos), intent(in)}]{eos\+Info,  }\item[{real(kind=8), dimension(numnondimens), intent(in)}]{eos\+Non\+Dimen,  }\item[{real(kind=8), dimension(numgasparams$\ast$(nauxvars+1)), intent(in)}]{eos\+Gas\+Params,  }\item[{integer(kind=4), intent(in)}]{grid\+Type,  }\item[{integer(kind=4), intent(in)}]{have\+Axis,  }\item[{type(\hyperlink{structnavierstokesrhsweno_1_1dissipation__local}{dissipation\+\_\+local})}]{d\+\_\+local,  }\item[{type(\hyperlink{structnavierstokesrhsweno_1_1characteristic__local}{characteristic\+\_\+local})}]{c\+\_\+local,  }\item[{type(\hyperlink{structnavierstokesrhsweno_1_1upwinding__local}{upwinding\+\_\+local})}]{u\+\_\+local }\end{DoxyParamCaption})}
+
+
+
+Definition at line 861 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+References characteristic\+\_\+velocity(), conserved\+\_\+variables\+\_\+single\+\_\+point(), dissipation\+\_\+part\+\_\+by\+\_\+upwinding\+\_\+flux(), frozen\+\_\+incviscid\+\_\+flux(), and width.
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+weno().
+
+Here is the call graph for this function\+:
+% FIG 4
+Here is the caller graph for this function\+:
+% FIG 5
+\hypertarget{namespacenavierstokesrhsweno_abbc2f98a7ca22919d8a11d92a72b67e3}{}\label{namespacenavierstokesrhsweno_abbc2f98a7ca22919d8a11d92a72b67e3} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old@{apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old}}
+\index{apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old@{apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old()}{apply\_weno\_js\_dissipation\_old()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{dir,  }\item[{integer(kind=8), dimension(\+:)}]{p\+\_\+map,  }\item[{real(kind=8), dimension(\+:,\+:), intent(in)}]{smap,  }\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=4), intent(in)}]{num\+Equations,  }\item[{real(kind=8), dimension(\+:,\+:), intent(out)}]{f\+\_\+face\+\_\+1d,  }\item[{integer(kind=8), dimension(2)}]{index\+\_\+weno,  }\item[{real(kind=8)}]{W\+E\+N\+O\+\_\+alpha,  }\item[{integer(kind=4), intent(in)}]{n\+Aux\+Vars,  }\item[{integer(kind=4)}]{W\+E\+N\+O\+\_\+\+S\+T\+R\+O\+N\+G\+S\+H\+O\+C\+KS,  }\item[{integer(kind=8)}]{num\+Points\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{rho\+V\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+E\+Buffer,  }\item[{real(kind=8), dimension(nauxvars$\ast$numpointsbuffer), intent(in), target}]{scalar\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{pressure\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{temperature\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{sos\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer)}]{grid\+Metric,  }\item[{real(kind=8), dimension(numpointsbuffer)}]{jacobian\+Determinant,  }\item[{integer(kind=8), dimension(numgasinfos)}]{eos\+Info,  }\item[{real(kind=8), dimension(numnondimens), intent(in)}]{eos\+Non\+Dimen,  }\item[{real(kind=8), dimension(numgasparams$\ast$(nauxvars+1)), intent(in)}]{eos\+Gas\+Params,  }\item[{integer(kind=4), intent(in)}]{grid\+Type,  }\item[{integer(kind=4)}]{have\+Axis }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1046 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+References allocate\+\_\+upwinding\+\_\+local(), characteristic\+\_\+velocity\+\_\+old(), conserved\+\_\+variables\+\_\+single\+\_\+point(), deallocate\+\_\+upwinding\+\_\+local(), dissipation\+\_\+part\+\_\+by\+\_\+upwinding\+\_\+flux(), frozen\+\_\+incviscid\+\_\+flux(), and width.
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+muscl().
+
+Here is the call graph for this function\+:
+% FIG 6
+Here is the caller graph for this function\+:
+% FIG 7
+\hypertarget{namespacenavierstokesrhsweno_a99ebd5b1eaad99cba4958c639554bb7c}{}\label{namespacenavierstokesrhsweno_a99ebd5b1eaad99cba4958c639554bb7c} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!characteristic\+\_\+velocity@{characteristic\+\_\+velocity}}
+\index{characteristic\+\_\+velocity@{characteristic\+\_\+velocity}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{characteristic\+\_\+velocity()}{characteristic\_velocity()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::characteristic\+\_\+velocity (\begin{DoxyParamCaption}\item[{real(kind=8), dimension(\hyperlink{namespacenavierstokesrhsweno_af00ac01da0553acc8e7382cfc4a5ca1b}{width}+1,numequations), intent(out)}]{ws\+\_\+stencil,  }\item[{integer(kind=4)}]{width,  }\item[{integer(kind=4)}]{i\+Left,  }\item[{integer(kind=4)}]{i\+Right,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{rho\+V\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+E\+Buffer,  }\item[{real(kind=8), dimension(nauxvars$\ast$numpointsbuffer), intent(in), target}]{scalar\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{pressure\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{temperature\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{sos\+Buffer,  }\item[{integer(kind=4)}]{map,  }\item[{integer(kind=8), dimension(\+:)}]{p\+\_\+map,  }\item[{real(kind=8), dimension(\+:,\+:)}]{smap,  }\item[{integer(kind=4)}]{dir,  }\item[{integer(kind=4)}]{num\+Dim,  }\item[{integer(kind=4)}]{naux\+Vars,  }\item[{integer(kind=4)}]{num\+Equations,  }\item[{integer(kind=8)}]{num\+Points\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer)}]{grid\+Metric,  }\item[{real(kind=8), dimension(numpointsbuffer)}]{jacobian\+Determinant,  }\item[{integer(kind=8), dimension(numgasinfos)}]{eos\+Info,  }\item[{real(kind=8), dimension(numnondimens), intent(in)}]{eos\+Non\+Dimen,  }\item[{real(kind=8), dimension(numgasparams$\ast$(nauxvars+1)), intent(in)}]{eos\+Gas\+Params,  }\item[{integer(kind=4)}]{have\+Axis,  }\item[{type(\hyperlink{structnavierstokesrhsweno_1_1characteristic__local}{characteristic\+\_\+local})}]{c\+\_\+local }\end{DoxyParamCaption})}
+
+
+
+Definition at line 605 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+References conserved\+\_\+variables\+\_\+single\+\_\+point().
+
+
+
+Referenced by apply\+\_\+weno\+\_\+js\+\_\+dissipation().
+
+Here is the call graph for this function\+:
+% FIG 8
+Here is the caller graph for this function\+:
+% FIG 9
+\hypertarget{namespacenavierstokesrhsweno_a218ed3a33c33cf47975e22571e34c3c3}{}\label{namespacenavierstokesrhsweno_a218ed3a33c33cf47975e22571e34c3c3} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!characteristic\+\_\+velocity\+\_\+old@{characteristic\+\_\+velocity\+\_\+old}}
+\index{characteristic\+\_\+velocity\+\_\+old@{characteristic\+\_\+velocity\+\_\+old}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{characteristic\+\_\+velocity\+\_\+old()}{characteristic\_velocity\_old()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::characteristic\+\_\+velocity\+\_\+old (\begin{DoxyParamCaption}\item[{real(kind=8), dimension(\hyperlink{namespacenavierstokesrhsweno_af00ac01da0553acc8e7382cfc4a5ca1b}{width}+1,numequations), intent(out)}]{ws\+\_\+stencil,  }\item[{integer(kind=4)}]{width,  }\item[{integer(kind=4)}]{i\+Left,  }\item[{integer(kind=4)}]{i\+Right,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{rho\+V\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+E\+Buffer,  }\item[{real(kind=8), dimension(nauxvars$\ast$numpointsbuffer), intent(in), target}]{scalar\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{pressure\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{temperature\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{sos\+Buffer,  }\item[{integer(kind=4)}]{map,  }\item[{integer(kind=8), dimension(\+:)}]{p\+\_\+map,  }\item[{real(kind=8), dimension(\+:,\+:)}]{smap,  }\item[{integer(kind=4)}]{dir,  }\item[{integer(kind=4)}]{num\+Dim,  }\item[{integer(kind=4)}]{naux\+Vars,  }\item[{integer(kind=4)}]{num\+Equations,  }\item[{integer(kind=8)}]{num\+Points\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer)}]{grid\+Metric,  }\item[{real(kind=8), dimension(numpointsbuffer)}]{jacobian\+Determinant,  }\item[{integer(kind=8), dimension(numgasinfos)}]{eos\+Info,  }\item[{real(kind=8), dimension(numnondimens), intent(in)}]{eos\+Non\+Dimen,  }\item[{real(kind=8), dimension(numgasparams$\ast$(nauxvars+1)), intent(in)}]{eos\+Gas\+Params,  }\item[{integer(kind=4)}]{have\+Axis }\end{DoxyParamCaption})}
+
+
+
+Definition at line 770 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+References conserved\+\_\+variables\+\_\+single\+\_\+point().
+
+
+
+Referenced by apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old(), and ns\+\_\+rhs\+\_\+muscl().
+
+Here is the call graph for this function\+:
+% FIG 10
+Here is the caller graph for this function\+:
+% FIG 11
+\hypertarget{namespacenavierstokesrhsweno_a4481b668ca0b9a3c6adf1ebc7649268f}{}\label{namespacenavierstokesrhsweno_a4481b668ca0b9a3c6adf1ebc7649268f} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!computecharacteristicvelocities@{computecharacteristicvelocities}}
+\index{computecharacteristicvelocities@{computecharacteristicvelocities}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{computecharacteristicvelocities()}{computecharacteristicvelocities()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::computecharacteristicvelocities (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=8), intent(in)}]{num\+Points\+Buffer,  }\item[{integer(kind=8), dimension(numdim), intent(in)}]{buffer\+Sizes,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{integer(kind=4), intent(in)}]{num\+Equations,  }\item[{integer(kind=4), intent(in)}]{n\+Aux\+Vars,  }\item[{integer(kind=4), intent(in)}]{have\+Axis,  }\item[{integer(kind=4), intent(in)}]{dir,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in)}]{velocity\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{sos\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer), intent(in)}]{grid\+Metric,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{jacobian\+Determinant,  }\item[{real(kind=8), dimension(3$\ast$numpointsbuffer), intent(out)}]{char\+Vel }\end{DoxyParamCaption})}
+
+
+
+Definition at line 701 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+\hypertarget{namespacenavierstokesrhsweno_a915a5f75335f503106a55b3359b23e4f}{}\label{namespacenavierstokesrhsweno_a915a5f75335f503106a55b3359b23e4f} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!conserved\+\_\+variables\+\_\+single\+\_\+point@{conserved\+\_\+variables\+\_\+single\+\_\+point}}
+\index{conserved\+\_\+variables\+\_\+single\+\_\+point@{conserved\+\_\+variables\+\_\+single\+\_\+point}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{conserved\+\_\+variables\+\_\+single\+\_\+point()}{conserved\_variables\_single\_point()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::conserved\+\_\+variables\+\_\+single\+\_\+point (\begin{DoxyParamCaption}\item[{real(kind=8), dimension(numequations)}]{u,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{rho\+V\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+E\+Buffer,  }\item[{real(kind=8), dimension(nauxvars$\ast$numpointsbuffer), intent(in), target}]{scalar\+Buffer,  }\item[{integer(kind=8)}]{map,  }\item[{real(kind=8), dimension(\+:)}]{smap,  }\item[{integer(kind=4)}]{num\+Dim,  }\item[{integer(kind=4)}]{naux\+Vars,  }\item[{integer(kind=4)}]{num\+Equations,  }\item[{integer(kind=8)}]{num\+Points\+Buffer,  }\item[{integer(kind=4)}]{have\+Axis }\end{DoxyParamCaption})}
+
+
+
+Definition at line 503 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by apply\+\_\+weno\+\_\+js\+\_\+dissipation(), apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old(), characteristic\+\_\+velocity(), characteristic\+\_\+velocity\+\_\+old(), ns\+\_\+bc\+\_\+fixvalue(), ns\+\_\+bc\+\_\+weno(), and ns\+\_\+rhs\+\_\+muscl().
+
+Here is the caller graph for this function\+:
+% FIG 12
+\hypertarget{namespacenavierstokesrhsweno_ab05f550a5f2fb0bbe1ed4e771c8e999e}{}\label{namespacenavierstokesrhsweno_ab05f550a5f2fb0bbe1ed4e771c8e999e} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!cross\+\_\+product@{cross\+\_\+product}}
+\index{cross\+\_\+product@{cross\+\_\+product}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{cross\+\_\+product()}{cross\_product()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::cross\+\_\+product (\begin{DoxyParamCaption}\item[{real(kind=8), dimension(3)}]{v1,  }\item[{real(kind=8), dimension(3)}]{v2,  }\item[{real(kind=8), dimension(3)}]{y }\end{DoxyParamCaption})}
+
+
+
+Definition at line 2813 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+bc\+\_\+fixvalue().
+
+Here is the caller graph for this function\+:
+% FIG 13
+\hypertarget{namespacenavierstokesrhsweno_a097089e1d0c132ad64a8c601319499bb}{}\label{namespacenavierstokesrhsweno_a097089e1d0c132ad64a8c601319499bb} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!deallocate\+\_\+local\+\_\+types@{deallocate\+\_\+local\+\_\+types}}
+\index{deallocate\+\_\+local\+\_\+types@{deallocate\+\_\+local\+\_\+types}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{deallocate\+\_\+local\+\_\+types()}{deallocate\_local\_types()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::deallocate\+\_\+local\+\_\+types (\begin{DoxyParamCaption}\item[{type(\hyperlink{structnavierstokesrhsweno_1_1dissipation__local}{dissipation\+\_\+local})}]{d\+\_\+local,  }\item[{type(\hyperlink{structnavierstokesrhsweno_1_1characteristic__local}{characteristic\+\_\+local})}]{c\+\_\+local,  }\item[{type(\hyperlink{structnavierstokesrhsweno_1_1upwinding__local}{upwinding\+\_\+local})}]{u\+\_\+local }\end{DoxyParamCaption})}
+
+
+
+Definition at line 131 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+References deallocate\+\_\+upwinding\+\_\+local().
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+weno().
+
+Here is the call graph for this function\+:
+% FIG 14
+Here is the caller graph for this function\+:
+% FIG 15
+\hypertarget{namespacenavierstokesrhsweno_af0672aeaf819970b43963e86448c91ad}{}\label{namespacenavierstokesrhsweno_af0672aeaf819970b43963e86448c91ad} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!deallocate\+\_\+upwinding\+\_\+local@{deallocate\+\_\+upwinding\+\_\+local}}
+\index{deallocate\+\_\+upwinding\+\_\+local@{deallocate\+\_\+upwinding\+\_\+local}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{deallocate\+\_\+upwinding\+\_\+local()}{deallocate\_upwinding\_local()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::deallocate\+\_\+upwinding\+\_\+local (\begin{DoxyParamCaption}\item[{type(\hyperlink{structnavierstokesrhsweno_1_1upwinding__local}{upwinding\+\_\+local})}]{u\+\_\+local }\end{DoxyParamCaption})}
+
+
+
+Definition at line 170 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old(), and deallocate\+\_\+local\+\_\+types().
+
+Here is the caller graph for this function\+:
+% FIG 16
+\hypertarget{namespacenavierstokesrhsweno_a5a6e0cc7f0cfcab7d3db0700b7eda393}{}\label{namespacenavierstokesrhsweno_a5a6e0cc7f0cfcab7d3db0700b7eda393} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!dissipation\+\_\+part\+\_\+by\+\_\+upwinding\+\_\+flux@{dissipation\+\_\+part\+\_\+by\+\_\+upwinding\+\_\+flux}}
+\index{dissipation\+\_\+part\+\_\+by\+\_\+upwinding\+\_\+flux@{dissipation\+\_\+part\+\_\+by\+\_\+upwinding\+\_\+flux}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{dissipation\+\_\+part\+\_\+by\+\_\+upwinding\+\_\+flux()}{dissipation\_part\_by\_upwinding\_flux()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::dissipation\+\_\+part\+\_\+by\+\_\+upwinding\+\_\+flux (\begin{DoxyParamCaption}\item[{real(kind=8), dimension(\hyperlink{namespacenavierstokesrhsweno_af00ac01da0553acc8e7382cfc4a5ca1b}{width},numequations)}]{f\+\_\+stencil\+\_\+char\+\_\+sign,  }\item[{integer(kind=4)}]{dir,  }\item[{integer(kind=4)}]{num\+Dim,  }\item[{integer(kind=4)}]{num\+Equations,  }\item[{integer(kind=4)}]{width,  }\item[{integer(kind=4)}]{sign\+\_\+flag,  }\item[{real(kind=8), dimension(numdim)}]{M\+T1\+\_\+freeze,  }\item[{real(kind=8), dimension(numequations)}]{f\+\_\+face\+\_\+1d\+\_\+char,  }\item[{type(\hyperlink{structnavierstokesrhsweno_1_1upwinding__local}{upwinding\+\_\+local})}]{u\+\_\+local }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1220 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by apply\+\_\+weno\+\_\+js\+\_\+dissipation(), and apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old().
+
+Here is the caller graph for this function\+:
+% FIG 17
+\hypertarget{namespacenavierstokesrhsweno_ae41d80693f0933b732f601a4c4b52697}{}\label{namespacenavierstokesrhsweno_ae41d80693f0933b732f601a4c4b52697} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!frozen\+\_\+incviscid\+\_\+flux@{frozen\+\_\+incviscid\+\_\+flux}}
+\index{frozen\+\_\+incviscid\+\_\+flux@{frozen\+\_\+incviscid\+\_\+flux}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{frozen\+\_\+incviscid\+\_\+flux()}{frozen\_incviscid\_flux()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::frozen\+\_\+incviscid\+\_\+flux (\begin{DoxyParamCaption}\item[{real(kind=8), dimension(\hyperlink{namespacenavierstokesrhsweno_af00ac01da0553acc8e7382cfc4a5ca1b}{width},numequations)}]{f\+\_\+stencil,  }\item[{integer(kind=4)}]{width,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{rho\+V\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+E\+Buffer,  }\item[{real(kind=8), dimension(nauxvars$\ast$numpointsbuffer), intent(in), target}]{scalar\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{pressure\+Buffer,  }\item[{integer(kind=4)}]{map,  }\item[{integer(kind=8), dimension(\+:)}]{p\+\_\+map,  }\item[{real(kind=8), dimension(\+:,\+:)}]{smap,  }\item[{integer(kind=4)}]{num\+Dim,  }\item[{integer(kind=4)}]{naux\+Vars,  }\item[{integer(kind=4)}]{num\+Equations,  }\item[{integer(kind=8)}]{num\+Points\+Buffer,  }\item[{real(kind=8), dimension(numdim), intent(in)}]{M\+T1\+\_\+freeze,  }\item[{integer(kind=4)}]{have\+Axis }\end{DoxyParamCaption})}
+
+
+
+Definition at line 538 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by apply\+\_\+weno\+\_\+js\+\_\+dissipation(), and apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old().
+
+Here is the caller graph for this function\+:
+% FIG 18
+\hypertarget{namespacenavierstokesrhsweno_a31b872df779e6dca9565827209290ac4}{}\label{namespacenavierstokesrhsweno_a31b872df779e6dca9565827209290ac4} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!inviscidflux@{inviscidflux}}
+\index{inviscidflux@{inviscidflux}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{inviscidflux()}{inviscidflux()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::inviscidflux (\begin{DoxyParamCaption}\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{rho\+V\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+E\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{pressure\+Buffer,  }\item[{real(kind=8), dimension(numscalars$\ast$numpointsbuffer), intent(in), target}]{scalar\+Buffer,  }\item[{integer(kind=8), dimension(\+:), intent(in)}]{p\+\_\+map,  }\item[{integer(kind=4)}]{normdir,  }\item[{integer(kind=4)}]{num\+Dim,  }\item[{integer(kind=4)}]{num\+Scalars,  }\item[{integer(kind=4)}]{num\+Equations,  }\item[{integer(kind=8)}]{num\+Points\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer), intent(in)}]{grid\+Metric,  }\item[{integer(kind=4)}]{Npencil,  }\item[{real(kind=8), dimension(npencil,numequations), intent(out)}]{f\+\_\+stencil }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1817 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+muscl().
+
+Here is the caller graph for this function\+:
+% FIG 19
+\hypertarget{namespacenavierstokesrhsweno_a55d470cff0a999fd7c1394776ce8153a}{}\label{namespacenavierstokesrhsweno_a55d470cff0a999fd7c1394776ce8153a} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!inviscidflux\+\_\+freeze@{inviscidflux\+\_\+freeze}}
+\index{inviscidflux\+\_\+freeze@{inviscidflux\+\_\+freeze}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{inviscidflux\+\_\+freeze()}{inviscidflux\_freeze()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::inviscidflux\+\_\+freeze (\begin{DoxyParamCaption}\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{rho\+V\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+E\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{pressure\+Buffer,  }\item[{real(kind=8), dimension(numscalars$\ast$numpointsbuffer), intent(in), target}]{scalar\+Buffer,  }\item[{integer(kind=8), dimension(\+:), intent(in)}]{p\+\_\+map,  }\item[{integer(kind=4)}]{normdir,  }\item[{integer(kind=4)}]{num\+Dim,  }\item[{integer(kind=4)}]{num\+Scalars,  }\item[{integer(kind=4)}]{num\+Equations,  }\item[{integer(kind=8)}]{num\+Points\+Buffer,  }\item[{real(kind=8), dimension(numdim), intent(in)}]{M\+T1,  }\item[{integer(kind=4)}]{Npencil,  }\item[{integer(kind=4)}]{width,  }\item[{real(kind=8), dimension(npencil,numequations), intent(out)}]{f\+\_\+stencil }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1865 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+muscl().
+
+Here is the caller graph for this function\+:
+% FIG 20
+\hypertarget{namespacenavierstokesrhsweno_adc0cae81dfd0f35fb63adedfe8e322ea}{}\label{namespacenavierstokesrhsweno_adc0cae81dfd0f35fb63adedfe8e322ea} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!muscl\+\_\+reconstruction@{muscl\+\_\+reconstruction}}
+\index{muscl\+\_\+reconstruction@{muscl\+\_\+reconstruction}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{muscl\+\_\+reconstruction()}{muscl\_reconstruction()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::muscl\+\_\+reconstruction (\begin{DoxyParamCaption}\item[{real(kind=8), dimension(npencilw,numequations)}]{f\+\_\+input,  }\item[{integer(kind=4)}]{num\+Equations,  }\item[{integer(kind=4)}]{NpencilW,  }\item[{integer(kind=4)}]{i1,  }\item[{integer(kind=4)}]{i2,  }\item[{integer(kind=4)}]{i3,  }\item[{real(kind=8)}]{side,  }\item[{real(kind=8), dimension(numequations)}]{f\+\_\+output }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1794 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+muscl().
+
+Here is the caller graph for this function\+:
+% FIG 21
+\hypertarget{namespacenavierstokesrhsweno_a6a6c17f009939c4d47bb3c856785e8c1}{}\label{namespacenavierstokesrhsweno_a6a6c17f009939c4d47bb3c856785e8c1} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!ns\+\_\+bc\+\_\+fixvalue@{ns\+\_\+bc\+\_\+fixvalue}}
+\index{ns\+\_\+bc\+\_\+fixvalue@{ns\+\_\+bc\+\_\+fixvalue}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{ns\+\_\+bc\+\_\+fixvalue()}{ns\_bc\_fixvalue()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::ns\+\_\+bc\+\_\+fixvalue (\begin{DoxyParamCaption}\item[{integer(kind=4)}]{num\+Dim,  }\item[{integer(kind=8), dimension(numdim)}]{buffer\+Sizes,  }\item[{integer(kind=8)}]{num\+Points\+Buffer,  }\item[{integer(kind=4)}]{norm\+Dir\+In,  }\item[{integer(kind=8)}]{num\+Patch\+Points\+Op,  }\item[{integer(kind=8), dimension(numpatchpointsop)}]{patch\+Points\+Op,  }\item[{integer(kind=4)}]{grid\+Type,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer), intent(in)}]{grid\+Metric,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{grid\+Jacobian,  }\item[{integer(kind=4)}]{bc\+Type,  }\item[{real(kind=8), dimension(5), intent(in)}]{bc\+Params,  }\item[{real(kind=8), dimension(6), intent(in)}]{gas\+Vars,  }\item[{integer(kind=4)}]{num\+Scalars,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{pressure\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{temperature\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{sos\+Buffer,  }\item[{integer(kind=8), dimension(numgasinfos)}]{eos\+Info,  }\item[{real(kind=8), dimension(numnondimens), intent(in)}]{eos\+Non\+Dimen,  }\item[{real(kind=8), dimension(numgasparams$\ast$(numscalars+1)), intent(in)}]{eos\+Gas\+Params,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+Target,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{rho\+V\+Target,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+E\+Target,  }\item[{real(kind=8), dimension(numscalars$\ast$numpointsbuffer), intent(in), target}]{scalar\+Target,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(inout)}]{rho\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(inout), target}]{rho\+V\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(inout)}]{rho\+E\+Buffer,  }\item[{real(kind=8), dimension(numscalars$\ast$numpointsbuffer), intent(inout), target}]{scalar\+Buffer }\end{DoxyParamCaption})}
+
+BC Fix\+Value for different metric types \mbox{[}mtc\mbox{]} 
+
+Definition at line 2500 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+References conserved\+\_\+variables\+\_\+single\+\_\+point(), cross\+\_\+product(), nscbc\+\_\+axisymmetry, nscbc\+\_\+inflow\+\_\+subsonic, nscbc\+\_\+inflow\+\_\+supersonic, nscbc\+\_\+inflow\+\_\+veltemp, nscbc\+\_\+noslip\+\_\+isothermal, and nscbc\+\_\+slip\+\_\+adiabatic.
+
+Here is the call graph for this function\+:
+% FIG 22
+\hypertarget{namespacenavierstokesrhsweno_ab262bb2c0604c826851c659a22ded494}{}\label{namespacenavierstokesrhsweno_ab262bb2c0604c826851c659a22ded494} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!ns\+\_\+bc\+\_\+weno@{ns\+\_\+bc\+\_\+weno}}
+\index{ns\+\_\+bc\+\_\+weno@{ns\+\_\+bc\+\_\+weno}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{ns\+\_\+bc\+\_\+weno()}{ns\_bc\_weno()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::ns\+\_\+bc\+\_\+weno (\begin{DoxyParamCaption}\item[{integer(kind=4)}]{num\+Dim,  }\item[{integer(kind=8), dimension(numdim)}]{buffer\+Sizes,  }\item[{integer(kind=8)}]{num\+Points\+Buffer,  }\item[{integer(kind=4)}]{norm\+Dir\+In,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{buffer\+Interval,  }\item[{integer(kind=4)}]{grid\+Type,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer), intent(inout)}]{grid\+Metric,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(inout)}]{grid\+Jacobian,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer), intent(in)}]{M\+T2,  }\item[{integer(kind=4)}]{bc\+Type,  }\item[{real(kind=8), dimension(5), intent(in)}]{bc\+Params,  }\item[{real(kind=8), dimension(6), intent(in)}]{gas\+Vars,  }\item[{integer(kind=4)}]{num\+Scalars,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{rho\+V\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+E\+Buffer,  }\item[{real(kind=8), dimension(numscalars$\ast$numpointsbuffer), intent(in), target}]{scalar\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{pressure\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{temperature\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{sos\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(inout)}]{rho\+R\+H\+S\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(inout), target}]{rho\+V\+R\+H\+S\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(inout)}]{rho\+E\+R\+H\+S\+Buffer,  }\item[{real(kind=8), dimension(numscalars$\ast$numpointsbuffer), intent(inout), target}]{scalar\+R\+H\+S\+Buffer,  }\item[{integer(kind=8), dimension(numgasinfos)}]{eos\+Info,  }\item[{real(kind=8), dimension(numnondimens), intent(in)}]{eos\+Non\+Dimen,  }\item[{real(kind=8), dimension(numgasparams$\ast$(numscalars+1)), intent(in)}]{eos\+Gas\+Params }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1917 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+References conserved\+\_\+variables\+\_\+single\+\_\+point(), nscbc\+\_\+axisymmetry, nscbc\+\_\+inflow\+\_\+veltemp, nscbc\+\_\+noslip\+\_\+isothermal, nscbc\+\_\+outflow\+\_\+nonreflection, and nscbc\+\_\+slip\+\_\+adiabatic.
+
+Here is the call graph for this function\+:
+% FIG 23
+\hypertarget{namespacenavierstokesrhsweno_af7f65e87016e0ba65e255f4f45bb0fa5}{}\label{namespacenavierstokesrhsweno_af7f65e87016e0ba65e255f4f45bb0fa5} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!ns\+\_\+rhs\+\_\+axisymmetric@{ns\+\_\+rhs\+\_\+axisymmetric}}
+\index{ns\+\_\+rhs\+\_\+axisymmetric@{ns\+\_\+rhs\+\_\+axisymmetric}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{ns\+\_\+rhs\+\_\+axisymmetric()}{ns\_rhs\_axisymmetric()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::ns\+\_\+rhs\+\_\+axisymmetric (\begin{DoxyParamCaption}\item[{integer(kind=4)}]{num\+Dim,  }\item[{integer(kind=8), dimension(numdim)}]{buffer\+Sizes,  }\item[{integer(kind=8)}]{num\+Points\+Buffer,  }\item[{integer(kind=4)}]{num\+Scalars,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{grid\+Coordinates,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{rho\+V\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+E\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{pressure\+Buffer,  }\item[{real(kind=8), dimension(numscalars$\ast$numpointsbuffer), intent(in), target}]{scalar\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(inout)}]{rho\+R\+H\+S\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(inout), target}]{rho\+V\+R\+H\+S\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(inout)}]{rho\+E\+R\+H\+S\+Buffer,  }\item[{real(kind=8), dimension(numscalars$\ast$numpointsbuffer), intent(inout), target}]{scalar\+R\+H\+S\+Buffer }\end{DoxyParamCaption})}
+
+
+
+Definition at line 2832 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+\hypertarget{namespacenavierstokesrhsweno_abfdc9aec9f5858f83d007f57efc42de0}{}\label{namespacenavierstokesrhsweno_abfdc9aec9f5858f83d007f57efc42de0} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!ns\+\_\+rhs\+\_\+axisymmetric\+\_\+axis@{ns\+\_\+rhs\+\_\+axisymmetric\+\_\+axis}}
+\index{ns\+\_\+rhs\+\_\+axisymmetric\+\_\+axis@{ns\+\_\+rhs\+\_\+axisymmetric\+\_\+axis}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{ns\+\_\+rhs\+\_\+axisymmetric\+\_\+axis()}{ns\_rhs\_axisymmetric\_axis()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::ns\+\_\+rhs\+\_\+axisymmetric\+\_\+axis (\begin{DoxyParamCaption}\item[{integer(kind=4)}]{num\+Dim,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{buffer\+Interval,  }\item[{integer(kind=8)}]{num\+Points\+Buffer,  }\item[{integer(kind=4)}]{num\+Scalars,  }\item[{integer(kind=4)}]{norm\+Dir,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer), intent(in)}]{grid\+Metric,  }\item[{real(kind=8), dimension(2$\ast$numpointsbuffer), intent(in)}]{jacobian\+Determinant,  }\item[{integer(kind=4)}]{grid\+Type,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{grid\+Coordinates,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{rho\+V\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+E\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{pressure\+Buffer,  }\item[{real(kind=8), dimension(numscalars$\ast$numpointsbuffer), intent(in), target}]{scalar\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(inout)}]{rho\+R\+H\+S\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(inout), target}]{rho\+V\+R\+H\+S\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(inout)}]{rho\+E\+R\+H\+S\+Buffer,  }\item[{real(kind=8), dimension(numscalars$\ast$numpointsbuffer), intent(inout), target}]{scalar\+R\+H\+S\+Buffer }\end{DoxyParamCaption})}
+
+
+
+Definition at line 2888 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+\hypertarget{namespacenavierstokesrhsweno_a3e70362602fa5641e6a5546530caa1fc}{}\label{namespacenavierstokesrhsweno_a3e70362602fa5641e6a5546530caa1fc} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!ns\+\_\+rhs\+\_\+muscl@{ns\+\_\+rhs\+\_\+muscl}}
+\index{ns\+\_\+rhs\+\_\+muscl@{ns\+\_\+rhs\+\_\+muscl}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{ns\+\_\+rhs\+\_\+muscl()}{ns\_rhs\_muscl()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::ns\+\_\+rhs\+\_\+muscl (\begin{DoxyParamCaption}\item[{integer(kind=4)}]{num\+Dim,  }\item[{integer(kind=8), dimension(numdim)}]{buffer\+Sizes,  }\item[{integer(kind=8)}]{num\+Points\+Buffer,  }\item[{integer(kind=4)}]{norm\+Dir,  }\item[{integer(kind=4), dimension(numpointsbuffer)}]{sconn,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{buffer\+Interval,  }\item[{integer(kind=4)}]{grid\+Type,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer), intent(in)}]{grid\+Metric,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{jacobian\+Determinant,  }\item[{real(kind=8), dimension(5), intent(in)}]{bc\+Params,  }\item[{real(kind=8), dimension(5), intent(in)}]{gas\+Params,  }\item[{integer(kind=4)}]{num\+Scalars,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{rho\+V\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+E\+Buffer,  }\item[{real(kind=8), dimension(numscalars$\ast$numpointsbuffer), intent(in), target}]{scalar\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{pressure\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{temperature\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{sos\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(inout)}]{rho\+R\+H\+S\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(inout), target}]{rho\+V\+R\+H\+S\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(inout)}]{rho\+E\+R\+H\+S\+Buffer,  }\item[{real(kind=8), dimension(numscalars$\ast$numpointsbuffer), intent(inout), target}]{scalar\+R\+H\+S\+Buffer,  }\item[{real(kind=8)}]{W\+E\+N\+O\+\_\+alpha,  }\item[{integer(kind=4), dimension(2)}]{weno\+Options,  }\item[{integer(kind=8), dimension(numgasinfos)}]{eos\+Info,  }\item[{real(kind=8), dimension(numnondimens), intent(in)}]{eos\+Non\+Dimen,  }\item[{real(kind=8), dimension(numgasparams$\ast$(numscalars+1)), intent(in)}]{eos\+Gas\+Params }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1306 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+References apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old(), characteristic\+\_\+velocity\+\_\+old(), conserved\+\_\+variables\+\_\+single\+\_\+point(), inviscidflux(), inviscidflux\+\_\+freeze(), and muscl\+\_\+reconstruction().
+
+Here is the call graph for this function\+:
+% FIG 24
+\hypertarget{namespacenavierstokesrhsweno_a1df7b6e3020cca9787110b8f1f5a024f}{}\label{namespacenavierstokesrhsweno_a1df7b6e3020cca9787110b8f1f5a024f} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!ns\+\_\+rhs\+\_\+weno@{ns\+\_\+rhs\+\_\+weno}}
+\index{ns\+\_\+rhs\+\_\+weno@{ns\+\_\+rhs\+\_\+weno}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{ns\+\_\+rhs\+\_\+weno()}{ns\_rhs\_weno()}}
+{\footnotesize\ttfamily subroutine navierstokesrhsweno\+::ns\+\_\+rhs\+\_\+weno (\begin{DoxyParamCaption}\item[{integer(kind=4)}]{num\+Dim,  }\item[{integer(kind=8), dimension(numdim)}]{buffer\+Sizes,  }\item[{integer(kind=8)}]{num\+Points\+Buffer,  }\item[{integer(kind=4)}]{num\+Scalars,  }\item[{integer(kind=4)}]{num\+Equations,  }\item[{integer(kind=4)}]{dir,  }\item[{integer(kind=4), dimension(numpointsbuffer)}]{sconn,  }\item[{real(kind=8), dimension(numequations$\ast$numpointsbuffer)}]{dfluxbuffer,  }\item[{real(kind=8), dimension(numequations$\ast$numpointsbuffer), intent(in)}]{inviscid\+Flux\+Buffer,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpointsbuffer), intent(in)}]{grid\+Metric,  }\item[{real(kind=8), dimension(2$\ast$numpointsbuffer), intent(in)}]{jacobian\+Determinant,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in)}]{grid\+Coordinates,  }\item[{integer(kind=4)}]{grid\+Type,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpointsbuffer), intent(in), target}]{rho\+V\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{rho\+E\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{pressure\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{temperature\+Buffer,  }\item[{real(kind=8), dimension(numpointsbuffer), intent(in)}]{sos\+Buffer,  }\item[{real(kind=8), dimension(numscalars$\ast$numpointsbuffer), intent(in), target}]{scalar\+Buffer,  }\item[{real(kind=8)}]{W\+E\+N\+O\+\_\+alpha,  }\item[{integer(kind=4), dimension(2)}]{weno\+Options,  }\item[{integer(kind=8), dimension(numgasinfos)}]{eos\+Gas\+Info,  }\item[{real(kind=8), dimension(numnondimens), intent(in)}]{eos\+Non\+Dimen,  }\item[{real(kind=8), dimension(numgasparams$\ast$(numscalars+1)), intent(in)}]{eos\+Gas\+Params }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000003}{Todo}]Check with Pavel, sconn(1) will actually be in the halo \mbox{[}mtc\mbox{]} \end{DoxyRefDesc}
+
+
+Definition at line 195 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+References allocate\+\_\+local\+\_\+types(), apply\+\_\+weno\+\_\+js\+\_\+consistent(), apply\+\_\+weno\+\_\+js\+\_\+dissipation(), deallocate\+\_\+local\+\_\+types(), weno\+\_\+axisboundary1, weno\+\_\+axisboundary2, weno\+\_\+central, weno\+\_\+leftboundary1, weno\+\_\+leftboundary2, weno\+\_\+rightboundary1, and weno\+\_\+rightboundary2.
+
+Here is the call graph for this function\+:
+% FIG 25
+
+
+\subsection{Variable Documentation}
+\hypertarget{namespacenavierstokesrhsweno_a24a7b443382b45612203c265466399d4}{}\label{namespacenavierstokesrhsweno_a24a7b443382b45612203c265466399d4} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!ns@{ns}}
+\index{ns@{ns}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{ns}{ns}}
+{\footnotesize\ttfamily integer, parameter ns = 3}
+
+
+
+Definition at line 28 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by allocate\+\_\+upwinding\+\_\+local().
+
+\hypertarget{namespacenavierstokesrhsweno_a5d52dfb26d090fc1dd8555dbd4b41ea1}{}\label{namespacenavierstokesrhsweno_a5d52dfb26d090fc1dd8555dbd4b41ea1} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!nscbc\+\_\+axisymmetry@{nscbc\+\_\+axisymmetry}}
+\index{nscbc\+\_\+axisymmetry@{nscbc\+\_\+axisymmetry}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{nscbc\+\_\+axisymmetry}{nscbc\_axisymmetry}}
+{\footnotesize\ttfamily integer(kind=4), parameter nscbc\+\_\+axisymmetry = 12}
+
+
+
+Definition at line 18 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+bc\+\_\+fixvalue(), and ns\+\_\+bc\+\_\+weno().
+
+\hypertarget{namespacenavierstokesrhsweno_a107aa9ceb3e9d2a5a94105422ed2ba17}{}\label{namespacenavierstokesrhsweno_a107aa9ceb3e9d2a5a94105422ed2ba17} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!nscbc\+\_\+inflow\+\_\+subsonic@{nscbc\+\_\+inflow\+\_\+subsonic}}
+\index{nscbc\+\_\+inflow\+\_\+subsonic@{nscbc\+\_\+inflow\+\_\+subsonic}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{nscbc\+\_\+inflow\+\_\+subsonic}{nscbc\_inflow\_subsonic}}
+{\footnotesize\ttfamily integer(kind=4), parameter nscbc\+\_\+inflow\+\_\+subsonic = 9}
+
+
+
+Definition at line 15 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+bc\+\_\+fixvalue().
+
+\hypertarget{namespacenavierstokesrhsweno_a38d8dd65816be04f23b62b1a44902ad2}{}\label{namespacenavierstokesrhsweno_a38d8dd65816be04f23b62b1a44902ad2} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!nscbc\+\_\+inflow\+\_\+supersonic@{nscbc\+\_\+inflow\+\_\+supersonic}}
+\index{nscbc\+\_\+inflow\+\_\+supersonic@{nscbc\+\_\+inflow\+\_\+supersonic}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{nscbc\+\_\+inflow\+\_\+supersonic}{nscbc\_inflow\_supersonic}}
+{\footnotesize\ttfamily integer(kind=4), parameter nscbc\+\_\+inflow\+\_\+supersonic = 8}
+
+
+
+Definition at line 14 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+bc\+\_\+fixvalue().
+
+\hypertarget{namespacenavierstokesrhsweno_a5be437968972476e91d15252df952b44}{}\label{namespacenavierstokesrhsweno_a5be437968972476e91d15252df952b44} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!nscbc\+\_\+inflow\+\_\+veltemp@{nscbc\+\_\+inflow\+\_\+veltemp}}
+\index{nscbc\+\_\+inflow\+\_\+veltemp@{nscbc\+\_\+inflow\+\_\+veltemp}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{nscbc\+\_\+inflow\+\_\+veltemp}{nscbc\_inflow\_veltemp}}
+{\footnotesize\ttfamily integer(kind=4), parameter nscbc\+\_\+inflow\+\_\+veltemp = 10}
+
+
+
+Definition at line 16 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+bc\+\_\+fixvalue(), and ns\+\_\+bc\+\_\+weno().
+
+\hypertarget{namespacenavierstokesrhsweno_acc03638c1b5de1b5efb5bf82d44bab60}{}\label{namespacenavierstokesrhsweno_acc03638c1b5de1b5efb5bf82d44bab60} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!nscbc\+\_\+noslip\+\_\+isothermal@{nscbc\+\_\+noslip\+\_\+isothermal}}
+\index{nscbc\+\_\+noslip\+\_\+isothermal@{nscbc\+\_\+noslip\+\_\+isothermal}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{nscbc\+\_\+noslip\+\_\+isothermal}{nscbc\_noslip\_isothermal}}
+{\footnotesize\ttfamily integer(kind=4), parameter nscbc\+\_\+noslip\+\_\+isothermal = 6}
+
+
+
+Definition at line 12 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+bc\+\_\+fixvalue(), and ns\+\_\+bc\+\_\+weno().
+
+\hypertarget{namespacenavierstokesrhsweno_a44d1aa8c46aa6d879e759954abdbb1f6}{}\label{namespacenavierstokesrhsweno_a44d1aa8c46aa6d879e759954abdbb1f6} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!nscbc\+\_\+outflow\+\_\+nonreflection@{nscbc\+\_\+outflow\+\_\+nonreflection}}
+\index{nscbc\+\_\+outflow\+\_\+nonreflection@{nscbc\+\_\+outflow\+\_\+nonreflection}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{nscbc\+\_\+outflow\+\_\+nonreflection}{nscbc\_outflow\_nonreflection}}
+{\footnotesize\ttfamily integer(kind=4), parameter nscbc\+\_\+outflow\+\_\+nonreflection = 11}
+
+
+
+Definition at line 17 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+bc\+\_\+weno().
+
+\hypertarget{namespacenavierstokesrhsweno_a61b688d5e56fecdb26047d0427b4180d}{}\label{namespacenavierstokesrhsweno_a61b688d5e56fecdb26047d0427b4180d} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!nscbc\+\_\+slip\+\_\+adiabatic@{nscbc\+\_\+slip\+\_\+adiabatic}}
+\index{nscbc\+\_\+slip\+\_\+adiabatic@{nscbc\+\_\+slip\+\_\+adiabatic}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{nscbc\+\_\+slip\+\_\+adiabatic}{nscbc\_slip\_adiabatic}}
+{\footnotesize\ttfamily integer(kind=4), parameter nscbc\+\_\+slip\+\_\+adiabatic = 7}
+
+
+
+Definition at line 13 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+bc\+\_\+fixvalue(), and ns\+\_\+bc\+\_\+weno().
+
+\hypertarget{namespacenavierstokesrhsweno_af94f674d95f5f5ef6262da407a7fd4c8}{}\label{namespacenavierstokesrhsweno_af94f674d95f5f5ef6262da407a7fd4c8} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!weno\+\_\+axisboundary1@{weno\+\_\+axisboundary1}}
+\index{weno\+\_\+axisboundary1@{weno\+\_\+axisboundary1}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{weno\+\_\+axisboundary1}{weno\_axisboundary1}}
+{\footnotesize\ttfamily integer(kind=4), parameter weno\+\_\+axisboundary1 = 20}
+
+
+
+Definition at line 25 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+weno().
+
+\hypertarget{namespacenavierstokesrhsweno_a903f5f21fcefb6a5062f328e7a8b8164}{}\label{namespacenavierstokesrhsweno_a903f5f21fcefb6a5062f328e7a8b8164} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!weno\+\_\+axisboundary2@{weno\+\_\+axisboundary2}}
+\index{weno\+\_\+axisboundary2@{weno\+\_\+axisboundary2}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{weno\+\_\+axisboundary2}{weno\_axisboundary2}}
+{\footnotesize\ttfamily integer(kind=4), parameter weno\+\_\+axisboundary2 = 26}
+
+
+
+Definition at line 26 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+weno().
+
+\hypertarget{namespacenavierstokesrhsweno_af011f25d6b892365a71782a1acc53cac}{}\label{namespacenavierstokesrhsweno_af011f25d6b892365a71782a1acc53cac} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!weno\+\_\+central@{weno\+\_\+central}}
+\index{weno\+\_\+central@{weno\+\_\+central}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{weno\+\_\+central}{weno\_central}}
+{\footnotesize\ttfamily integer(kind=4), parameter weno\+\_\+central = 1}
+
+
+
+Definition at line 20 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+weno().
+
+\hypertarget{namespacenavierstokesrhsweno_aaea0ea1a649fc6e1c76d7e09afd83e17}{}\label{namespacenavierstokesrhsweno_aaea0ea1a649fc6e1c76d7e09afd83e17} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!weno\+\_\+leftboundary1@{weno\+\_\+leftboundary1}}
+\index{weno\+\_\+leftboundary1@{weno\+\_\+leftboundary1}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{weno\+\_\+leftboundary1}{weno\_leftboundary1}}
+{\footnotesize\ttfamily integer(kind=4), parameter weno\+\_\+leftboundary1 = 4}
+
+
+
+Definition at line 21 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+weno().
+
+\hypertarget{namespacenavierstokesrhsweno_abc7c2a47f826df42ffb4de7f3c3b9e0b}{}\label{namespacenavierstokesrhsweno_abc7c2a47f826df42ffb4de7f3c3b9e0b} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!weno\+\_\+leftboundary2@{weno\+\_\+leftboundary2}}
+\index{weno\+\_\+leftboundary2@{weno\+\_\+leftboundary2}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{weno\+\_\+leftboundary2}{weno\_leftboundary2}}
+{\footnotesize\ttfamily integer(kind=4), parameter weno\+\_\+leftboundary2 = 8}
+
+
+
+Definition at line 22 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+weno().
+
+\hypertarget{namespacenavierstokesrhsweno_a5f3396ae1256ba3e5cbf718cbf261618}{}\label{namespacenavierstokesrhsweno_a5f3396ae1256ba3e5cbf718cbf261618} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!weno\+\_\+rightboundary1@{weno\+\_\+rightboundary1}}
+\index{weno\+\_\+rightboundary1@{weno\+\_\+rightboundary1}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{weno\+\_\+rightboundary1}{weno\_rightboundary1}}
+{\footnotesize\ttfamily integer(kind=4), parameter weno\+\_\+rightboundary1 = 10}
+
+
+
+Definition at line 23 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+weno().
+
+\hypertarget{namespacenavierstokesrhsweno_aedc66bac095d9c04f800491a6a77de56}{}\label{namespacenavierstokesrhsweno_aedc66bac095d9c04f800491a6a77de56} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!weno\+\_\+rightboundary2@{weno\+\_\+rightboundary2}}
+\index{weno\+\_\+rightboundary2@{weno\+\_\+rightboundary2}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{weno\+\_\+rightboundary2}{weno\_rightboundary2}}
+{\footnotesize\ttfamily integer(kind=4), parameter weno\+\_\+rightboundary2 = 14}
+
+
+
+Definition at line 24 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by ns\+\_\+rhs\+\_\+weno().
+
+\hypertarget{namespacenavierstokesrhsweno_af00ac01da0553acc8e7382cfc4a5ca1b}{}\label{namespacenavierstokesrhsweno_af00ac01da0553acc8e7382cfc4a5ca1b} 
+\index{navierstokesrhsweno@{navierstokesrhsweno}!width@{width}}
+\index{width@{width}!navierstokesrhsweno@{navierstokesrhsweno}}
+\subsubsection{\texorpdfstring{width}{width}}
+{\footnotesize\ttfamily integer(kind=4), parameter width = 6}
+
+
+
+Definition at line 29 of file Navier\+Stokes\+R\+H\+S\+W\+E\+N\+O.\+f90.
+
+
+
+Referenced by allocate\+\_\+local\+\_\+types(), allocate\+\_\+upwinding\+\_\+local(), apply\+\_\+weno\+\_\+js\+\_\+dissipation(), and apply\+\_\+weno\+\_\+js\+\_\+dissipation\+\_\+old().
+

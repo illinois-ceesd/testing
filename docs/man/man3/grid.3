@@ -1,0 +1,85 @@
+.TH "grid" 3 "Fri Apr 10 2020" "Version 1.0" "JustKernels" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+grid \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions/Subroutines"
+
+.in +1c
+.ti -1c
+.RI "subroutine \fBcomputegridmetrics\fP (\fBnumDim\fP, \fBgridSizes\fP, \fBnumPoints\fP, \fBopInterval\fP, \fBnumStencils\fP, numStencilValues, \fBstencilSizes\fP, \fBstencilStarts\fP, \fBstencilOffsets\fP, \fBstencilWeights\fP, \fBstencilID\fP, \fBgridCoordinates\fP, gridMetricTensor, gridJacobianDeterminants)"
+.br
+.ti -1c
+.RI "subroutine \fBcomputecurvilineargridmetrics\fP (\fBnumDim\fP, \fBgridSizes\fP, \fBnumPoints\fP, \fBopInterval\fP, \fBnumStencils\fP, numStencilValues, \fBstencilSizes\fP, \fBstencilStarts\fP, \fBstencilOffsets\fP, \fBstencilWeights\fP, \fBstencilID\fP, \fBgridCoordinates\fP, gridMetricTensor, gridJacobianDeterminants)"
+.br
+.ti -1c
+.RI "subroutine \fBapplyuniformgridmetric\fP (\fBnumDim\fP, \fBgridSizes\fP, \fBnumPoints\fP, \fBopInterval\fP, \fBgridMetric\fP, vBuffer, vHat)"
+.br
+.ti -1c
+.RI "subroutine \fBapplycartesiangridmetric\fP (\fBnumDim\fP, \fBgridSizes\fP, \fBnumPoints\fP, \fBopInterval\fP, \fBgridMetric\fP, vBuffer, vHat)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "integer(kind=4), parameter \fBcartesian\fP = 0"
+.br
+.ti -1c
+.RI "integer(kind=4), parameter \fBunirect\fP = 1"
+.br
+.ti -1c
+.RI "integer(kind=4), parameter \fBrectilinear\fP = 2"
+.br
+.ti -1c
+.RI "integer(kind=4), parameter \fBcurvilinear\fP = 3"
+.br
+.in -1c
+.SH "Function/Subroutine Documentation"
+.PP 
+.SS "subroutine grid::applycartesiangridmetric (integer(kind=4), intent(in) numDim, integer(kind=8), dimension(numdim), intent(in) gridSizes, integer(kind=8), intent(in) numPoints, integer(kind=8), dimension(2*numdim), intent(in) opInterval, real(kind=8), dimension(numdim*numpoints), intent(in) gridMetric, real(kind=8), dimension(numdim*numpoints), intent(in) vBuffer, real(kind=8), dimension(numdim*numpoints), intent(out) vHat)"
+
+.PP
+Definition at line 255 of file Grid\&.f90\&.
+.SS "subroutine grid::applyuniformgridmetric (integer(kind=4), intent(in) numDim, integer(kind=8), dimension(numdim), intent(in) gridSizes, integer(kind=8), intent(in) numPoints, integer(kind=8), dimension(2*numdim), intent(in) opInterval, real(kind=8), dimension(numdim), intent(in) gridMetric, real(kind=8), dimension(numdim*numpoints), intent(in) vBuffer, real(kind=8), dimension(numdim*numpoints), intent(out) vHat)"
+
+.PP
+Definition at line 172 of file Grid\&.f90\&.
+.SS "subroutine grid::computecurvilineargridmetrics (integer(kind=4), intent(in) numDim, integer(kind=8), dimension(numdim), intent(in) gridSizes, integer(kind=8), intent(in) numPoints, integer(kind=8), dimension(2*numdim), intent(in) opInterval, integer(kind=4), intent(in) numStencils, integer(kind=4), intent(in) numStencilValues, integer(kind=4), dimension(numstencils), intent(in) stencilSizes, integer(kind=4), dimension(numstencils), intent(in) stencilStarts, integer(kind=4), dimension(numstencilvalues), intent(in) stencilOffsets, real(kind=8), dimension(numstencilvalues), intent(in) stencilWeights, integer(kind=4), dimension(numdim*numpoints), intent(in), target stencilID, real(kind=8), dimension(numdim*numpoints), intent(in), target gridCoordinates, real(kind=8), dimension(numdim*numdim*numpoints), intent(inout), target gridMetricTensor, real(kind=8), dimension(2*numpoints), intent(inout), target gridJacobianDeterminants)"
+
+.PP
+Definition at line 57 of file Grid\&.f90\&.
+.PP
+References operators::applyoperator(), simple::assignmentxa(), simple::assignmentyx(), and simple::yaxm1()\&.
+.SS "subroutine grid::computegridmetrics (integer(kind=4), intent(in) numDim, integer(kind=8), dimension(numdim), intent(in) gridSizes, integer(kind=8), intent(in) numPoints, integer(kind=8), dimension(2*numdim), intent(in) opInterval, integer(kind=4), intent(in) numStencils, integer(kind=4), intent(in) numStencilValues, integer(kind=4), dimension(numstencils), intent(in) stencilSizes, integer(kind=4), dimension(numstencils), intent(in) stencilStarts, integer(kind=4), dimension(numstencilvalues), intent(in) stencilOffsets, real(kind=8), dimension(numstencilvalues), intent(in) stencilWeights, integer(kind=4), dimension(numdim*numpoints), intent(in), target stencilID, real(kind=8), dimension(numdim*numpoints), intent(in), target gridCoordinates, real(kind=8), dimension(numdim*numdim*numpoints), intent(inout), target gridMetricTensor, real(kind=8), dimension(2*numpoints), intent(inout), target gridJacobianDeterminants)"
+
+.PP
+Definition at line 20 of file Grid\&.f90\&.
+.SH "Variable Documentation"
+.PP 
+.SS "integer(kind=4), parameter cartesian = 0"
+
+.PP
+Definition at line 5 of file Grid\&.f90\&.
+.SS "integer(kind=4), parameter curvilinear = 3"
+
+.PP
+Definition at line 8 of file Grid\&.f90\&.
+.PP
+Referenced by metricops::boundarypointmetric(), euler::flux1d(), and metricops::getpointmetric()\&.
+.SS "integer(kind=4), parameter rectilinear = 2"
+
+.PP
+Definition at line 7 of file Grid\&.f90\&.
+.PP
+Referenced by metricops::alphaweight(), metricops::alphaweight2(), metricops::boundarypointmetric(), satutil::farfield(), euler::flux1d(), metricops::getpointmetric(), metricops::gradijktogradxyz(), metricops::ijkgradtoxyzdiv(), satutil::noslip_isothermal(), viscid::scalarflux1d(), satutil::slip_adiabatic(), viscid::strongflux1d(), and metricops::vhatcomponent()\&.
+.SS "integer(kind=4), parameter unirect = 1"
+
+.PP
+Definition at line 6 of file Grid\&.f90\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for JustKernels from the source code\&.

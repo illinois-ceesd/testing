@@ -1,0 +1,124 @@
+\hypertarget{namespacegrid}{}\section{grid Module Reference}
+\label{namespacegrid}\index{grid@{grid}}
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \hyperlink{namespacegrid_aa7be0a201b7b8462fb9c99fde93464c6}{computegridmetrics} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{ViscidKernels_8H_a969a5d6106eec8b7096250b27865b9ba}{grid\+Sizes}, \hyperlink{ViscidKernels_8H_adf0bf75d0875d1bb42a5348bee7b7bfd}{num\+Points}, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{OperatorKernels_8H_a3ebb77d78da88e132f012ab6788ff123}{num\+Stencils}, num\+Stencil\+Values, \hyperlink{OperatorKernels_8H_ad36f7e6638c24dc8cce030ebb48e32a4}{stencil\+Sizes}, \hyperlink{OperatorKernels_8H_ab81c9b92fc99d6a20e08f1ad1c9630b0}{stencil\+Starts}, \hyperlink{OperatorKernels_8H_aace4e878476c6638c99ce2be58848e52}{stencil\+Offsets}, \hyperlink{OperatorKernels_8H_a71782584f6f521c3d69ed8a53fbbbd59}{stencil\+Weights}, \hyperlink{OperatorKernels_8H_a681701e0402fff5dd66637c1c99e34aa}{stencil\+ID}, \hyperlink{WENOKernels_8H_a55f433dcd5ee1a2b6a9d73ce18fcaa58}{grid\+Coordinates}, grid\+Metric\+Tensor, grid\+Jacobian\+Determinants)
+\item 
+subroutine \hyperlink{namespacegrid_a7424cadee63bb7574ca7cf11cf49714b}{computecurvilineargridmetrics} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{ViscidKernels_8H_a969a5d6106eec8b7096250b27865b9ba}{grid\+Sizes}, \hyperlink{ViscidKernels_8H_adf0bf75d0875d1bb42a5348bee7b7bfd}{num\+Points}, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{OperatorKernels_8H_a3ebb77d78da88e132f012ab6788ff123}{num\+Stencils}, num\+Stencil\+Values, \hyperlink{OperatorKernels_8H_ad36f7e6638c24dc8cce030ebb48e32a4}{stencil\+Sizes}, \hyperlink{OperatorKernels_8H_ab81c9b92fc99d6a20e08f1ad1c9630b0}{stencil\+Starts}, \hyperlink{OperatorKernels_8H_aace4e878476c6638c99ce2be58848e52}{stencil\+Offsets}, \hyperlink{OperatorKernels_8H_a71782584f6f521c3d69ed8a53fbbbd59}{stencil\+Weights}, \hyperlink{OperatorKernels_8H_a681701e0402fff5dd66637c1c99e34aa}{stencil\+ID}, \hyperlink{WENOKernels_8H_a55f433dcd5ee1a2b6a9d73ce18fcaa58}{grid\+Coordinates}, grid\+Metric\+Tensor, grid\+Jacobian\+Determinants)
+\item 
+subroutine \hyperlink{namespacegrid_a43b9c1dd56d93e4e53c25044ce190ef9}{applyuniformgridmetric} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{ViscidKernels_8H_a969a5d6106eec8b7096250b27865b9ba}{grid\+Sizes}, \hyperlink{ViscidKernels_8H_adf0bf75d0875d1bb42a5348bee7b7bfd}{num\+Points}, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, v\+Buffer, v\+Hat)
+\item 
+subroutine \hyperlink{namespacegrid_a532fa7a70556e4067221c4174bab01d1}{applycartesiangridmetric} (\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}, \hyperlink{ViscidKernels_8H_a969a5d6106eec8b7096250b27865b9ba}{grid\+Sizes}, \hyperlink{ViscidKernels_8H_adf0bf75d0875d1bb42a5348bee7b7bfd}{num\+Points}, \hyperlink{WENOKernels_8H_a23d86f4608a92738225f87574392b273}{op\+Interval}, \hyperlink{WENOKernels_8H_a901f07fa4e3f966a2f6951d6c5974e89}{grid\+Metric}, v\+Buffer, v\+Hat)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+integer(kind=4), parameter \hyperlink{namespacegrid_a93002a1fdf205e858b27917e5ef07e87}{cartesian} = 0
+\item 
+integer(kind=4), parameter \hyperlink{namespacegrid_ae5c8d9b8d49f1a584ddc38e794825323}{unirect} = 1
+\item 
+integer(kind=4), parameter \hyperlink{namespacegrid_a56b6da89996d538d28fc889ff68ce087}{rectilinear} = 2
+\item 
+integer(kind=4), parameter \hyperlink{namespacegrid_a5e3aa0692b948da96fa11d90eb6c17ff}{curvilinear} = 3
+\end{DoxyCompactItemize}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\hypertarget{namespacegrid_a532fa7a70556e4067221c4174bab01d1}{}\label{namespacegrid_a532fa7a70556e4067221c4174bab01d1} 
+\index{grid@{grid}!applycartesiangridmetric@{applycartesiangridmetric}}
+\index{applycartesiangridmetric@{applycartesiangridmetric}!grid@{grid}}
+\subsubsection{\texorpdfstring{applycartesiangridmetric()}{applycartesiangridmetric()}}
+{\footnotesize\ttfamily subroutine grid\+::applycartesiangridmetric (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=8), dimension(numdim), intent(in)}]{grid\+Sizes,  }\item[{integer(kind=8), intent(in)}]{num\+Points,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{real(kind=8), dimension(numdim$\ast$numpoints), intent(in)}]{grid\+Metric,  }\item[{real(kind=8), dimension(numdim$\ast$numpoints), intent(in)}]{v\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpoints), intent(out)}]{v\+Hat }\end{DoxyParamCaption})}
+
+
+
+Definition at line 255 of file Grid.\+f90.
+
+\hypertarget{namespacegrid_a43b9c1dd56d93e4e53c25044ce190ef9}{}\label{namespacegrid_a43b9c1dd56d93e4e53c25044ce190ef9} 
+\index{grid@{grid}!applyuniformgridmetric@{applyuniformgridmetric}}
+\index{applyuniformgridmetric@{applyuniformgridmetric}!grid@{grid}}
+\subsubsection{\texorpdfstring{applyuniformgridmetric()}{applyuniformgridmetric()}}
+{\footnotesize\ttfamily subroutine grid\+::applyuniformgridmetric (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=8), dimension(numdim), intent(in)}]{grid\+Sizes,  }\item[{integer(kind=8), intent(in)}]{num\+Points,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{real(kind=8), dimension(numdim), intent(in)}]{grid\+Metric,  }\item[{real(kind=8), dimension(numdim$\ast$numpoints), intent(in)}]{v\+Buffer,  }\item[{real(kind=8), dimension(numdim$\ast$numpoints), intent(out)}]{v\+Hat }\end{DoxyParamCaption})}
+
+
+
+Definition at line 172 of file Grid.\+f90.
+
+\hypertarget{namespacegrid_a7424cadee63bb7574ca7cf11cf49714b}{}\label{namespacegrid_a7424cadee63bb7574ca7cf11cf49714b} 
+\index{grid@{grid}!computecurvilineargridmetrics@{computecurvilineargridmetrics}}
+\index{computecurvilineargridmetrics@{computecurvilineargridmetrics}!grid@{grid}}
+\subsubsection{\texorpdfstring{computecurvilineargridmetrics()}{computecurvilineargridmetrics()}}
+{\footnotesize\ttfamily subroutine grid\+::computecurvilineargridmetrics (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=8), dimension(numdim), intent(in)}]{grid\+Sizes,  }\item[{integer(kind=8), intent(in)}]{num\+Points,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{integer(kind=4), intent(in)}]{num\+Stencils,  }\item[{integer(kind=4), intent(in)}]{num\+Stencil\+Values,  }\item[{integer(kind=4), dimension(numstencils), intent(in)}]{stencil\+Sizes,  }\item[{integer(kind=4), dimension(numstencils), intent(in)}]{stencil\+Starts,  }\item[{integer(kind=4), dimension(numstencilvalues), intent(in)}]{stencil\+Offsets,  }\item[{real(kind=8), dimension(numstencilvalues), intent(in)}]{stencil\+Weights,  }\item[{integer(kind=4), dimension(numdim$\ast$numpoints), intent(in), target}]{stencil\+ID,  }\item[{real(kind=8), dimension(numdim$\ast$numpoints), intent(in), target}]{grid\+Coordinates,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpoints), intent(inout), target}]{grid\+Metric\+Tensor,  }\item[{real(kind=8), dimension(2$\ast$numpoints), intent(inout), target}]{grid\+Jacobian\+Determinants }\end{DoxyParamCaption})}
+
+
+
+Definition at line 57 of file Grid.\+f90.
+
+
+
+References operators\+::applyoperator(), simple\+::assignmentxa(), simple\+::assignmentyx(), and simple\+::yaxm1().
+
+Here is the call graph for this function\+:
+% FIG 0
+\hypertarget{namespacegrid_aa7be0a201b7b8462fb9c99fde93464c6}{}\label{namespacegrid_aa7be0a201b7b8462fb9c99fde93464c6} 
+\index{grid@{grid}!computegridmetrics@{computegridmetrics}}
+\index{computegridmetrics@{computegridmetrics}!grid@{grid}}
+\subsubsection{\texorpdfstring{computegridmetrics()}{computegridmetrics()}}
+{\footnotesize\ttfamily subroutine grid\+::computegridmetrics (\begin{DoxyParamCaption}\item[{integer(kind=4), intent(in)}]{num\+Dim,  }\item[{integer(kind=8), dimension(numdim), intent(in)}]{grid\+Sizes,  }\item[{integer(kind=8), intent(in)}]{num\+Points,  }\item[{integer(kind=8), dimension(2$\ast$numdim), intent(in)}]{op\+Interval,  }\item[{integer(kind=4), intent(in)}]{num\+Stencils,  }\item[{integer(kind=4), intent(in)}]{num\+Stencil\+Values,  }\item[{integer(kind=4), dimension(numstencils), intent(in)}]{stencil\+Sizes,  }\item[{integer(kind=4), dimension(numstencils), intent(in)}]{stencil\+Starts,  }\item[{integer(kind=4), dimension(numstencilvalues), intent(in)}]{stencil\+Offsets,  }\item[{real(kind=8), dimension(numstencilvalues), intent(in)}]{stencil\+Weights,  }\item[{integer(kind=4), dimension(numdim$\ast$numpoints), intent(in), target}]{stencil\+ID,  }\item[{real(kind=8), dimension(numdim$\ast$numpoints), intent(in), target}]{grid\+Coordinates,  }\item[{real(kind=8), dimension(numdim$\ast$numdim$\ast$numpoints), intent(inout), target}]{grid\+Metric\+Tensor,  }\item[{real(kind=8), dimension(2$\ast$numpoints), intent(inout), target}]{grid\+Jacobian\+Determinants }\end{DoxyParamCaption})}
+
+
+
+Definition at line 20 of file Grid.\+f90.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{namespacegrid_a93002a1fdf205e858b27917e5ef07e87}{}\label{namespacegrid_a93002a1fdf205e858b27917e5ef07e87} 
+\index{grid@{grid}!cartesian@{cartesian}}
+\index{cartesian@{cartesian}!grid@{grid}}
+\subsubsection{\texorpdfstring{cartesian}{cartesian}}
+{\footnotesize\ttfamily integer(kind=4), parameter cartesian = 0}
+
+
+
+Definition at line 5 of file Grid.\+f90.
+
+\hypertarget{namespacegrid_a5e3aa0692b948da96fa11d90eb6c17ff}{}\label{namespacegrid_a5e3aa0692b948da96fa11d90eb6c17ff} 
+\index{grid@{grid}!curvilinear@{curvilinear}}
+\index{curvilinear@{curvilinear}!grid@{grid}}
+\subsubsection{\texorpdfstring{curvilinear}{curvilinear}}
+{\footnotesize\ttfamily integer(kind=4), parameter curvilinear = 3}
+
+
+
+Definition at line 8 of file Grid.\+f90.
+
+
+
+Referenced by metricops\+::boundarypointmetric(), euler\+::flux1d(), and metricops\+::getpointmetric().
+
+\hypertarget{namespacegrid_a56b6da89996d538d28fc889ff68ce087}{}\label{namespacegrid_a56b6da89996d538d28fc889ff68ce087} 
+\index{grid@{grid}!rectilinear@{rectilinear}}
+\index{rectilinear@{rectilinear}!grid@{grid}}
+\subsubsection{\texorpdfstring{rectilinear}{rectilinear}}
+{\footnotesize\ttfamily integer(kind=4), parameter rectilinear = 2}
+
+
+
+Definition at line 7 of file Grid.\+f90.
+
+
+
+Referenced by metricops\+::alphaweight(), metricops\+::alphaweight2(), metricops\+::boundarypointmetric(), satutil\+::farfield(), euler\+::flux1d(), metricops\+::getpointmetric(), metricops\+::gradijktogradxyz(), metricops\+::ijkgradtoxyzdiv(), satutil\+::noslip\+\_\+isothermal(), viscid\+::scalarflux1d(), satutil\+::slip\+\_\+adiabatic(), viscid\+::strongflux1d(), and metricops\+::vhatcomponent().
+
+\hypertarget{namespacegrid_ae5c8d9b8d49f1a584ddc38e794825323}{}\label{namespacegrid_ae5c8d9b8d49f1a584ddc38e794825323} 
+\index{grid@{grid}!unirect@{unirect}}
+\index{unirect@{unirect}!grid@{grid}}
+\subsubsection{\texorpdfstring{unirect}{unirect}}
+{\footnotesize\ttfamily integer(kind=4), parameter unirect = 1}
+
+
+
+Definition at line 6 of file Grid.\+f90.
+

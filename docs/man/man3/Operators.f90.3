@@ -1,0 +1,46 @@
+.TH "Operators.f90" 3 "Fri Apr 10 2020" "Version 1.0" "JustKernels" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Operators.f90 \- Implementation of routines that apply differential (or other) operators to all points of the state data in the indicated interval\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Modules"
+
+.in +1c
+.ti -1c
+.RI "module \fBoperators\fP"
+.br
+.in -1c
+.SS "Functions/Subroutines"
+
+.in +1c
+.ti -1c
+.RI "subroutine \fBapplyoperator\fP (\fBnumDim\fP, \fBdimSizes\fP, \fBnumComponents\fP, \fBnumPoints\fP, \fBopDir\fP, \fBopInterval\fP, \fBnumStencils\fP, \fBstencilSizes\fP, \fBstencilStarts\fP, numValues, \fBstencilWeights\fP, \fBstencilOffsets\fP, \fBstencilID\fP, \fBU\fP, dU)"
+.br
+.RI "applyoperator applies an operator specified as a stencil set to the provided state data "
+.ti -1c
+.RI "subroutine \fBapplyoperatorv\fP (\fBnumDim\fP, \fBdimSizes\fP, \fBnumComponents\fP, \fBnumPoints\fP, \fBopDir\fP, \fBopInterval\fP, \fBnumStencils\fP, \fBstencilSizes\fP, \fBstencilStarts\fP, numValues, \fBstencilWeights\fP, \fBstencilOffsets\fP, \fBstencilID\fP, \fBU\fP, dU)"
+.br
+.RI "applyoperator applies an operator specified as a stencil set to the provided state data "
+.ti -1c
+.RI "subroutine \fBapplyoperatorblobs\fP (\fBnumDim\fP, \fBdimSizes\fP, \fBnumComponents\fP, \fBnumPointsBuffer\fP, \fBopDir\fP, \fBnumStencils\fP, \fBstencilSizes\fP, \fBstencilStarts\fP, numStencilValues, \fBstencilWeights\fP, \fBstencilOffsets\fP, numPointsStencil, numPointsApply, stencilPoints, \fBU\fP, dU)"
+.br
+.RI "applyoperatorblobs applies an operator by applying each stencil in turn to all the points to which it applies "
+.ti -1c
+.RI "subroutine \fBapplysinglestencil\fP (\fBnumDim\fP, \fBdimSizes\fP, \fBnumComponents\fP, \fBnumPointsBuffer\fP, \fBopDir\fP, numPointsApply, applyPoints, stencilSize, \fBstencilWeights\fP, \fBstencilOffsets\fP, \fBU\fP, dU)"
+.br
+.RI "applysinglestencil applies an operator by applying a given stencil to the specified points "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Implementation of routines that apply differential (or other) operators to all points of the state data in the indicated interval\&. 
+
+
+.PP
+Definition in file \fBOperators\&.f90\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for JustKernels from the source code\&.

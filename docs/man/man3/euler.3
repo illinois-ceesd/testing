@@ -1,0 +1,72 @@
+.TH "euler" 3 "Fri Apr 10 2020" "Version 1.0" "JustKernels" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+euler \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions/Subroutines"
+
+.in +1c
+.ti -1c
+.RI "subroutine \fBflux1d\fP (\fBnumDim\fP, \fBnumPoints\fP, \fBgridSizes\fP, \fBopInterval\fP, \fBfluxDir\fP, \fBgridType\fP, \fBgridMetric\fP, \fBrhoBuffer\fP, \fBrhoVBuffer\fP, \fBrhoEBuffer\fP, \fBvelHat\fP, \fBpressureBuffer\fP, \fBfluxBuffer\fP)"
+.br
+.RI "Computes the inviscid fluxes in one dimension\&. "
+.ti -1c
+.RI "subroutine \fBscalarflux1d\fP (\fBnumDim\fP, \fBnumPoints\fP, \fBgridSizes\fP, \fBopInterval\fP, \fBnumScalars\fP, \fBscalarBuffer\fP, \fBvelHat\fP, \fBfluxBuffer\fP)"
+.br
+.RI "Flux for scalar transport\&. "
+.in -1c
+.SH "Function/Subroutine Documentation"
+.PP 
+.SS "subroutine euler::flux1d (integer(kind=4), intent(in) numDim, integer(kind=8), intent(in) numPoints, integer(kind=8), dimension(numdim), intent(in) gridSizes, integer(kind=8), dimension(2*numdim), intent(in) opInterval, integer(kind=4), intent(in) fluxDir, integer(kind=4), intent(in) gridType, real(kind=8), dimension(numdim*numdim*numpoints), intent(in), target gridMetric, real(kind=8), dimension(numpoints), intent(in) rhoBuffer, real(kind=8), dimension(numdim*numpoints), intent(in), target rhoVBuffer, real(kind=8), dimension(numpoints), intent(in) rhoEBuffer, real(kind=8), dimension(numpoints), intent(in) velHat, real(kind=8), dimension(numpoints), intent(in) pressureBuffer, real(kind=8), dimension(numpoints*(numdim+2)), intent(out), target fluxBuffer)"
+
+.PP
+Computes the inviscid fluxes in one dimension\&. This routine computes the inviscid fluxes of the single gas NS in one dimension\&. For example in the $\hat{\xi}$ direction, the inviscid flux is: \[ \hat{\vec{F}}^I_1 = \begin{bmatrix} \rho \hat{U} \\ \rho u \hat{U} + p\hat{\xi}_x \\ \rho v \hat{U} + p \hat{\xi}_y \\ \rho w \hat{U} + p\hat{\xi}_z \\ (\rho E + p)\hat{U} - \hat{\xi}_t p \end{bmatrix}, \] 
+.PP
+\fBParameters:\fP
+.RS 4
+\fInumDim\fP - const integer indicating number of dimensions 
+.br
+\fInumPoints\fP - const 64-bit integer indicating total size of input arrays 
+.br
+\fIgridSizes\fP - const 64-bit integer 1d array of size \fInumDim\fP, which indicates the number of points in each dimension for the grid 
+.br
+\fIopInterval\fP - const 64-bit integer 1d array of size 2 x \fInumDim\fP which indicates the rectangular interval over which this routine should operate\&. e\&.g\&. [\fIiStart\fP \fIiEnd\fP \fIjStart\fP \fIjEnd\fP \&.\&.\&. ] 
+.br
+\fIfluxDir\fP - const integer indicating the direction in which the flux is to be calculated 
+.br
+\fIgridType\fP - const integer indicating whether the \fIgridMetric\fP parameter is a Cartesian, Rectilinear, or Curvilinear metric 
+.br
+\fIgridMetric\fP - const double precision 1d array containing the grid metric 
+.br
+\fIrhoBuffer\fP - ( $\rho$) const double precision contiguous 1d array of size \fInumPoints\fP representing the \fIdensity\fP at each point on the grid 
+.br
+\fIrhoVBuffer\fP - ( $\rho\vec{V}$) const double precision contiguous 1d array of size \fInumDim\fP x \fInumPoints\fP representing the \fImomentum\fP density at each point on the grid\&. 
+.br
+\fIrhoEBuffer\fP - ( $\rho E$) const double precision contiguous 1d array of size \fInumPoints\fP representing the energy density at each point on the grid 
+.br
+\fIvelHat\fP - ( $\hat{U}$) - const double precision contiguous 1d array of size \fInumPoints\fP representing the component of the contravariant velocity corresponding to the direction (\fIfluxDir\fP) in which the fluxes are to be calculated 
+.br
+\fIpressureBuffer\fP - (p) - const double precision contiguous 1d array of size \fInumPoints\fP representing the  pressure at each point on the grid 
+.br
+\fIfluxBuffer\fP - double precision contiguous 1d array of size (\fInumDim\fP + 2) x \fInumPoints\fP for output of the fluxes for each equation\&. The \fIfluxBuffer\fP is returned with (\fInumDim\fP + 2) blocks of size \fInumPoints\fP, one block for each equation\&. 
+.RE
+.PP
+
+.PP
+Definition at line 38 of file Euler\&.f90\&.
+.PP
+References grid::curvilinear, grid::rectilinear, simple::zawpxy(), simple::zvwpxy(), simple::zwmxpy(), and simple::zxy()\&.
+.SS "subroutine euler::scalarflux1d (integer(kind=4), intent(in) numDim, integer(kind=8), intent(in) numPoints, integer(kind=8), dimension(numdim), intent(in) gridSizes, integer(kind=8), dimension(2*numdim), intent(in) opInterval, integer(kind=4), intent(in) numScalars, real(kind=8), dimension(numscalars*numpoints), intent(in), target scalarBuffer, real(kind=8), dimension(numpoints), intent(in) velHat, real(kind=8), dimension(numscalars*numpoints), intent(out), target fluxBuffer)"
+
+.PP
+Flux for scalar transport\&. 
+.PP
+Definition at line 152 of file Euler\&.f90\&.
+.PP
+References simple::zxy()\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for JustKernels from the source code\&.

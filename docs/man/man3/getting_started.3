@@ -1,0 +1,131 @@
+.TH "getting_started" 3 "Fri Apr 10 2020" "Version 1.0" "JustKernels" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+getting_started \- Getting Started with PlasCom2 
+
+.SH "Quickstart"
+.PP
+For the impatient\&. Must haves:
+.br
+.IP "\(bu" 2
+git
+.IP "\(bu" 2
+C++/F90 Compiler
+.IP "\(bu" 2
+CMake
+.IP "\(bu" 2
+MPI
+.IP "\(bu" 2
+Paralell HDF5
+.PP
+.PP
+Optional:
+.br
+.IP "\(bu" 2
+Doxygen (for documentation)
+.IP "\(bu" 2
+Cantera (for reactive flow)
+.PP
+.PP
+Get, build, and test:
+.br
+ 
+.PP
+.RS 4
+git clone --recursive git@bitbucket.org:/xpacc-dev/PlasCom2
+.br
+mkdir PlasCom2/build
+.br
+cd PlasCom2/build
+.br
+cmake \&.\&./
+.br
+make
+.br
+make test
+.br
+.RE
+.PP
+.PP
+Read on as needed for details\&.
+.SH "Getting the code"
+.PP
+PlasCom2 can be obtained from the \fCXPACC Bitbucket repository\fP\&. Make sure to use the '--recursive' option when cloning the repository so that all sub-modules will be picked up\&. For example:
+.br
+ 
+.PP
+.RS 4
+git clone --recursive git@bitbucket.org:/xpacc-dev/PlasCom2 [PC2SRCPATH]
+.br
+.RE
+.PP
+.PP
+The above command should create a clone of the PlasCom2 repository in at your local path [PC2SRCPATH]\&. If [PC2SRCPATH] argument is not supplied, then the default path will be \&./PlasCom2\&. The path to your clone of PlasCom2 will hereafter be referred to as PC2SRCPATH\&.
+.PP
+\fBNote:\fP
+.RS 4
+Sometimes PlasCom2 fails to clone unless the user has SSH keys set up with Bitbucket\&. If there is trouble cloning, please try setting up SSH key-based access\&.
+.RE
+.PP
+.SH "Building PlasCom2"
+.PP
+.SS "Prerequisites"
+.IP "\(bu" 2
+C++/F90 compilers
+.br
+ Most modern C++ and F90 compilers should work\&. Most commonly used and tested are GCC, Intel, LLVM/Clang/Flang, and IBM\&. PlasCom2 currently requires only C++98, although should build without issue against C++11\&.
+.IP "\(bu" 2
+CMake 2\&.8 or higher
+.IP "\(bu" 2
+MPI
+.br
+ Currently only MPI1 is required, although MPI2 is likely on the horizon\&. PlasCom2 should build OK against nearly any flavor of MPI that implements MPI1\&. Most commonly used and tested are MPICH, OpenMPI, and MVAPICH\&.
+.IP "\(bu" 2
+HDF5
+.br
+ PlasCom2 uses parallel HDF5 for all heavy-lifting I/O and requires at least HDF5-1\&.8\&.20\&. HDF5 should be built with the MPI compiler wrappers with parallel enabled (--enable-parallel)\&. If HDF5 is installed in user space (i\&.e\&. not in a system-wide location), then PlasCom2 will need to be made aware of its location at configuration time\&.
+.IP "\(bu" 2
+Cantera
+.br
+ This packages is only required if flow chemistry or combustion is enabled\&. Refer to Cantera build/install instructions for the process of getting and building it\&.
+.PP
+.SS "Configuration and Compiling"
+PlasCom2 uses CMake (2\&.8+) for configuration, and build management\&. It is highly recommended to create a build directory that is separate from your PlasCom2 source path (PC2SRCPATH)\&. Typically, this is done by creating a build directory below the PC2SRCPATH\&. For example:
+.br
+ 
+.PP
+.RS 4
+mkdir PC2SRCPATH/build && cd PC2SRCPATH/build
+.br
+.RE
+.PP
+.PP
+Regardless of where the build will be conducted, the build directory will hereafter be referred to as PC2BLDPATH\&. There are a few environment variables that can be helpful when configuring PlasCom2\&. If you do not set these environment variables, CMake will attempt to find the appropriate setup by searching your environment and common system paths\&. PlasCom2 requires MPI, and to ensure the correct building environment is found, it can be useful to set the following:
+.br
+ 
+.PP
+.RS 4
+CC=mpicc
+.br
+CXX=mpicxx
+.br
+FC=mpif90
+.br
+.RE
+.PP
+.PP
+If used, the above environment variables should be set to the desired MPI compilers before invoking CMake to configure PlasCom2\&. In addition, if third-party packages (e\&.g\&. HDF5 and/or Cantera) are installed in non-standard, or user-owned file spaces, then CMake must be made aware of the path to those packages\&. The following environment variable can be used to indicate third-party or non-standard paths:
+.br
+ 
+.PP
+.RS 4
+CMAKE_PREFIX_PATH=/path/to/hdf5:/path/to/cantera
+.br
+.RE
+.PP
+.PP
+CMake will search the bin, lib, share, and include subdirectories of any paths included in CMAKE_PREFIX_PATH for tools, libraries, and include files required by the build\&.
+.SH "Testing"
+.PP
+

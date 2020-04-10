@@ -1,0 +1,441 @@
+\hypertarget{RoeKernels_8H}{}\section{Roe\+Kernels.\+H File Reference}
+\label{RoeKernels_8H}\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+{\ttfamily \#include \char`\"{}F\+C.\+h\char`\"{}}\newline
+Include dependency graph for Roe\+Kernels.\+H\+:
+% FIG 0
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{RoeKernels_8H_a52b10908b1958b2c6611bf1fb569b396}{F\+C\+\_\+\+M\+O\+D\+U\+LE} (roe, pointroestate, R\+OE, P\+O\+I\+N\+T\+R\+O\+E\+S\+T\+A\+TE)(const int $\ast$\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}
+\item 
+void \hyperlink{RoeKernels_8H_a088a5f6038376dc46cbc26a51cc9fb21}{F\+C\+\_\+\+M\+O\+D\+U\+LE} (roe, pointroestate2, R\+OE, P\+O\+I\+N\+T\+R\+O\+E\+S\+T\+A\+T\+E2)(const int $\ast$\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}
+\item 
+void \hyperlink{RoeKernels_8H_aa96fdd8710098fc1c148d5677dc0e3cc}{F\+C\+\_\+\+M\+O\+D\+U\+LE} (roe, eigenmatrices, R\+OE, E\+I\+G\+E\+N\+M\+A\+T\+R\+I\+C\+ES)(const int $\ast$\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}
+\item 
+void \hyperlink{RoeKernels_8H_a7cbc5c0e16634b11889efa9e6ac983c4}{F\+C\+\_\+\+M\+O\+D\+U\+LE} (roe, form\+\_\+roe\+\_\+state, R\+OE, F\+O\+R\+M\+\_\+\+R\+O\+E\+\_\+\+S\+T\+A\+TE)(const int $\ast$\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}
+\item 
+void \hyperlink{RoeKernels_8H_a341cfd2959d425a676b8174cdedce055}{F\+C\+\_\+\+M\+O\+D\+U\+LE} (roe, form\+\_\+roe\+\_\+matrices, R\+OE, F\+O\+R\+M\+\_\+\+R\+O\+E\+\_\+\+M\+A\+T\+R\+I\+C\+ES)(const int $\ast$\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+void const int $\ast$ \hyperlink{RoeKernels_8H_a69440a5a13a588383e4cf4872dcba0ec}{num\+Scalar}
+\item 
+void const int const double $\ast$ \hyperlink{RoeKernels_8H_a1b97e89ad96c3195da39163d30857767}{u\+In}
+\item 
+void const int const double const double $\ast$ \hyperlink{RoeKernels_8H_a24a50bb7f3155b1d6314eec79d33d669}{dv\+In}
+\item 
+void const int const double const double const double $\ast$ \hyperlink{RoeKernels_8H_aa8ba2167c968e6f2da632acd106b7f88}{u\+Out}
+\item 
+void const int const double const double const double const double $\ast$ \hyperlink{RoeKernels_8H_ac5fd034bc232848163b16d30e790e8b1}{dv\+Out}
+\item 
+void const int const double const double const double const double double $\ast$ \hyperlink{RoeKernels_8H_a5624e61551b02c502a36c52d56b2350b}{u\+Roe}
+\item 
+void const int const double const double const double const double double double $\ast$ \hyperlink{RoeKernels_8H_a642571b2454da1bb84221249e107f82a}{dv\+Roe}
+\item 
+void const int const double const double const double const double double double double $\ast$ \hyperlink{RoeKernels_8H_a21369091011c3e247805004394055b28}{dv2\+Roe}
+\item 
+void const int const double $\ast$ \hyperlink{RoeKernels_8H_a9dfc587f7fe16adaf8968f62e62ea6a7}{uL}
+\item 
+void const int const double const double $\ast$ \hyperlink{RoeKernels_8H_a6be6b080530ea7105efc943756d2d87e}{dvL}
+\item 
+void const int const double const double const double $\ast$ \hyperlink{RoeKernels_8H_a1ea2314c87ebfdd0ac10106c76b3bd08}{uR}
+\item 
+void const int const double const double const double const double $\ast$ \hyperlink{RoeKernels_8H_a707f1194fbf12a091390be0a7f5b60b1}{dvR}
+\item 
+void const int $\ast$ \hyperlink{RoeKernels_8H_adfdaef4223583c4c0fc2fd3930f44a71}{num\+Scalars}
+\item 
+void const int const double $\ast$ \hyperlink{RoeKernels_8H_a1d673d40f8fa40c8e56ed0d69021e9dc}{q\+Roe}
+\item 
+void const int const double const double const double $\ast$ \hyperlink{RoeKernels_8H_ac12401cc24ddbf8b003a0e6201826e90}{dp}
+\item 
+void const int const double const double const double const double $\ast$ \hyperlink{RoeKernels_8H_ab66f723f3c3d8399c4428802a1142be0}{sound\+Speed}
+\item 
+void const int const double const double const double const double const double $\ast$ \hyperlink{RoeKernels_8H_a3ef779535ff22c94cec7a43794047e9d}{point\+Metric}
+\item 
+void const int const double const double const double const double const double const double $\ast$ \hyperlink{RoeKernels_8H_abc719b26d5e9b9d4a4f40ad4261c5f70}{metric\+Eigen\+Vectors}
+\item 
+void const int const double const double const double const double const double const double double $\ast$ \hyperlink{RoeKernels_8H_a15dafdc1823a1c1281057d840bfdcda6}{Pfor}
+\item 
+void const int const double const double const double const double const double const double double double $\ast$ \hyperlink{RoeKernels_8H_a399ec13188834ab2fbeb1b2e02def95d}{Pinv}
+\item 
+void const int const double const double const double const double const double const double double double double $\ast$ \hyperlink{RoeKernels_8H_a89211c91f7e80725e4791ef58e043244}{lambda}
+\item 
+void const int const double $\ast$ \hyperlink{RoeKernels_8H_a6d30a232f8df207a0a3655c728f0c396}{u\+Left}
+\item 
+void const int const double const double $\ast$ \hyperlink{RoeKernels_8H_ad7596a27f3010967e23b245f06eadfdd}{u\+Right}
+\item 
+void const int const double const double const double $\ast$ \hyperlink{RoeKernels_8H_aa94841cd8b113b2af1e594fe6b13c9ee}{gamma}
+\item 
+void const int const double const double const double const double $\ast$ \hyperlink{RoeKernels_8H_a2f4a1dd2ebbf44fdb86ecebd7a4c2d0d}{norm}
+\item 
+void const int const double const double const double const double double double double $\ast$ \hyperlink{RoeKernels_8H_afbfc1812dadf64d47879e3085e3dd1d0}{u\+Con}
+\item 
+void const int const double const double const double const double double double double double $\ast$ \hyperlink{RoeKernels_8H_a333c205cc8e2644d5201ac7099775c88}{c\+Roe}
+\item 
+void const int const double const double const double const double double double double double double $\ast$ \hyperlink{RoeKernels_8H_adb6f64e825dfbb4917994d2d1f934f17}{theta}
+\item 
+void const double $\ast$ \hyperlink{RoeKernels_8H_a2bf6aff605796b2e670cbe75c3e872e2}{u\+\_\+in}
+\item 
+void const double const double $\ast$ \hyperlink{RoeKernels_8H_aa81f1dc40301dafeb750cbf32d8d3833}{u\+\_\+out}
+\item 
+void const double const double const double const double double $\ast$ \hyperlink{RoeKernels_8H_ae5000afe2aef5d2927a3f3ec02cb4e2e}{tmat}
+\item 
+void const double const double const double const double double double $\ast$ \hyperlink{RoeKernels_8H_a9698f37ae98c96f7f647e1cf16a18ac3}{tinv}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{RoeKernels_8H_a52b10908b1958b2c6611bf1fb569b396}{}\label{RoeKernels_8H_a52b10908b1958b2c6611bf1fb569b396} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}}
+\index{F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{F\+C\+\_\+\+M\+O\+D\+U\+L\+E()}{FC\_MODULE()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily void F\+C\+\_\+\+M\+O\+D\+U\+LE (\begin{DoxyParamCaption}\item[{roe}]{,  }\item[{pointroestate}]{,  }\item[{R\+OE}]{,  }\item[{P\+O\+I\+N\+T\+R\+O\+E\+S\+T\+A\+TE}]{ }\end{DoxyParamCaption}) const}
+
+\hypertarget{RoeKernels_8H_a088a5f6038376dc46cbc26a51cc9fb21}{}\label{RoeKernels_8H_a088a5f6038376dc46cbc26a51cc9fb21} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}}
+\index{F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{F\+C\+\_\+\+M\+O\+D\+U\+L\+E()}{FC\_MODULE()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily void F\+C\+\_\+\+M\+O\+D\+U\+LE (\begin{DoxyParamCaption}\item[{roe}]{,  }\item[{pointroestate2}]{,  }\item[{R\+OE}]{,  }\item[{P\+O\+I\+N\+T\+R\+O\+E\+S\+T\+A\+T\+E2}]{ }\end{DoxyParamCaption}) const}
+
+\hypertarget{RoeKernels_8H_aa96fdd8710098fc1c148d5677dc0e3cc}{}\label{RoeKernels_8H_aa96fdd8710098fc1c148d5677dc0e3cc} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}}
+\index{F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{F\+C\+\_\+\+M\+O\+D\+U\+L\+E()}{FC\_MODULE()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily void F\+C\+\_\+\+M\+O\+D\+U\+LE (\begin{DoxyParamCaption}\item[{roe}]{,  }\item[{eigenmatrices}]{,  }\item[{R\+OE}]{,  }\item[{E\+I\+G\+E\+N\+M\+A\+T\+R\+I\+C\+ES}]{ }\end{DoxyParamCaption}) const}
+
+\hypertarget{RoeKernels_8H_a7cbc5c0e16634b11889efa9e6ac983c4}{}\label{RoeKernels_8H_a7cbc5c0e16634b11889efa9e6ac983c4} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}}
+\index{F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{F\+C\+\_\+\+M\+O\+D\+U\+L\+E()}{FC\_MODULE()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily void F\+C\+\_\+\+M\+O\+D\+U\+LE (\begin{DoxyParamCaption}\item[{roe}]{,  }\item[{form\+\_\+roe\+\_\+state}]{,  }\item[{R\+OE}]{,  }\item[{F\+O\+R\+M\+\_\+\+R\+O\+E\+\_\+\+S\+T\+A\+TE}]{ }\end{DoxyParamCaption}) const}
+
+\hypertarget{RoeKernels_8H_a341cfd2959d425a676b8174cdedce055}{}\label{RoeKernels_8H_a341cfd2959d425a676b8174cdedce055} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}}
+\index{F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{F\+C\+\_\+\+M\+O\+D\+U\+L\+E()}{FC\_MODULE()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily void F\+C\+\_\+\+M\+O\+D\+U\+LE (\begin{DoxyParamCaption}\item[{roe}]{,  }\item[{form\+\_\+roe\+\_\+matrices}]{,  }\item[{R\+OE}]{,  }\item[{F\+O\+R\+M\+\_\+\+R\+O\+E\+\_\+\+M\+A\+T\+R\+I\+C\+ES}]{ }\end{DoxyParamCaption}) const}
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{RoeKernels_8H_a333c205cc8e2644d5201ac7099775c88}{}\label{RoeKernels_8H_a333c205cc8e2644d5201ac7099775c88} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!c\+Roe@{c\+Roe}}
+\index{c\+Roe@{c\+Roe}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{c\+Roe}{cRoe}}
+{\footnotesize\ttfamily void const int const double const double const double const double double double double double$\ast$ c\+Roe}
+
+
+
+Definition at line 23 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_ac12401cc24ddbf8b003a0e6201826e90}{}\label{RoeKernels_8H_ac12401cc24ddbf8b003a0e6201826e90} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!dp@{dp}}
+\index{dp@{dp}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{dp}{dp}}
+{\footnotesize\ttfamily void const int const double const double const double$\ast$ dp}
+
+
+
+Definition at line 18 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a21369091011c3e247805004394055b28}{}\label{RoeKernels_8H_a21369091011c3e247805004394055b28} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!dv2\+Roe@{dv2\+Roe}}
+\index{dv2\+Roe@{dv2\+Roe}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{dv2\+Roe}{dv2Roe}}
+{\footnotesize\ttfamily void const int const double const double const double const double double double double$\ast$ dv2\+Roe}
+
+
+
+Definition at line 9 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a24a50bb7f3155b1d6314eec79d33d669}{}\label{RoeKernels_8H_a24a50bb7f3155b1d6314eec79d33d669} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!dv\+In@{dv\+In}}
+\index{dv\+In@{dv\+In}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{dv\+In}{dvIn}}
+{\footnotesize\ttfamily void const int const double const double$\ast$ dv\+In}
+
+
+
+Definition at line 9 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a6be6b080530ea7105efc943756d2d87e}{}\label{RoeKernels_8H_a6be6b080530ea7105efc943756d2d87e} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!dvL@{dvL}}
+\index{dvL@{dvL}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{dvL}{dvL}}
+{\footnotesize\ttfamily void const int const double const double$\ast$ dvL}
+
+
+
+Definition at line 14 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_ac5fd034bc232848163b16d30e790e8b1}{}\label{RoeKernels_8H_ac5fd034bc232848163b16d30e790e8b1} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!dv\+Out@{dv\+Out}}
+\index{dv\+Out@{dv\+Out}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{dv\+Out}{dvOut}}
+{\footnotesize\ttfamily void const int const double const double const double const double$\ast$ dv\+Out}
+
+
+
+Definition at line 9 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a707f1194fbf12a091390be0a7f5b60b1}{}\label{RoeKernels_8H_a707f1194fbf12a091390be0a7f5b60b1} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!dvR@{dvR}}
+\index{dvR@{dvR}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{dvR}{dvR}}
+{\footnotesize\ttfamily void const int const double const double const double const double$\ast$ dvR}
+
+
+
+Definition at line 14 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a642571b2454da1bb84221249e107f82a}{}\label{RoeKernels_8H_a642571b2454da1bb84221249e107f82a} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!dv\+Roe@{dv\+Roe}}
+\index{dv\+Roe@{dv\+Roe}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{dv\+Roe}{dvRoe}}
+{\footnotesize\ttfamily void const int const double const double const double const double double double $\ast$ dv\+Roe}
+
+
+
+Definition at line 9 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_aa94841cd8b113b2af1e594fe6b13c9ee}{}\label{RoeKernels_8H_aa94841cd8b113b2af1e594fe6b13c9ee} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!gamma@{gamma}}
+\index{gamma@{gamma}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{gamma}{gamma}}
+{\footnotesize\ttfamily void const double const double const double $\ast$ gamma}
+
+
+
+Definition at line 23 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a89211c91f7e80725e4791ef58e043244}{}\label{RoeKernels_8H_a89211c91f7e80725e4791ef58e043244} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!lambda@{lambda}}
+\index{lambda@{lambda}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{lambda}{lambda}}
+{\footnotesize\ttfamily void const double const double const double const double double double double $\ast$ lambda}
+
+
+
+Definition at line 18 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_abc719b26d5e9b9d4a4f40ad4261c5f70}{}\label{RoeKernels_8H_abc719b26d5e9b9d4a4f40ad4261c5f70} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!metric\+Eigen\+Vectors@{metric\+Eigen\+Vectors}}
+\index{metric\+Eigen\+Vectors@{metric\+Eigen\+Vectors}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{metric\+Eigen\+Vectors}{metricEigenVectors}}
+{\footnotesize\ttfamily void const int const double const double const double const double const double const double$\ast$ metric\+Eigen\+Vectors}
+
+
+
+Definition at line 18 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a2f4a1dd2ebbf44fdb86ecebd7a4c2d0d}{}\label{RoeKernels_8H_a2f4a1dd2ebbf44fdb86ecebd7a4c2d0d} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!norm@{norm}}
+\index{norm@{norm}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{norm}{norm}}
+{\footnotesize\ttfamily void const double const double const double const double $\ast$ norm}
+
+
+
+Definition at line 23 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a69440a5a13a588383e4cf4872dcba0ec}{}\label{RoeKernels_8H_a69440a5a13a588383e4cf4872dcba0ec} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!num\+Scalar@{num\+Scalar}}
+\index{num\+Scalar@{num\+Scalar}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{num\+Scalar}{numScalar}}
+{\footnotesize\ttfamily void const int$\ast$ num\+Scalar}
+
+
+
+Definition at line 9 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_adfdaef4223583c4c0fc2fd3930f44a71}{}\label{RoeKernels_8H_adfdaef4223583c4c0fc2fd3930f44a71} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!num\+Scalars@{num\+Scalars}}
+\index{num\+Scalars@{num\+Scalars}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{num\+Scalars}{numScalars}}
+{\footnotesize\ttfamily void const int$\ast$ num\+Scalars}
+
+
+
+Definition at line 18 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a15dafdc1823a1c1281057d840bfdcda6}{}\label{RoeKernels_8H_a15dafdc1823a1c1281057d840bfdcda6} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!Pfor@{Pfor}}
+\index{Pfor@{Pfor}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{Pfor}{Pfor}}
+{\footnotesize\ttfamily void const int const double const double const double const double const double const double double$\ast$ Pfor}
+
+
+
+Definition at line 18 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a399ec13188834ab2fbeb1b2e02def95d}{}\label{RoeKernels_8H_a399ec13188834ab2fbeb1b2e02def95d} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!Pinv@{Pinv}}
+\index{Pinv@{Pinv}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{Pinv}{Pinv}}
+{\footnotesize\ttfamily void const int const double const double const double const double const double const double double double$\ast$ Pinv}
+
+
+
+Definition at line 18 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a3ef779535ff22c94cec7a43794047e9d}{}\label{RoeKernels_8H_a3ef779535ff22c94cec7a43794047e9d} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!point\+Metric@{point\+Metric}}
+\index{point\+Metric@{point\+Metric}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{point\+Metric}{pointMetric}}
+{\footnotesize\ttfamily void const int const double const double const double const double const double$\ast$ point\+Metric}
+
+
+
+Definition at line 18 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a1d673d40f8fa40c8e56ed0d69021e9dc}{}\label{RoeKernels_8H_a1d673d40f8fa40c8e56ed0d69021e9dc} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!q\+Roe@{q\+Roe}}
+\index{q\+Roe@{q\+Roe}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{q\+Roe}{qRoe}}
+{\footnotesize\ttfamily void const int const double$\ast$ q\+Roe}
+
+
+
+Definition at line 18 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_ab66f723f3c3d8399c4428802a1142be0}{}\label{RoeKernels_8H_ab66f723f3c3d8399c4428802a1142be0} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!sound\+Speed@{sound\+Speed}}
+\index{sound\+Speed@{sound\+Speed}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{sound\+Speed}{soundSpeed}}
+{\footnotesize\ttfamily void const int const double const double const double const double$\ast$ sound\+Speed}
+
+
+
+Definition at line 18 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_adb6f64e825dfbb4917994d2d1f934f17}{}\label{RoeKernels_8H_adb6f64e825dfbb4917994d2d1f934f17} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!theta@{theta}}
+\index{theta@{theta}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{theta}{theta}}
+{\footnotesize\ttfamily void const int const double const double const double const double double double double double double$\ast$ theta}
+
+
+
+Definition at line 23 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a9698f37ae98c96f7f647e1cf16a18ac3}{}\label{RoeKernels_8H_a9698f37ae98c96f7f647e1cf16a18ac3} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!tinv@{tinv}}
+\index{tinv@{tinv}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{tinv}{tinv}}
+{\footnotesize\ttfamily void const double const double const double const double double double$\ast$ tinv}
+
+
+
+Definition at line 28 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_ae5000afe2aef5d2927a3f3ec02cb4e2e}{}\label{RoeKernels_8H_ae5000afe2aef5d2927a3f3ec02cb4e2e} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!tmat@{tmat}}
+\index{tmat@{tmat}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{tmat}{tmat}}
+{\footnotesize\ttfamily void const double const double const double const double double$\ast$ tmat}
+
+
+
+Definition at line 28 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a2bf6aff605796b2e670cbe75c3e872e2}{}\label{RoeKernels_8H_a2bf6aff605796b2e670cbe75c3e872e2} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!u\+\_\+in@{u\+\_\+in}}
+\index{u\+\_\+in@{u\+\_\+in}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{u\+\_\+in}{u\_in}}
+{\footnotesize\ttfamily void const double$\ast$ u\+\_\+in}
+
+
+
+Definition at line 28 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_aa81f1dc40301dafeb750cbf32d8d3833}{}\label{RoeKernels_8H_aa81f1dc40301dafeb750cbf32d8d3833} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!u\+\_\+out@{u\+\_\+out}}
+\index{u\+\_\+out@{u\+\_\+out}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{u\+\_\+out}{u\_out}}
+{\footnotesize\ttfamily void const double const double$\ast$ u\+\_\+out}
+
+
+
+Definition at line 28 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_afbfc1812dadf64d47879e3085e3dd1d0}{}\label{RoeKernels_8H_afbfc1812dadf64d47879e3085e3dd1d0} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!u\+Con@{u\+Con}}
+\index{u\+Con@{u\+Con}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{u\+Con}{uCon}}
+{\footnotesize\ttfamily void const int const double const double const double const double double double double$\ast$ u\+Con}
+
+
+
+Definition at line 23 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a1b97e89ad96c3195da39163d30857767}{}\label{RoeKernels_8H_a1b97e89ad96c3195da39163d30857767} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!u\+In@{u\+In}}
+\index{u\+In@{u\+In}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{u\+In}{uIn}}
+{\footnotesize\ttfamily void const int const double$\ast$ u\+In}
+
+
+
+Definition at line 9 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a9dfc587f7fe16adaf8968f62e62ea6a7}{}\label{RoeKernels_8H_a9dfc587f7fe16adaf8968f62e62ea6a7} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!uL@{uL}}
+\index{uL@{uL}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{uL}{uL}}
+{\footnotesize\ttfamily void const int const double$\ast$ uL}
+
+
+
+Definition at line 14 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a6d30a232f8df207a0a3655c728f0c396}{}\label{RoeKernels_8H_a6d30a232f8df207a0a3655c728f0c396} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!u\+Left@{u\+Left}}
+\index{u\+Left@{u\+Left}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{u\+Left}{uLeft}}
+{\footnotesize\ttfamily void const int const double$\ast$ u\+Left}
+
+
+
+Definition at line 23 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_aa8ba2167c968e6f2da632acd106b7f88}{}\label{RoeKernels_8H_aa8ba2167c968e6f2da632acd106b7f88} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!u\+Out@{u\+Out}}
+\index{u\+Out@{u\+Out}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{u\+Out}{uOut}}
+{\footnotesize\ttfamily void const int const double const double const double$\ast$ u\+Out}
+
+
+
+Definition at line 9 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a1ea2314c87ebfdd0ac10106c76b3bd08}{}\label{RoeKernels_8H_a1ea2314c87ebfdd0ac10106c76b3bd08} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!uR@{uR}}
+\index{uR@{uR}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{uR}{uR}}
+{\footnotesize\ttfamily void const int const double const double const double$\ast$ uR}
+
+
+
+Definition at line 14 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_ad7596a27f3010967e23b245f06eadfdd}{}\label{RoeKernels_8H_ad7596a27f3010967e23b245f06eadfdd} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!u\+Right@{u\+Right}}
+\index{u\+Right@{u\+Right}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{u\+Right}{uRight}}
+{\footnotesize\ttfamily void const int const double const double$\ast$ u\+Right}
+
+
+
+Definition at line 23 of file Roe\+Kernels.\+H.
+
+\hypertarget{RoeKernels_8H_a5624e61551b02c502a36c52d56b2350b}{}\label{RoeKernels_8H_a5624e61551b02c502a36c52d56b2350b} 
+\index{Roe\+Kernels.\+H@{Roe\+Kernels.\+H}!u\+Roe@{u\+Roe}}
+\index{u\+Roe@{u\+Roe}!Roe\+Kernels.\+H@{Roe\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{u\+Roe}{uRoe}}
+{\footnotesize\ttfamily void const int const double const double const double const double double $\ast$ u\+Roe}
+
+
+
+Definition at line 9 of file Roe\+Kernels.\+H.
+

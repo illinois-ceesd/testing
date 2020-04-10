@@ -1,0 +1,212 @@
+.TH "user_reference" 3 "Fri Apr 10 2020" "Version 1.0" "JustKernels" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+user_reference \- User Reference 
+The intent of this page is to provide some usage information for \fIPlasCom2\fP\&.
+.SH "Basic Usage"
+.PP
+The main \fIPlasCom2\fP executable is:
+.br
+ 
+.PP
+.RS 4
+plascom2x 
+.RE
+.PP
+.SS "Inline Help"
+Invoke with -h or --help for an inline help for command-line options:
+.br
+ 
+.PP
+.RS 4
+plascom2x -h
+.br
+plascom2x: PlasCom2 alpha development\&.
+.br
+plascom2x: 
+.br
+plascom2x: Usage:
+.br
+ plascom2x: 
+.br
+plascom2x: plascom2x [-h] [-d [arg] -v [arg] -p [arg] -c <configfile> ] [restartFile] [targetFile] 
+.br
+plascom2x: 
+.br
+plascom2x: -d,--debuglevel [arg]
+.br
+plascom2x: Set the debugging level for the program\&.(default=1)
+.br
+plascom2x: 
+.br
+plascom2x: -h,--help
+.br
+plascom2x: Produces this long help message
+.br
+plascom2x: 
+.br
+plascom2x: -v,--verblevel [arg]
+.br
+plascom2x: Set the verbosity level for the program\&. Anything
+.br
+plascom2x: larger than 3 is debugging level\&.
+.br
+plascom2x: Examples:
+.br
+plascom2x: -v (defaults to 1)
+.br
+plascom2x: -v 0 (silence)
+.br
+plascom2x: -v 1 (default: some normal output)
+.br
+plascom2x: -v 2 (verbose: more than normal output)
+.br
+ plascom2x: -v 3 (verbose indeed: some control flow information)
+.br
+plascom2x: -v 4 (ridiculously verbose debugging mode)
+.br
+plascom2x: -v 10 (ranks other than 0 create output logs\&.
+.br
+plascom2x: 
+.br
+plascom2x: -p,--enable-profiling [arg]
+.br
+plascom2x: Enable profiling\&. Profiling level > 1 enables profiling
+.br
+plascom2x: barriers, with the following settings available:
+.br
+plascom2x: level=1 enables async profiling w/report on rank 0\&.
+.br
+plascom2x: level=2 enables barrier sync w/report on rank 0\&.
+.br
+plascom2x: level=3 enables async with output on all ranks\&.
+.br
+plascom2x: level=4 enables sync with output on all ranks\&.
+.br
+plascom2x: 
+.br
+plascom2x: -c,--config <configfile>
+.br
+plascom2x: Set the configuration file\&.
+.br
+plascom2x: 
+.br
+plascom2x: [restartFile]
+.br
+plascom2x: HDF5 restart file\&.
+.br
+plascom2x: 
+.br
+plascom2x: [targetFile]
+.br
+plascom2x: HDF5 file with target data\&.
+.br
+>
+.br
+.RE
+.PP
+.SS "Typical Usage"
+Typical usage examples:
+.PP
+.IP "\(bu" 2
+Start \fIPlasCom2\fP from scratch using built-in grid generators:
+.PP
+.PP
+.RS 4
+mpiexec -n <numproc> plascom2x -v 2 -p 2 -c <configfile>
+.br
+.RE
+.PP
+.PP
+\fBNote:\fP
+.RS 4
+The '-v 2' and '-p 2' options are optional and set the verbosity and profiling levels, repsectively
+.RE
+.PP
+.IP "\(bu" 2
+Restart \fIPlasCom2\fP with no configuration changes from initial run:
+.PP
+.PP
+.RS 4
+mpiexec -n <numproc> plascom2x -v 2 -p 2 <restartfile> <targetfile>
+.br
+.RE
+.PP
+.PP
+.IP "\(bu" 2
+Restart \fIPlasCom2\fP with changes to configuration:
+.PP
+.PP
+.RS 4
+mpiexec -n <numproc> plascom2x -v 2 -p 2 -c <configfile> <restartfile> <targetfile>
+.br
+.RE
+.PP
+.PP
+.IP "\(bu" 2
+Restart \fIPlasCom2\fP from a \fIPlasComCM\fP input deck:
+.PP
+.PP
+.RS 4
+mpiexec -n <numproc> plascom2x -v 2 -p 2 -c <plascomcm\&.inp> <PlasComCM *\&.h5 restart file> <PlasComCM *\&.h5 target file>
+.br
+.RE
+.PP
+.PP
+\fBNote:\fP
+.RS 4
+\fIPlasCom2\fP will create a (mostly) \fIPlasCom2\fP-compatible configuration file and a solution dump\&. The generated config file needs to be stripped of \fIPlasComCM\fP parameters before used directly in \fIPlasCom2\fP\&.
+.RE
+.PP
+.SH "Configuration File"
+.PP
+PlasCom2 is configured with a configuration file, analagous to the legacy 
+.PP
+.nf
+plascomcm\&.inp
+.fi
+.PP
+\&. Please see below for documentation on specific parameters by section\&.
+.SS "PlasCom2 Section"
+The PlasCom2 parameter section controls the overall system-level stepping, and major run modes\&.
+.PP
+.IP "\(bu" 2
+\fBPlasCom2:NumSteps\fP - max number of steps in the simulation
+.IP "\(bu" 2
+\fBPlasCom2:NumStepsIO\fP - number of steps between solution dumps
+.IP "\(bu" 2
+\fBPlasCom2:NumStepsStatus\fP - number of steps between status reports
+.IP "\(bu" 2
+\fBPlasCom2:RunMode\fP - indicates the major running mode of PlasCom2
+.IP "  \(bu" 4
+\fBRunMode\fP = PC2 - runs \fIPlasCom2\fP in the usual 'simulation' mode
+.IP "  \(bu" 4
+\fBRunMode\fP = Maxwell - runs \fIPlasCom2\fP in Maxwell solver mode
+.IP "  \(bu" 4
+\fBRunMode\fP = BareBones - just makes sure \fIPlasCom2\fP can run - no simulation is started
+.PP
+
+.PP
+.SS "Geometry Section"
+The Geometry configuration section specifies the settings for the geometries and grids used in the simulation\&. Each so-called \fIgeometry\fP is just a collection of grids\&.
+.PP
+.IP "\(bu" 2
+\fBGeometry:Names\fP = <geomName1> <geomName2> <geomName3> - space delimited list of geometry names
+.IP "\(bu" 2
+\fBgeometryName:GridNames\fP = <gridName1> <gridName2> <gridName3> - space delimited list of grids for geometry *<geometryName>*
+.IP "\(bu" 2
+\fBgeometryName:gridName:Dimension\fP = 2 | 3 - specifies spatial dimensionality of grid
+.IP "\(bu" 2
+\fBgeometryName:gridName:NumPoints\fP = nX nY [nZ] - number of points in each dimension of the grid
+.IP "\(bu" 2
+\fBgeometryName:gridName:Type\fP = Uniform | Rectilinear | Curvilinear - chooses the type of grid metric used for this grid
+.IP "\(bu" 2
+\fBgeometryName:gridName:PhysicalExtent\fP = xStart xEnd yStart yEnd [zStart zEnd] - for uniform grids, the extents of the physical coordinates
+.IP "\(bu" 2
+\fBgeometryName:gridName:GridFile = 
+.SS "- HDF5 file from which the grid should be read**geometryName:gridName:GenerateGrid = YES | NO - indicates whether the grid should be generated by the PC2 grid generator\fBgeometryName:gridName:GeneratorMode\fP =  - indicates which grid generator should be used\fBgeometryName:gridName:DecompDirs\fP = 1|0 1|0 1|0 - indicates which directions allow MPI partitioning\fBgeometryName:gridName:ThreadDecompDirs\fP = 1|0 1|0 1|0 - indicates which directions allow OpenMP partitioning\fBgeometryName:gridName:DecompSizes\fP = nXi nEta [nZeta] - prescribes the number of MPI partitions in each dimension\fBgeometryName:gridName:PeriodicDirs\fP = 1|0 1|0 1|0 - prescribes which directions should \fIdefault\fP to periodic  Any boundary condition placed on a 'periodic' boundary overrides any previous periodicity settings  configgridboundaries Grid Region Configuration Subregions of grids (including boundaries) are configured in the \fIgrid region\fP configuration section\&. The following parameters set up the region(s)\&.\fBgeometryName:gridName:RegionNames\fP =    - space delimited list of region names\fBgeometryName:gridName:regionName\fP =  [      \fBnormalDirection\fP = 0 | +/- 1 | +/- 2 | +/- 3 - indicates the \fIinward pointing\fP normal for the grid region\fBxi|eta|zeta Start|End\fP =  - indicates the \fI1-based\fP starting|ending index (a negative number indicates starting from the \fIright\fP side of the domain)  (xi,eta,zeta)(Start,End) default to being the full domain-wide grid line, so they may be omitted if a proper sub-range is not needed  configgridgen Grid Generator Configuration  configgeomproc Geometry Processing Configuration  configdomain Domain Section  configdata Data Dictionary Stuff  configbc Boundary Condition Stuff  configsoln Solution Initialization Stuff "
+\fP
+.PP
+.PP
+\fB\fP

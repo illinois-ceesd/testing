@@ -1,0 +1,110 @@
+.TH "xpacc_coding_guide" 3 "Fri Apr 10 2020" "Version 1.0" "JustKernels" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xpacc_coding_guide \- XPACC Coding Guide for C/C++ in PlasCom2 
+
+.SH "Coding Style"
+.PP
+An existing and useful guide on C coding is the one for the Linux kernel here: \fCLinux Kernel Coding Style Guide\fP
+.PP
+The Linux Kernel Style Guide is a bit overboard for our purposes, and doesn't provide any C++-specific guidelines\&. The following is a start on some guidelines for C++, and some general exceptions to the guidelines presented in the Linux Kernel Style Guide\&.
+.SH "PlasCom2-specific"
+.PP
+.IP "\(bu" 2
+Braces - use function-like braces (i\&.e\&. curly braces begin on next line) for the following C++ constructs:
+.IP "  \(bu" 4
+Classes
+.IP "  \(bu" 4
+Namespaces
+.IP "  \(bu" 4
+Functions ( not strict, sometimes same-line braces make sense)
+.PP
+
+.IP "\(bu" 2
+Use of namespaces
+.IP "  \(bu" 4
+Project-specific namespaces - Each project should have its own namespace
+.IP "  \(bu" 4
+Each major self-contained programmatic construct should be contained in a namespace (e\&.g\&. domain, grid, state)
+.IP "  \(bu" 4
+The standard namespace, std, should be explicitly resolved on each construct from the standard namespace (as opposed to doing 'using namespace std'\&. It is also acceptable to use specific functions from the standard namespace, e\&.g\&. 'using std::cout'\&.
+.PP
+
+.IP "\(bu" 2
+Variable, function, and construct naming conventions
+.IP "  \(bu" 4
+There is no need to be as pedantic about variable naming conventions as the Linux Kernel Style Guide\&. Just create readable, maintainable code\&.
+.IP "  \(bu" 4
+Much of the code follows a loose variable naming scheme:
+.IP "    \(bu" 6
+Start with lower case letters, followed by camel case (ex: deltaTime, interFaceNormal)
+.IP "    \(bu" 6
+Be descriptive with variable names, avoid things like \fIx\fP, and \fItmp\fP for all but the most trivial and localized use
+.IP "    \(bu" 6
+Embedding some type descriptions can be useful (ex: coordinatesPtr, xValueVec), depending on context
+.IP "    \(bu" 6
+Function names should be capitalized, camel case (ex: GetCurrentTime)
+.PP
+
+.IP "  \(bu" 4
+When using references, use the same rule as for pointers where the reference qualifier rides with the variable name, not the type\&.
+.br
+Like this:
+.br
+.PP
+.nf
+int *pointerVar; (good)
+int &referenceVar; (good)
+.fi
+.PP
+ \fBNot\fP like this:
+.br
+.PP
+.nf
+int* pointerVar; (other than good)
+int& referenceVar; (other than good)
+.fi
+.PP
+
+.PP
+
+.IP "\(bu" 2
+Use spaces between stream operators and their arguments:
+.br
+.PP
+.nf
+std::cout << "Hello world!" << std::endl; (good)
+std::cout<<"Hardertoread"<<std::endl; (other than good)
+.fi
+.PP
+
+.IP "\(bu" 2
+File Names
+.IP "  \(bu" 4
+C-style headers = '\&.h'
+.IP "  \(bu" 4
+C source code = '\&.c'
+.IP "  \(bu" 4
+C++ headers = '\&.H,\&.hpp'
+.IP "  \(bu" 4
+C++ source code = '\&.C,\&.cpp'
+.IP "  \(bu" 4
+F90 source code = '\&.f90'
+.PP
+
+.IP "\(bu" 2
+Indentation and line lengths
+.IP "  \(bu" 4
+An indent is 3 (or 4) spaces
+.IP "  \(bu" 4
+All code must be consistently 'block indented' in multiples of 3 (or 4) space indentations
+.IP "  \(bu" 4
+We strongly prefer to not have 'tab' characters in our sources
+.IP "  \(bu" 4
+We strongly prefer to not have lines greater than 80 characters in length\&.
+.PP
+
+.PP
+.PP
+Currently, there are no style checking or forcing mechanisms for PlasCom2\&. One can be certain that if the above style guide is followed, that nobody will complain about the resulting code formatting, but as long as a code is readable, understandable, and maintainable then that is the main overarching concern\&. 

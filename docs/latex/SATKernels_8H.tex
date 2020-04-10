@@ -1,0 +1,565 @@
+\hypertarget{SATKernels_8H}{}\section{S\+A\+T\+Kernels.\+H File Reference}
+\label{SATKernels_8H}\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+{\ttfamily \#include \char`\"{}F\+C.\+h\char`\"{}}\newline
+Include dependency graph for S\+A\+T\+Kernels.\+H\+:
+% FIG 0
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{SATKernels_8H_a41ee11e8608507f5a6db117547de6eb0}{F\+C\+\_\+\+M\+O\+D\+U\+LE} (satutil, farfield, S\+A\+T\+U\+T\+IL, F\+A\+R\+F\+I\+E\+LD)(const size\+\_\+t $\ast$\hyperlink{WENOKernels_8H_a9b67b225dd1b2bffc0623aa04a80bfc4}{eos\+Info}
+\item 
+void \hyperlink{SATKernels_8H_a95400afa9a1e488275a30fbf78f038c0}{F\+C\+\_\+\+M\+O\+D\+U\+LE} (satutil, noslip\+\_\+isothermal, S\+A\+T\+U\+T\+IL, N\+O\+S\+L\+I\+P\+\_\+\+I\+S\+O\+T\+H\+E\+R\+M\+AL)(const size\+\_\+t $\ast$\hyperlink{WENOKernels_8H_a9b67b225dd1b2bffc0623aa04a80bfc4}{eos\+Info}
+\item 
+void \hyperlink{SATKernels_8H_a36a1c22ed90f6a4ad9ffbe79109252c1}{F\+C\+\_\+\+M\+O\+D\+U\+LE} (satutil, slip\+\_\+adiabatic, S\+A\+T\+U\+T\+IL, S\+L\+I\+P\+\_\+\+A\+D\+I\+A\+B\+A\+T\+IC)(const size\+\_\+t $\ast$\hyperlink{WENOKernels_8H_a9b67b225dd1b2bffc0623aa04a80bfc4}{eos\+Info}
+\item 
+void \hyperlink{SATKernels_8H_a7dadf319d627db5174b922d8a9af8aeb}{F\+C\+\_\+\+M\+O\+D\+U\+LE} (satutil, dissipationweight, S\+A\+T\+U\+T\+IL, D\+I\+S\+S\+I\+P\+A\+T\+I\+O\+N\+W\+E\+I\+G\+HT)(const int $\ast$\hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+void const double $\ast$ \hyperlink{SATKernels_8H_a4278be352a3267641eaae6198afb804a}{eos\+Non\+Dimen}
+\item 
+void const double const double $\ast$ \hyperlink{SATKernels_8H_ac8bfd00975838fc342c281f3fd053090}{eos\+Gas\+Params}
+\item 
+void const double const double const int $\ast$ \hyperlink{SATKernels_8H_a680185db8546de161968dabace9e94f1}{num\+Dim}
+\item 
+void const double const double const int const size\+\_\+t $\ast$ \hyperlink{SATKernels_8H_a74eeadd5b4c053a55bbae02e9e6d690d}{buffer\+Sizes}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t $\ast$ \hyperlink{SATKernels_8H_a763eadbfec63ff273e2d7b16b0b05974}{num\+Points\+Buffer}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int $\ast$ \hyperlink{SATKernels_8H_a64cccc8cf13f56aec2b85bc30d83e456}{patch\+Normal\+Dir}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t $\ast$ \hyperlink{SATKernels_8H_aab9865bc07ba94e79eb63231f82f4d13}{patch\+Sizes}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t $\ast$ \hyperlink{SATKernels_8H_a5daa362dd0f031e81325fa4199fae8c1}{num\+Points\+Patch}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t $\ast$ \hyperlink{SATKernels_8H_a673536f73773c14c18b2b8924543e4c1}{num\+Patch\+Points\+Op}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t $\ast$ \hyperlink{SATKernels_8H_a8d092af5f58f1962e6b1c2564830eba6}{patch\+Points\+Op}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int $\ast$ \hyperlink{SATKernels_8H_aa9206cf7d7248907b29e016938842a7a}{grid\+Type}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double $\ast$ \hyperlink{SATKernels_8H_a958e0724b892fe1870c5f76f17abb768}{grid\+Metric}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double $\ast$ \hyperlink{SATKernels_8H_aaf1e04690bc21cac2a406748b963e345}{grid\+Jacobian}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double $\ast$ \hyperlink{SATKernels_8H_a498f997b8d8f027ad03132065bd1819d}{bc\+Params}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double $\ast$ \hyperlink{SATKernels_8H_a63fe892dfb364d26ef895affd963a88e}{gas\+Params}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double $\ast$ \hyperlink{SATKernels_8H_ace59278fbe93d9a310adbae856537ab6}{rho\+Buffer}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double $\ast$ \hyperlink{SATKernels_8H_a77e93407ab66bf5f0aa4f6d87b62ec81}{rho\+V\+Buffer}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double $\ast$ \hyperlink{SATKernels_8H_a08911833ae2c771ec222ca0450100363}{rho\+E\+Buffer}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const double $\ast$ \hyperlink{SATKernels_8H_a106c22d96843fe9efa651233fc90cb72}{viscous\+Flux\+Buffer}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const double const int $\ast$ \hyperlink{SATKernels_8H_ac97409f480a745850ce5b215aabef12a}{num\+Scalar}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const double const int const double $\ast$ \hyperlink{SATKernels_8H_a77f85158b3e3bd2ba599050be5a7b444}{scalar\+Buffer}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const double const int const double double $\ast$ \hyperlink{SATKernels_8H_a57216e7c305dcf4eb48881fb0d4a5d78}{rho\+R\+HS}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const double const int const double double double $\ast$ \hyperlink{SATKernels_8H_acb9b38017a6743d94bee14616af8c393}{rho\+V\+R\+HS}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const double const int const double double double double $\ast$ \hyperlink{SATKernels_8H_a86b34d656c3893a42fbedf44ade01dc7}{rho\+E\+R\+HS}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const double const int const double double double double double $\ast$ \hyperlink{SATKernels_8H_a409c39c77cbb195e5f02d1a9e96aa20d}{scalar\+R\+HS}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const double const int const double double double double double const double $\ast$ \hyperlink{SATKernels_8H_a3499ab88b8b2ace36d84356b19632298}{rho\+Target}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const double const int const double double double double double const double const double $\ast$ \hyperlink{SATKernels_8H_aca8f44b9d6cddd0f8e4997848b063b4c}{rho\+V\+Target}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const double const int const double double double double double const double const double const double $\ast$ \hyperlink{SATKernels_8H_a77cd7df787748ecffdb67100fb5ae013}{rho\+E\+Target}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const double const int const double double double double double const double const double const double const double $\ast$ \hyperlink{SATKernels_8H_a3dcb404dac2bbafd2e5ac51b38fd8549}{scalar\+Target}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const int $\ast$ \hyperlink{SATKernels_8H_a09eb314e5f0d178313086632ffd7193e}{sconn}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double $\ast$ \hyperlink{SATKernels_8H_af927ee3df09e556d50c34f0e1d279a8c}{jacobian\+Determinant}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double const double $\ast$ \hyperlink{SATKernels_8H_ad7f181d487933e1f440902dc6f080e54}{scalar\+Grad}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double const double double double double double const double const double const double const double const double $\ast$ \hyperlink{SATKernels_8H_aad34af7cffab47570a25bd8f1427f862}{mu\+Buffer}
+\item 
+void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double const double double double double double const double const double const double const double const double const double $\ast$ \hyperlink{SATKernels_8H_ac4082886995a4235f6338205c85d04fe}{lambda\+Buffer}
+\item 
+void const size\+\_\+t $\ast$ \hyperlink{SATKernels_8H_a338d2e6b5802f9ba652d355df0b1a04b}{dim\+Sizes}
+\item 
+void const size\+\_\+t const size\+\_\+t $\ast$ \hyperlink{SATKernels_8H_abc84d783b8a1ee234fdf7c43aef803e1}{num\+Points}
+\item 
+void const size\+\_\+t const size\+\_\+t const size\+\_\+t $\ast$ \hyperlink{SATKernels_8H_a4caa6f5ca62531b8c31e22919f206d68}{buffer\+Interval}
+\item 
+void const size\+\_\+t const size\+\_\+t const size\+\_\+t const double $\ast$ \hyperlink{SATKernels_8H_a37f2683de24db9314043c0908d11292c}{sigma\+Dissipation}
+\item 
+void const size\+\_\+t const size\+\_\+t const size\+\_\+t const double const double $\ast$ \hyperlink{SATKernels_8H_a1657cf7729fe0b6d5d9a412ecab80002}{sigma\+Dilatation}
+\item 
+void const size\+\_\+t const size\+\_\+t const size\+\_\+t const double const double const double $\ast$ \hyperlink{SATKernels_8H_ac59bb34f1cc96772cd2ff3b13a040a57}{dilatation\+Ramp}
+\item 
+void const size\+\_\+t const size\+\_\+t const size\+\_\+t const double const double const double const double $\ast$ \hyperlink{SATKernels_8H_afe603e2783dc402c56709682a723b77e}{dilatation\+Cutoff}
+\item 
+void const size\+\_\+t const size\+\_\+t const size\+\_\+t const double const double const double const double const double $\ast$ \hyperlink{SATKernels_8H_a7e17251bb9d4e0676024410ca03462c7}{divV}
+\item 
+void const size\+\_\+t const size\+\_\+t const size\+\_\+t const double const double const double const double const double double $\ast$ \hyperlink{SATKernels_8H_a4f33b7bbf46dad9ee0eb31f6a0340d7a}{sigma\+Diss}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{SATKernels_8H_a41ee11e8608507f5a6db117547de6eb0}{}\label{SATKernels_8H_a41ee11e8608507f5a6db117547de6eb0} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}}
+\index{F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{F\+C\+\_\+\+M\+O\+D\+U\+L\+E()}{FC\_MODULE()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily void F\+C\+\_\+\+M\+O\+D\+U\+LE (\begin{DoxyParamCaption}\item[{satutil}]{,  }\item[{farfield}]{,  }\item[{S\+A\+T\+U\+T\+IL}]{,  }\item[{F\+A\+R\+F\+I\+E\+LD}]{ }\end{DoxyParamCaption}) const}
+
+\hypertarget{SATKernels_8H_a95400afa9a1e488275a30fbf78f038c0}{}\label{SATKernels_8H_a95400afa9a1e488275a30fbf78f038c0} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}}
+\index{F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{F\+C\+\_\+\+M\+O\+D\+U\+L\+E()}{FC\_MODULE()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily void F\+C\+\_\+\+M\+O\+D\+U\+LE (\begin{DoxyParamCaption}\item[{satutil}]{,  }\item[{noslip\+\_\+isothermal}]{,  }\item[{S\+A\+T\+U\+T\+IL}]{,  }\item[{N\+O\+S\+L\+I\+P\+\_\+\+I\+S\+O\+T\+H\+E\+R\+M\+AL}]{ }\end{DoxyParamCaption}) const}
+
+\hypertarget{SATKernels_8H_a36a1c22ed90f6a4ad9ffbe79109252c1}{}\label{SATKernels_8H_a36a1c22ed90f6a4ad9ffbe79109252c1} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}}
+\index{F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{F\+C\+\_\+\+M\+O\+D\+U\+L\+E()}{FC\_MODULE()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily void F\+C\+\_\+\+M\+O\+D\+U\+LE (\begin{DoxyParamCaption}\item[{satutil}]{,  }\item[{slip\+\_\+adiabatic}]{,  }\item[{S\+A\+T\+U\+T\+IL}]{,  }\item[{S\+L\+I\+P\+\_\+\+A\+D\+I\+A\+B\+A\+T\+IC}]{ }\end{DoxyParamCaption}) const}
+
+\hypertarget{SATKernels_8H_a7dadf319d627db5174b922d8a9af8aeb}{}\label{SATKernels_8H_a7dadf319d627db5174b922d8a9af8aeb} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}}
+\index{F\+C\+\_\+\+M\+O\+D\+U\+LE@{F\+C\+\_\+\+M\+O\+D\+U\+LE}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{F\+C\+\_\+\+M\+O\+D\+U\+L\+E()}{FC\_MODULE()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily void F\+C\+\_\+\+M\+O\+D\+U\+LE (\begin{DoxyParamCaption}\item[{satutil}]{,  }\item[{dissipationweight}]{,  }\item[{S\+A\+T\+U\+T\+IL}]{,  }\item[{D\+I\+S\+S\+I\+P\+A\+T\+I\+O\+N\+W\+E\+I\+G\+HT}]{ }\end{DoxyParamCaption}) const}
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{SATKernels_8H_a498f997b8d8f027ad03132065bd1819d}{}\label{SATKernels_8H_a498f997b8d8f027ad03132065bd1819d} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!bc\+Params@{bc\+Params}}
+\index{bc\+Params@{bc\+Params}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{bc\+Params}{bcParams}}
+{\footnotesize\ttfamily void const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const int const double const double const int const double $\ast$ bc\+Params}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a4caa6f5ca62531b8c31e22919f206d68}{}\label{SATKernels_8H_a4caa6f5ca62531b8c31e22919f206d68} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!buffer\+Interval@{buffer\+Interval}}
+\index{buffer\+Interval@{buffer\+Interval}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{buffer\+Interval}{bufferInterval}}
+{\footnotesize\ttfamily void const size\+\_\+t $\ast$ buffer\+Interval}
+
+
+
+Definition at line 52 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a74eeadd5b4c053a55bbae02e9e6d690d}{}\label{SATKernels_8H_a74eeadd5b4c053a55bbae02e9e6d690d} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!buffer\+Sizes@{buffer\+Sizes}}
+\index{buffer\+Sizes@{buffer\+Sizes}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{buffer\+Sizes}{bufferSizes}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t$\ast$ buffer\+Sizes}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_afe603e2783dc402c56709682a723b77e}{}\label{SATKernels_8H_afe603e2783dc402c56709682a723b77e} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!dilatation\+Cutoff@{dilatation\+Cutoff}}
+\index{dilatation\+Cutoff@{dilatation\+Cutoff}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{dilatation\+Cutoff}{dilatationCutoff}}
+{\footnotesize\ttfamily void const size\+\_\+t const size\+\_\+t const size\+\_\+t const double const double const double const double$\ast$ dilatation\+Cutoff}
+
+
+
+Definition at line 52 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_ac59bb34f1cc96772cd2ff3b13a040a57}{}\label{SATKernels_8H_ac59bb34f1cc96772cd2ff3b13a040a57} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!dilatation\+Ramp@{dilatation\+Ramp}}
+\index{dilatation\+Ramp@{dilatation\+Ramp}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{dilatation\+Ramp}{dilatationRamp}}
+{\footnotesize\ttfamily void const size\+\_\+t const size\+\_\+t const size\+\_\+t const double const double const double$\ast$ dilatation\+Ramp}
+
+
+
+Definition at line 52 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a338d2e6b5802f9ba652d355df0b1a04b}{}\label{SATKernels_8H_a338d2e6b5802f9ba652d355df0b1a04b} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!dim\+Sizes@{dim\+Sizes}}
+\index{dim\+Sizes@{dim\+Sizes}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{dim\+Sizes}{dimSizes}}
+{\footnotesize\ttfamily void const size\+\_\+t$\ast$ dim\+Sizes}
+
+
+
+Definition at line 52 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a7e17251bb9d4e0676024410ca03462c7}{}\label{SATKernels_8H_a7e17251bb9d4e0676024410ca03462c7} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!divV@{divV}}
+\index{divV@{divV}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{divV}{divV}}
+{\footnotesize\ttfamily void const size\+\_\+t const size\+\_\+t const size\+\_\+t const double const double const double const double const double$\ast$ divV}
+
+
+
+Definition at line 52 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_ac8bfd00975838fc342c281f3fd053090}{}\label{SATKernels_8H_ac8bfd00975838fc342c281f3fd053090} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!eos\+Gas\+Params@{eos\+Gas\+Params}}
+\index{eos\+Gas\+Params@{eos\+Gas\+Params}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{eos\+Gas\+Params}{eosGasParams}}
+{\footnotesize\ttfamily void const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const int const double const double const int const double const double const int const double const double const double const size\+\_\+t const double const double $\ast$ eos\+Gas\+Params}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a4278be352a3267641eaae6198afb804a}{}\label{SATKernels_8H_a4278be352a3267641eaae6198afb804a} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!eos\+Non\+Dimen@{eos\+Non\+Dimen}}
+\index{eos\+Non\+Dimen@{eos\+Non\+Dimen}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{eos\+Non\+Dimen}{eosNonDimen}}
+{\footnotesize\ttfamily void const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const int const double const double const double const int const double const double const int const double const double const double const double const double const double const double const double const double const double const double const size\+\_\+t const double $\ast$ eos\+Non\+Dimen}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a63fe892dfb364d26ef895affd963a88e}{}\label{SATKernels_8H_a63fe892dfb364d26ef895affd963a88e} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!gas\+Params@{gas\+Params}}
+\index{gas\+Params@{gas\+Params}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{gas\+Params}{gasParams}}
+{\footnotesize\ttfamily void const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const int const double const double const int const double const double $\ast$ gas\+Params}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_aaf1e04690bc21cac2a406748b963e345}{}\label{SATKernels_8H_aaf1e04690bc21cac2a406748b963e345} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!grid\+Jacobian@{grid\+Jacobian}}
+\index{grid\+Jacobian@{grid\+Jacobian}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{grid\+Jacobian}{gridJacobian}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double$\ast$ grid\+Jacobian}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a958e0724b892fe1870c5f76f17abb768}{}\label{SATKernels_8H_a958e0724b892fe1870c5f76f17abb768} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!grid\+Metric@{grid\+Metric}}
+\index{grid\+Metric@{grid\+Metric}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{grid\+Metric}{gridMetric}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double$\ast$ grid\+Metric}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_aa9206cf7d7248907b29e016938842a7a}{}\label{SATKernels_8H_aa9206cf7d7248907b29e016938842a7a} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!grid\+Type@{grid\+Type}}
+\index{grid\+Type@{grid\+Type}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{grid\+Type}{gridType}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int$\ast$ grid\+Type}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_af927ee3df09e556d50c34f0e1d279a8c}{}\label{SATKernels_8H_af927ee3df09e556d50c34f0e1d279a8c} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!jacobian\+Determinant@{jacobian\+Determinant}}
+\index{jacobian\+Determinant@{jacobian\+Determinant}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{jacobian\+Determinant}{jacobianDeterminant}}
+{\footnotesize\ttfamily void const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const double const double $\ast$ jacobian\+Determinant}
+
+
+
+Definition at line 22 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_ac4082886995a4235f6338205c85d04fe}{}\label{SATKernels_8H_ac4082886995a4235f6338205c85d04fe} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!lambda\+Buffer@{lambda\+Buffer}}
+\index{lambda\+Buffer@{lambda\+Buffer}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{lambda\+Buffer}{lambdaBuffer}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double const double double double double double const double const double const double const double const double const double$\ast$ lambda\+Buffer}
+
+
+
+Definition at line 22 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_aad34af7cffab47570a25bd8f1427f862}{}\label{SATKernels_8H_aad34af7cffab47570a25bd8f1427f862} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!mu\+Buffer@{mu\+Buffer}}
+\index{mu\+Buffer@{mu\+Buffer}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{mu\+Buffer}{muBuffer}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double const double double double double double const double const double const double const double const double$\ast$ mu\+Buffer}
+
+
+
+Definition at line 22 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a680185db8546de161968dabace9e94f1}{}\label{SATKernels_8H_a680185db8546de161968dabace9e94f1} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!num\+Dim@{num\+Dim}}
+\index{num\+Dim@{num\+Dim}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{num\+Dim}{numDim}}
+{\footnotesize\ttfamily void const double const double const int $\ast$ num\+Dim}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a673536f73773c14c18b2b8924543e4c1}{}\label{SATKernels_8H_a673536f73773c14c18b2b8924543e4c1} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!num\+Patch\+Points\+Op@{num\+Patch\+Points\+Op}}
+\index{num\+Patch\+Points\+Op@{num\+Patch\+Points\+Op}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{num\+Patch\+Points\+Op}{numPatchPointsOp}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t $\ast$ num\+Patch\+Points\+Op}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_abc84d783b8a1ee234fdf7c43aef803e1}{}\label{SATKernels_8H_abc84d783b8a1ee234fdf7c43aef803e1} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!num\+Points@{num\+Points}}
+\index{num\+Points@{num\+Points}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{num\+Points}{numPoints}}
+{\footnotesize\ttfamily void const size\+\_\+t const size\+\_\+t$\ast$ num\+Points}
+
+
+
+Definition at line 52 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a763eadbfec63ff273e2d7b16b0b05974}{}\label{SATKernels_8H_a763eadbfec63ff273e2d7b16b0b05974} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!num\+Points\+Buffer@{num\+Points\+Buffer}}
+\index{num\+Points\+Buffer@{num\+Points\+Buffer}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{num\+Points\+Buffer}{numPointsBuffer}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t$\ast$ num\+Points\+Buffer}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a5daa362dd0f031e81325fa4199fae8c1}{}\label{SATKernels_8H_a5daa362dd0f031e81325fa4199fae8c1} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!num\+Points\+Patch@{num\+Points\+Patch}}
+\index{num\+Points\+Patch@{num\+Points\+Patch}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{num\+Points\+Patch}{numPointsPatch}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t $\ast$ num\+Points\+Patch}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_ac97409f480a745850ce5b215aabef12a}{}\label{SATKernels_8H_ac97409f480a745850ce5b215aabef12a} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!num\+Scalar@{num\+Scalar}}
+\index{num\+Scalar@{num\+Scalar}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{num\+Scalar}{numScalar}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int$\ast$ num\+Scalar}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a64cccc8cf13f56aec2b85bc30d83e456}{}\label{SATKernels_8H_a64cccc8cf13f56aec2b85bc30d83e456} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!patch\+Normal\+Dir@{patch\+Normal\+Dir}}
+\index{patch\+Normal\+Dir@{patch\+Normal\+Dir}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{patch\+Normal\+Dir}{patchNormalDir}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int $\ast$ patch\+Normal\+Dir}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a8d092af5f58f1962e6b1c2564830eba6}{}\label{SATKernels_8H_a8d092af5f58f1962e6b1c2564830eba6} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!patch\+Points\+Op@{patch\+Points\+Op}}
+\index{patch\+Points\+Op@{patch\+Points\+Op}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{patch\+Points\+Op}{patchPointsOp}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t $\ast$ patch\+Points\+Op}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_aab9865bc07ba94e79eb63231f82f4d13}{}\label{SATKernels_8H_aab9865bc07ba94e79eb63231f82f4d13} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!patch\+Sizes@{patch\+Sizes}}
+\index{patch\+Sizes@{patch\+Sizes}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{patch\+Sizes}{patchSizes}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t $\ast$ patch\+Sizes}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_ace59278fbe93d9a310adbae856537ab6}{}\label{SATKernels_8H_ace59278fbe93d9a310adbae856537ab6} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!rho\+Buffer@{rho\+Buffer}}
+\index{rho\+Buffer@{rho\+Buffer}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{rho\+Buffer}{rhoBuffer}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double$\ast$ rho\+Buffer}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a08911833ae2c771ec222ca0450100363}{}\label{SATKernels_8H_a08911833ae2c771ec222ca0450100363} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!rho\+E\+Buffer@{rho\+E\+Buffer}}
+\index{rho\+E\+Buffer@{rho\+E\+Buffer}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{rho\+E\+Buffer}{rhoEBuffer}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double$\ast$ rho\+E\+Buffer}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a86b34d656c3893a42fbedf44ade01dc7}{}\label{SATKernels_8H_a86b34d656c3893a42fbedf44ade01dc7} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!rho\+E\+R\+HS@{rho\+E\+R\+HS}}
+\index{rho\+E\+R\+HS@{rho\+E\+R\+HS}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{rho\+E\+R\+HS}{rhoERHS}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double const double double double double $\ast$ rho\+E\+R\+HS}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a77cd7df787748ecffdb67100fb5ae013}{}\label{SATKernels_8H_a77cd7df787748ecffdb67100fb5ae013} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!rho\+E\+Target@{rho\+E\+Target}}
+\index{rho\+E\+Target@{rho\+E\+Target}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{rho\+E\+Target}{rhoETarget}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double const double double double double double const double const double const double $\ast$ rho\+E\+Target}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a57216e7c305dcf4eb48881fb0d4a5d78}{}\label{SATKernels_8H_a57216e7c305dcf4eb48881fb0d4a5d78} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!rho\+R\+HS@{rho\+R\+HS}}
+\index{rho\+R\+HS@{rho\+R\+HS}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{rho\+R\+HS}{rhoRHS}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double const double double $\ast$ rho\+R\+HS}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a3499ab88b8b2ace36d84356b19632298}{}\label{SATKernels_8H_a3499ab88b8b2ace36d84356b19632298} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!rho\+Target@{rho\+Target}}
+\index{rho\+Target@{rho\+Target}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{rho\+Target}{rhoTarget}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double const double double double double double const double $\ast$ rho\+Target}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a77e93407ab66bf5f0aa4f6d87b62ec81}{}\label{SATKernels_8H_a77e93407ab66bf5f0aa4f6d87b62ec81} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!rho\+V\+Buffer@{rho\+V\+Buffer}}
+\index{rho\+V\+Buffer@{rho\+V\+Buffer}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{rho\+V\+Buffer}{rhoVBuffer}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double$\ast$ rho\+V\+Buffer}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_acb9b38017a6743d94bee14616af8c393}{}\label{SATKernels_8H_acb9b38017a6743d94bee14616af8c393} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!rho\+V\+R\+HS@{rho\+V\+R\+HS}}
+\index{rho\+V\+R\+HS@{rho\+V\+R\+HS}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{rho\+V\+R\+HS}{rhoVRHS}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double const double double double $\ast$ rho\+V\+R\+HS}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_aca8f44b9d6cddd0f8e4997848b063b4c}{}\label{SATKernels_8H_aca8f44b9d6cddd0f8e4997848b063b4c} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!rho\+V\+Target@{rho\+V\+Target}}
+\index{rho\+V\+Target@{rho\+V\+Target}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{rho\+V\+Target}{rhoVTarget}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double const double double double double double const double const double $\ast$ rho\+V\+Target}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a77f85158b3e3bd2ba599050be5a7b444}{}\label{SATKernels_8H_a77f85158b3e3bd2ba599050be5a7b444} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!scalar\+Buffer@{scalar\+Buffer}}
+\index{scalar\+Buffer@{scalar\+Buffer}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{scalar\+Buffer}{scalarBuffer}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double$\ast$ scalar\+Buffer}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_ad7f181d487933e1f440902dc6f080e54}{}\label{SATKernels_8H_ad7f181d487933e1f440902dc6f080e54} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!scalar\+Grad@{scalar\+Grad}}
+\index{scalar\+Grad@{scalar\+Grad}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{scalar\+Grad}{scalarGrad}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double const double $\ast$ scalar\+Grad}
+
+
+
+Definition at line 22 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a409c39c77cbb195e5f02d1a9e96aa20d}{}\label{SATKernels_8H_a409c39c77cbb195e5f02d1a9e96aa20d} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!scalar\+R\+HS@{scalar\+R\+HS}}
+\index{scalar\+R\+HS@{scalar\+R\+HS}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{scalar\+R\+HS}{scalarRHS}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double const double double double double double $\ast$ scalar\+R\+HS}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a3dcb404dac2bbafd2e5ac51b38fd8549}{}\label{SATKernels_8H_a3dcb404dac2bbafd2e5ac51b38fd8549} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!scalar\+Target@{scalar\+Target}}
+\index{scalar\+Target@{scalar\+Target}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{scalar\+Target}{scalarTarget}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const int const double const double double double double double const double const double const double const double $\ast$ scalar\+Target}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a09eb314e5f0d178313086632ffd7193e}{}\label{SATKernels_8H_a09eb314e5f0d178313086632ffd7193e} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!sconn@{sconn}}
+\index{sconn@{sconn}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{sconn}{sconn}}
+{\footnotesize\ttfamily void const size\+\_\+t const size\+\_\+t const int const int $\ast$ sconn}
+
+
+
+Definition at line 22 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a1657cf7729fe0b6d5d9a412ecab80002}{}\label{SATKernels_8H_a1657cf7729fe0b6d5d9a412ecab80002} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!sigma\+Dilatation@{sigma\+Dilatation}}
+\index{sigma\+Dilatation@{sigma\+Dilatation}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{sigma\+Dilatation}{sigmaDilatation}}
+{\footnotesize\ttfamily void const size\+\_\+t const size\+\_\+t const size\+\_\+t const double const double$\ast$ sigma\+Dilatation}
+
+
+
+Definition at line 52 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a4f33b7bbf46dad9ee0eb31f6a0340d7a}{}\label{SATKernels_8H_a4f33b7bbf46dad9ee0eb31f6a0340d7a} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!sigma\+Diss@{sigma\+Diss}}
+\index{sigma\+Diss@{sigma\+Diss}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{sigma\+Diss}{sigmaDiss}}
+{\footnotesize\ttfamily void const size\+\_\+t const size\+\_\+t const size\+\_\+t const double const double const double const double const double double$\ast$ sigma\+Diss}
+
+
+
+Definition at line 52 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a37f2683de24db9314043c0908d11292c}{}\label{SATKernels_8H_a37f2683de24db9314043c0908d11292c} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!sigma\+Dissipation@{sigma\+Dissipation}}
+\index{sigma\+Dissipation@{sigma\+Dissipation}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{sigma\+Dissipation}{sigmaDissipation}}
+{\footnotesize\ttfamily void const size\+\_\+t const size\+\_\+t const size\+\_\+t const double$\ast$ sigma\+Dissipation}
+
+
+
+Definition at line 52 of file S\+A\+T\+Kernels.\+H.
+
+\hypertarget{SATKernels_8H_a106c22d96843fe9efa651233fc90cb72}{}\label{SATKernels_8H_a106c22d96843fe9efa651233fc90cb72} 
+\index{S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}!viscous\+Flux\+Buffer@{viscous\+Flux\+Buffer}}
+\index{viscous\+Flux\+Buffer@{viscous\+Flux\+Buffer}!S\+A\+T\+Kernels.\+H@{S\+A\+T\+Kernels.\+H}}
+\subsubsection{\texorpdfstring{viscous\+Flux\+Buffer}{viscousFluxBuffer}}
+{\footnotesize\ttfamily void const double const double const int const size\+\_\+t const size\+\_\+t const int const size\+\_\+t const size\+\_\+t const size\+\_\+t const size\+\_\+t const int const double const double const double const double const double const double const double const double$\ast$ viscous\+Flux\+Buffer}
+
+
+
+Definition at line 10 of file S\+A\+T\+Kernels.\+H.
+
