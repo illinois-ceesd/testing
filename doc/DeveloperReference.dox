@@ -1,0 +1,349 @@
+/**
+
+@page developer_reference Developer Reference
+
+The intent of this page is to provide some useful information about commonly used data structures and constructs in a centralized quick-reference.
+
+@section config Configuration Object
+
+PlasCom2 makes extensive use of a so-called <em>Configuration Object</em> which encapsulates user options and other information and makes it available far-and-wide to the code. The main configuration object (\ref plascom2::application::appConfig) gets populated at application configuration time from (\ref plascom2::application::ConfigureApplication). The configuration object type is essentially an (\ref ix::util::Parameters) object which is just a collection of Key/Value pairs. Once populated, the configuration object is available to all processors at the top level of PlasCom2 scope.
+
+If the user specified a configuration file on the command line (i.e. with the -c \<<em>ConfigFile</em>\> option), then that file is read into the configuration object. For restarts, the configuration object may be populated from the HDF5 restart file. Otherwise, not specifying a configuration will invoke <em>BareBones</em> mode and no simulation will be performed.
+
+If the specified configuration is a legacy file (e.g. plascomcm.inp), then the configuration is translated into a PlasCom2-style configuration.  The legacy part of the configuration is retained, but not used by PlasCom2.
+
+@subsection configfile Configuration Files
+
+The accepted format for configuration file lines is identical between PlasCom2 and PlasComCM. It is essentially:\n
+
+> Key = Value \n
+
+The primitive datatype is std::string for both <em>Key</em> and <em>Value</em>. The <em>Value</em> is read in as everything (excepting leading and trailing whitespace) that follows the \"=\" character until the end-of-line or a comment character, whichever comes first. Comments are started with the \"\#\" character and anything between the comment character and the end-of-line is ignored. Lines beginning with comment characters are ignored.
+
+The PlasCom2 configuration file format differs from the legacy PlasComCM <em>inp</em> format in that it supports the configuration of multiple simulation constructs (e.g. domains, grids, boundaries) through the use of <em>configuration scope specifyers</em>.  Configuration scope is indicated through the <em>Key</em> with a \"\<ScopeName\>:\" format.  For example the configuration line: \n
+> Grid1:GridType = Curvlinear \# grid is a general curvilinear grid\n
+
+In the above configuration line, the <em>Key</em> is \"Grid1:GridType\", the <em>Value</em> is \"Curvilinear\", and everything after the \"\#\" is a comment.  The <em>Key</em> indicates <em>Grid1</em> scope. Other grid configurations may be present in the configuration, and they will all have a \"GridType\" entry, but each will have its own scope.  Everything that comes before the last \":\" character is considered as a scope specification.
+
+PlasCom2 configuration files can also be nested. Two forms of nesting are supported, <em>composition</em>, and <em>inheritance</em>.  
+
+@subsubsection configcomposition Composition
+
+Composition nesting for configuration files is achieved with the <em>ConfigFile</em> keyword. For example:\n
+
+> XXX:YYY:ConfigFile = SomeOtherFile.config\n
+
+Any configuration Key that ends with the ConfigFile keyword will cause the configuration utility to find \"SomeOtherFile.config\" in a relative path and include it (i.e. the parameters it contains) in the configuration object. 
+
+@subsubsection configinheritance Inheritance
+
+Inheritance nesting is accomplished with the <em>SubConfigFile</em> keyword. SubConfigFiles cause the file specified by the value of the configuration key to be parsed in a way that <em>inherits</em> the parent scope. For example:\n
+
+> XXX:YYY:SubConfigFile = SomeOtherFile.config\n
+
+Using the SubConfigFile keyword causes all parameters read from SomeOtherFile.config to inherit the XXX scope. Any subsequent SubConfigFile parameters will also inherit the parent scope. 
+
+@subsection configkey Configuration Keys
+
+@subsection configvalue Configuration Values
+
+@section state State Object
+
+The PlasCom2 <em>State Object</em> (\ref plascom2::simulation::state::base) centralizes and encapsulates all of the so-called heavy data of a given simulation.  It inherits from the primitive field data type (\ref pcpp::fielddata::dataset).
+
+@subsection metadata Field MetaData
+
+@subsection dictionary Data Dictionary
+
+@section interval Interval Object
+
+Information about grids, their domain decomposition, grid regions and 
+sub-regions are stored in a <em>PlasCom2</em> data structure called an 
+_interval_. The data type for the interval is ix::util::sizeextent. What 
+the intervals do and how to use them is best illustrated by example. 
+The following describes an example that is implemented in the 
+TestPartitionIntervals() function in the file TestIntervals.C. 
+
+Example: Consider a logically rectangular domain (D) 
+represented by the "interval":
+
+> (D) = {1:NI,1:NJ,1:NK}
+
+@image html DomainD_small.png The Domain (D) and Probe/ROI (R)
+          
+Also define rectangular "region of interest" in the domain (D) 
+represented by the "probe interval" (R). The probe interval (R)
+is a sub-region of the global domain (D), and is specified as 
+a subset of (D): 
+     
+> (R) = {i1:i2,j1:j2,k1:k2}. 
+
+Assume (D) has been decomposed into some number of logically rectangular
+non-overlapping partitions and distributed among processes, i.e. so that 
+each process "owns" a partition or a rectangular subregion of (D). 
+The rectangular subregion (a.k.a. the partition) is represented by the 
+interval (L), and each processor's locally-owned piece of the domain 
+has the local partition interval:
+    
+> (L) = {li1:li2,lj1:lj2,lk1:lk2}. 
+
+@image html DomainDecomp.png Decomposed Domain
+          
+The size of each partition is (nI x nJ x nK) where:
+
+@code
+size_t li1,li2,lj1,lj2,lk1,lk2; // set by decomposition
+size_t nI = (li2 - li1) + 1;  
+size_t nJ = (lj2 - lj1) + 1;  
+size_t nK = (lk2 - lk1) + 1; 
+@endcode
+
+
+The parallel application process 
+will typically create a buffer that is larger than the partition in order
+to encapsulate a number of _halo_ points who's data will be filled by 
+communication with remote partitions. If the halo is (nH) points wide, 
+then a buffer of size (nBi x nBj x nBk) is required to store data on each 
+point of the partition and its halos, where on each process the required 
+buffer size is:
+
+@code
+size_t nH;               // halo size
+size_t nI,nJ,nK;         // from above
+size_t nBi = (nI + 2*nH);
+size_t nBj = (nJ + 2*nH);
+size_t nBk = (nK + 2*nH);
+@endcode
+
+This buffer size covers both your partition and the halo points on
+either side of the partition. Let (B) be the buffer interval:
+
+> (B) = {1:nBi,1:nBj,1:nBk}
+
+@image html PartitionBuffer.png Partition Buffer - with halos
+
+The interval for (L) is called the "partition interval"; it's coordinates
+are with respect to the non-partitioned domain (D). That is, it has IJK 
+values (aka coordinates) that are wrt the global, non-partitioned domain (D). 
+The local buffer  points corresponding to the points of your local partition 
+interval (L) are referred to as the "partition buffer interval" (PBI). 
+In this case with halos all around, the (PBI) is this interval:
+
+> (PBI) = {nH+1:nH+nI,nH+1:nH+1:nH+nJ,nH+1:nH+nK}
+
+@subsection creation Creating interval objects
+
+All of these "intervals" (R), (D), (L), (B) and (PBI) are represented by 
+ix::util::sizeextent objects.  They can be created by the following code:
+
+@code          
+size_t domainSizes[]           = {NI,NJ,NK}; 
+size_t bufferSizes[]           = {nBi,nBj,nBk};
+size_t flatPartitionInterval[] = {li1,li2,lj1,lj2,lk1,lk2};
+size_t flatProbeInterval[]     = {i1,i2,j1,j2,k1,k2};      
+size_t flatPartBuffInterval[]  = {nH+1,nH+nI,nH+1,nH+nJ,nH+1,nH+nK};
+                                                                    
+ix::util::sizeextent domainInterval, bufferInterval;                
+domainInterval.InitSimple(3,domainSizes);           // (D)                    
+domainInterval.Fortranslate();                      // use 1-based indices              
+bufferInterval.InitSimple(3,bufferSizes);           // (B)                    
+bufferInterval.Fortranslate();                                      
+                                                                    
+ix::util::sizeextent probeInterval(flatProbeInterval,3);              // (R) 
+ix::util::sizeextent partitionInterval(flatPartitionInterval,3);      // (L) 
+ix::util::sizeextent partitionBufferInterval(flatPartBuffInterval,3); // (PBI)
+@endcode
+
+@note Fortranslate is not needed by (R),(L),(PBI) - these were explicitly
+        created by initializing with 1-based static intervals.
+
+The capabilities of the interval datatype (i.e. ix::util::sizeextent) are 
+demonstrated by answering these questions about the domain and region of 
+interest:
+
+1. What portion of the global probe interval (R) is located on the 
+local partition? 
+2. What is the interval of the local buffer that corresponds to the 
+locally owned part of (R)?
+3. What are the buffer indices that correspond to the local probe points?
+4. Given a local buffer index (l0):
+   -# what are the point's IJK coordinates wrt the local buffer (B)?
+   -# is the point in the halo or in the partition?
+   -# what are the point's IJK coordinates wrt the global domain (D)?
+   -# is the point within the region of interest (R)?
+
+@subsection overlap Detecting overlap or collision of intervals 
+
+###Question 1) What portion of the global probe interval (R) is located on the local partition?
+
+We need the extent to which (R) overlaps with (L), which we can 
+get with the member function ix::util::sizeextent::Overlap.  
+Here's how:
+
+@code
+ix::util::sizeextent partitionInterval; // from above
+ix::util::sizeextent probeInterval;     // from above 
+ix::util::sizeextent probePartitionInterval(partitionInterval.Overlap(probeInterval)); 
+@endcode
+
+_OR_
+
+@code
+ix::util::sizeextent partitionInterval; // from above
+ix::util::sizeextent probeInterval;     // from above 
+ix::util::sizeextent probePartitionInterval = partitionInterval.Overlap(probeInterval);            
+@endcode
+
+_OR_
+
+@code
+ix::util::sizeextent partitionInterval; // from above
+ix::util::sizeextent probeInterval;     // from above 
+ix::util::sizeextent probePartitionInterval;                                           
+partitionInterval.Overlap(probeInterval,probePartitionInterval);            
+@endcode
+
+@image html IntervalOverlap.png Overlap function returns the interval of the intersection of two input intervals.
+      
+Now (probePartitionInterval) is the part of the probe interval (R) 
+that is owned locally.
+
+@subsection translation Relative translation of intervals
+
+###Question 2) What is the interval of my local buffer that corresponds to the locally-owned part of (R)?
+
+The local probe interval (probePartitionInterval) needs to be 
+translated to line up with the storage buffer that includes the halo 
+regions. That translation can be done with the member function 
+ix::util::sizeextent::RelativeTranslation:
+
+@code
+ix::util::sizeextent probePartitionInterval;  // from above
+ix::util::sizeextent partitionBufferInterval; // from above
+ix::util::sizeextent partitionInterval;       // from above
+ix::util::sizeextent probeBufferInterval;
+probePartitionInterval.RelativeTranslation(partitionInterval,partitionBufferInterval,probeBufferInterval);
+@endcode
+
+@image html RelativeTranslation.png Buffer interval for the sub-region corresponding to the locally-owned probe points 
+   
+Now (probeBufferInterval) is the *buffer interval* that 
+corresponds to the locally owned portion of the original probe 
+interval (R). The action of RelativeTranslation is simply to find 
+the offset of (probePartitionInterval) within (L) or (partitionInterval)
+and then translate it to the (PBI) or (partitionBufferInterval) interval.
+ 
+@image html BufferRegions.png The partition buffer with its sub-regions.
+
+@subsection indices Finding buffer indices for sub-intervals
+
+###Question 3) What are the buffer indices that correspond to the local probe points?
+
+These are the buffer indices that correspond to the 
+(probeBufferInterval) interval. To get a vector of buffer 
+indices that correspond to a sub-interval (e.g. the probe interval 
+(probeBufferInterval) in this case), use ix::util::sizeextent::GetFlatIndices:
+
+@code 
+ix::util::sizeextent bufferInterval;      // from above
+ix::util::sizeextent probeBufferInterval; // from above
+std::vector<size_t> probeBufferIndices;
+bufferInterval.GetFlatIndices(probeBufferInterval,probeBufferIndices);
+@endcode
+    
+Now probeBufferIndices vector contains the buffer indices of the 
+locally owned probe points. If one wanted to operate on every local 
+probe point (i.e. every locally-owned point in the region-of-interest), 
+could do the following:
+
+@code
+ix::util::sizeextent bufferInterval;    // from above
+std::vector<size_t> probeBufferIndices; // from above
+size_t numPointsBuffer = bufferInterval.NNodes();
+std::vector<double> someBuffer(numPointsBuffer,0);
+std::vector<size_t>::iterator probeIndices = probeBufferIndices.begin();
+while(probeIndices != probeBufferIndices.end()){                
+  size_t bufferIndex = *probeIndices++;                         
+  Operate(someBuffer[bufferIndex]);                             
+}                                                                       
+@endcode
+
+@subsection mapping Mapping coordinates and indices for buffers and intervals  
+
+###Question 4) Given a local buffer index (l0):
+- (a) what are the point's IJK coordinates wrt the local buffer (B)?
+- (b) is the point in the halo or in the partition?
+- (c) what are the point's IJK coordinates wrt the global domain (D)?
+- (d) is the point within the region of interest (R)?
+
+###4a) What are the point's IJK coordinates wrt the local buffer (B)?
+
+Mapping back-and-forth between l0 and interval-based IJK can
+be accomplished by the ix::util::sizeextent::Coordinates and
+ix::util::sizeextent::NodeIndex member functions. These 
+functions are demonstrated by the following code:
+
+@code
+ix::util::sizeextent bufferInterval;          // from above
+ix::util::sizeextent probePartitionInterval;  // from above
+std::vector<size_t> probeBufferIndices;       // from above
+size_t numLocalProbePoints = probePartitionInterval.NNodes();
+for(size_t iProbe = 0;iProbe < numLocalProbePoints;iProbe++){
+   size_t bufferIndex = probeBufferIndices[iProbe]; // l0
+   // Get buffer-IJK (bufferInterval-based numbering) for l0
+   std::vector<size_t> bufferIJK(bufferInterval.Coordinates(bufferIndex));
+   // Get l0 back from buffer-IJK
+   size_t resolvedBufferIndex = bufferInterval.NodeIndex(bufferIJK);
+}
+@endcode
+
+@note In this example, l0 is meant to be the 0-based index into a 
+buffer holding data on each point of the partition (and halos). The
+IJK coordinates returned by the ix::util::sizeextent::Coordinates
+member function will have the same numbering scheme as the 
+ix::util::sizeextent itself.  That is, if the sizeextent is 1-based
+then the returned IJK will be 1-based. Similarly, the 
+ix::util::sizeextent::NodeIndex member function will expect an
+input set of IJK coordinates consistent with the numbering
+scheme for the sizeextent, and will return a 0-based index that 
+is the buffer index corresponding to the data for the given IJK
+point.
+
+###4b) and 4d) Is a given point l0 in the halo, partition or probe/ROI?
+
+Simple queries about whether intervals contain certain
+points can be done with the ix::util::sizeextent::Contains
+member function:
+
+@code
+size_t l0;
+ix::util::sizeextent bufferInterval;          // from above
+ix::util::sizeextent partitionBufferInterval; // from above
+std::vector<size_t> bufferIJK(bufferInterval.Coordinates(l0));
+bool pointInPartition = partitionBufferInterval.Contains(bufferIJK);
+bool pointInHalo      = !pointInPartition;
+bool pointInProbe     = probeBufferInterval.Contains(bufferIJK);
+@endcode
+
+###4c) What are the point's IJK coordinates wrt the global domain (D)?
+
+The ix::util::sizeextent::RelativeCoordinates and
+ix::util::sizeextent::TranslateCoordinates member functions 
+are used to map the buffer's IJK coordinates to the global
+domain (D):
+ 
+@code
+size_t l0;
+ix::util::sizeextent bufferInterval;          // from above
+ix::util::sizeextent partitionBufferInterval; // from above
+std::vector<size_t> bufferIJK(bufferInterval.Coordinates(l0));
+if(partitionBufferInterval.Contains(bufferIJK)){
+  std::vector<size_t> partitionIJK(bufferIJK);// copy create
+  partitionBufferInterval.RelativeCoordinates(partitionIJK);
+  partitionInterval.TranslateCoordinates(partitionIJK);
+  // partitionIJK is now the IJK coordinates wrt the global
+  // domain (D).
+}
+@endcode
+
+*/

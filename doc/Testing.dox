@@ -1,0 +1,315 @@
+/**
+
+@page testing_reference Testing Reference
+
+The intent of this page is to provide some useful information about the PlasCom2 
+testing framework. 
+
+- \ref running 
+- \ref addtest 
+- \ref addsuite 
+- \ref anatomy
+
+@section running Running Tests
+
+The PlasCom2 testing can be run after configuration and building with:
+
+> make test
+
+At this point CMake/CTest will take over and stage-in all of the testing data
+in Testing/Data to the build/test area and execute all of the enabled
+tests. Typically, the default tests will take around 5-10 minutes on a modern
+laptop to run, and will use 4 MPI ranks. Upon completion, the results of all the
+tests will be summarized.  A summary of test failures is presented at the end of
+the tests summary.  
+
+@note Any failing tests with **FAILS** in the test name is a known, non-critical
+failure. Any failing test _without_ the FAILS keyword could indicate that your 
+PlasCom2 build is broken in some way.
+
+There are several places where the actual output of the tests and the testing
+framework can be reviewed:
+
+- <build>/Testing/parallel_test_output.txt - is a log of the output of the actual
+test functions that are executed during the testing
+- <build>/Testing/Temporary/LastTest.log - is a log of the output of testing framework
+*and* the output of the testing functions.
+
+Users may also directly run the PlasCom2 test drivers to execute only a suite of tests
+at-a-time. Any data required by the suite should be staged into the current directory 
+when attempting to directly run the PlasCom2 test drivers.  In general individual suites
+can be run as follows:
+
+> cd <build>/Testing\n
+> ../bin/plascom2_test -n <serial_suite_name>
+-or-
+> mpiexec -n 4 ../bin/plascom2_parallel_test -n <parallel_suite_name>
+
+@note Running single individual tests is not currently supported, but is coming
+soon.
+
+@section addtest Adding Tests
+
+This section is about adding tests to an existing suite of tests. Adding tests
+to an existing suite is the most common way to add a test. Adding tests to 
+existing suites that use a *suite driver* is trivial.  This section will focus
+on adding legacy tests for existing suites that do not use a suite driver.
+
+The general procedure is as follows:
+
+- \ref addfunc "Add or edit a test function"
+- \ref addproto "Add a test function prototype"
+- \ref addcall "Add appropriate calls to the test functions to the PlasCom2 testing object"
+
+@subsection addfunc Add a Test Function
+
+Test functions for testing suites without suite drivers are directly called
+by the PC2 testing framework. Test functions are defined in Testing/src/Test<XXX>.C. 
+Test functions (and suite drivers) must all follow the standard prototypes.
+
+Serial prototype:
+> void Test<MyName>(ix::test::results &);
+
+Parallel prototype:
+> void Test<MyName>(ix::test::results &,ix::comm::CommunicatorObject &);
+
+Examples of testing functions can be found in any file Testing/src/Test<XXX>.C. Example 
+serial and parallel suite drivers can be found in Testing/src/TestExample.C.  
+
+To add your own test function, open or create a file Testing/src/Test<XXX>.C and add
+a new function with the required function prototype. Alternatively, edit an existing 
+test function to add your test. Inside your test function, for every test you want 
+to add, add a call to ix::test::results::UpdateResult to indicate whether
+your test passes or fails. For example:
+
+@code
+void TestMyTest(ix::test::results &testResults)
+{
+   testResults.UpdateResult("MySuite:MyTest:Ran",true);
+}
+@endcode
+
+In this example, the test function is named *TestMyTest*, the name of the suite is 
+_MySuite_, and the name of the test is _MyTest:Ran_.  It is hardcoded to *true* for a 
+function pass, and simply indicates that the test function has been executed.
+
+For new test functions (or new suite drivers) that are not called from an existing 
+suite driver, the next step for getting the new function called by the testing framework
+is to add the test function's prototype to Testing/include/ExternalTestingFunctions.H. This
+step is explained in \ref addproto.
+
+@note Test functions for suites with a suite driver can have arbitrary function prototypes
+and do not require any additional steps beyond writing the function and calling it from the 
+suite driver.
+
+@subsection addproto Add a Testing Function Prototype
+
+Adding a function prototype for each function to be called by the framework is required 
+to provide the PlasCom2 testing object knowledge about the function it must call. This 
+step is easily done by editing Testing/include/ExternalTestingFunctions.H and adding a
+function prototype for your testing function(s). 
+
+For the example testing function provided in the \ref addfunc section, one would edit 
+Testing/include/ExternalTestingFunctions.H and add the following line(s):
+
+@code
+ // new test function by [myname]
+ void TestMyTest(ix::test::results &);
+@endcode
+
+The next step is adding the appropriate calls to the PlasCom2 Testing Object, which is
+explained in \ref addcall.
+
+@subsection addcall Add new Testing Function to Testing Object 
+
+The PlasCom2 Testing Object is driven by the PlasCom2 test drivers when tests are
+executed. In order for your new test function(s) or suite driver(s) to be called 
+by the testing framework, calls to those must be added to the PlasCom2 Testing
+Object by editing Testing/include/PlasCom2Test.H.
+
+Typically, 3 things must be added to the PlasCom2 Testing Object for each new
+test function or suite driver.
+
+- \ref wrapper
+- \ref processcall
+- \ref callbyname
+
+@subsubsection wrapper Function Wrapper
+
+Function wrappers are added to the PlasCom2 Testing Object by editing 
+Testing/include/PlasCom2Test.H.
+
+Function wrappers with a standard form are used to access testing functions 
+(and suite drivers) in the PlasCom2 Testing Object. We follow a specific form
+to make automation easier. There are many existing function wrappers that can
+be used as examples in PlasCom2Test.H.  
+
+Following the example from previous sections, the test function wrapper that 
+would be added here is:
+
+@code
+void Test__MySuite__MyTest(ix::test::results &result)
+{ TestMyTest(result); };
+@endcode
+
+For a parallel test, the wrapper looks as follows:
+
+@code
+void Test__MySuite__MyParallelTest(ix::test::results &result)
+{ TestMyParallelTest(result,_communicator); };
+@endcode
+
+Once the required wrappers are implemented, the PlasCom2 Testing Object 
+will access the test function(s) (or suite driver) through calls to 
+the wrapper.
+
+Calls to the wrapper(s) must be added in two places, in the _Process_ method
+and in the _RunTest_ method. The Process method executes *all* of the tests
+while the RunTest method executes testing suites by name. 
+ 
+@subsubsection processcall Call in Process method
+
+Add a call to the 
+wrapper in the plascom2::TestingObject::Process method, or 
+plascom2::ParallelTestingObject::Process as is appropriate for a serial or
+parallel test, respectively.
+
+@subsubsection callbyname Call by Name
+ 
+Add a call to the wrapper in the plascom2::TestingObject::RunTest method in the
+appropriate suite-specific construct 
+(or plascom2::ParallelTestingObject::RunTest for a parallel test). 
+
+@section addsuite Adding Suites
+
+The high level steps for adding a new testing suite are:
+
+- \ref newsuite
+- \ref addlist
+
+@subsection newsuite Adding a new testing suite
+
+A new suite is required when developers add tests that do not fit into any 
+existing suite.  Creating a new test suite is simply done by specifying 
+an unknown suite name in a call to ix::test::results::UpdateResult.  
+For example:
+
+@code
+ void TestMyTest(ix::test::results &testResults)
+ {
+   ...
+   testResults.UpdateResult("MyNewSuite:MyTestName",true);
+   ...
+ }
+@endcode
+
+It is highly recommended when adding new suites to use a suite driver. Use of 
+the suite driver greatly reduces the complexity and steps for adding new
+tests in the suite. Example suite drivers can be found in Testing/src/TestExample.C
+as ExamplesSerialTestDriver, and ExamplesParallelTestDriver.
+
+@note For brand new suites, developers can copy Testing/src/TestExample.C to 
+a test file name of their choice and rename the functions appropriately. Then 
+add the new suite driver to the framework similarly to the steps outlined
+in previous sections for new testing functions.
+
+@subsection addlist Add new suite to suite lists
+
+This step makes the testing framework aware of your new suite. If your 
+new suite has serial tests, add a line for the suite containing only the
+name of the suite to Testing/Scripts/serialUnitSuites.txt.   If your 
+new suite has parallel tests, add the suite name to 
+Testing/Scripts/parallelUnitSuites.txt.
+
+After adding suites, PlasCom2 needs to be reconfigured to make the 
+testing framework aware of the new suite.
+
+@note At configuration (cmake) time, a verbose listing of tests and 
+suites can be generated if one uses the option _-DSHOWTESTS=1_.  This
+can be a convenient way to indicate whether your suite and tests have
+been properly added.
+
+@section additional Additional Topics
+
+This section will talk about FAIL keyword, suite drivers,
+optional test exclusions, adding platforms, running tests,
+and debugging tests.
+
+@section anatomy Anatomy of PlasCom2 Testing 
+
+The PlasCom2 testing framework consists of several parts:
+- \ref parser 
+- \ref object 
+- \ref drivers         
+- \ref functions
+- \ref suites
+- \ref tests   
+- \ref platforms
+- \ref cmake
+
+@subsection parser Code Parser 
+ The Code Parser automatically detects tests added by user/developers.
+ User/developers do not often need to fiddle with the Code Parser.
+ The Code Parser looks through all files matching the "Test*" pattern
+ in the Testing/src subdirectory and finds any calls to "UpdateResult" 
+ and extracts the "SuiteName" and "TestName" from that call. The parse
+ happens at PlasCom2 config-time (i.e. CMake). The lists of testing suites 
+ and tests is accumulated, pruned, and eventually provided to CMake/CTest 
+ at PlasCom2 configuration time and test time. One can find the parse/prune
+ functionality in Testing/CMakeLists.txt.
+
+@subsection object PlasCom2 Testing Object
+ The PlasCom2 Testing Object is an object that encapsulates all the
+ unit and integrated tests implemented for PlasCom2. It is implemented in
+ Testing/include/PlasCom2Test.H. Each "Testing Function" is called as in 
+ a member method of the PlasCom2 Testing Object.
+
+@subsection drivers Test Drivers
+ The PlasCom2 Test Drivers execute the tests optionally by suite or
+ test name. There is a parallel test driver (plascom2_parallel_test) and
+ a serial test driver (plascom2_test). Each of these drivers instantiate
+ a PlasCom2 Testing Object and drive it to run the tests.
+
+@subsection functions Testing Functions
+ The Testing Functions are those functions that the PlasCom2 Testing
+ Object calls from its member methods that implement the tests.  The user
+ writes these Testing Functions.  Testing Functions must be *void*.
+ Each Testing Function needs to be added to the testing prototypes in
+ Testing/include/ExternalTestingFunctions.H and a PlasCom2 Testing
+ Object member method added in Testing/include/PlasCom2Test.H to call 
+ the Testing Function.
+
+@subsection suites Test Suites
+ Test Suites are collections of Tests. Every Test belongs to a 
+ Suite. The testing framework executes each Test Suite in-turn when
+ the user invokes 'make test'. See \ref addsuite for how to add 
+ new suites to the testing framework.
+
+
+@subsection tests Tests
+ Tests are defined, from the testing framework's perspective, as 
+ a call to "UpdateResults" method of the ix::test::results object. The
+ arguments to UpdateResults indicate the "SuiteName" and the "TestName"
+ for the test:
+
+> results.UpdateResults("<SuiteName>:<TestName>");
+
+ - The "TestName" is arbitrary, user-defined
+ - The "SuiteName" should be an existing suite -OR- see \ref addsuites 
+
+ The results for every named test will be reported by CTest when the user
+ invokes: 
+> make test
+
+@subsection platforms Platform Drivers
+ Platform drivers are scripts that help the tests navigate the 
+ resource management system (e.g. batch queue) for each platform. Users do
+ not typically need to tinker with these, but mostly they can be found in
+ Testing/Platforms
+
+@subsection cmake CMake/CTest
+ CMake/CTest - the PlasCom2 testing framework (currently) uses CMake
+ to help parse and prune the lists of tests to run for any given configuration.
+ CTest is used to run the tests and report the results on all platforms.
+ 
+*/

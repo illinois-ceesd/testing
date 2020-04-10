@@ -1,0 +1,657 @@
+/**
+ 
+@page weno WENO
+
+This document summarizes the WENO scheme implementation in PlasCom2. The fifth-order finite difference WENO scheme of Jiang and Shu \cite Jiang1996:fifth with modifications for the freestream preservation on curvilinear grids \cite nonomura2015new are considered. A reduced-order platform is applied to reduce the order of the scheme close to the boundaries and the characteristic wave relations are used for the points on the boundary to implement different boundaries, such as inflow, outflow, no-slip adiabatic and slip isothermal walls.
+
+@section gov Euler equations
+
+
+Euler equations in the computational space in the vector form are considered
+\f[
+\begin{equation*}
+\frac{\partial \hat{\mathbf{Q}}}{\partial t}+\frac{\partial \hat{\mathbf{E}}}{\partial \xi}+\frac{\partial \hat{\mathbf{F}}}{\partial \eta}+\frac{\partial \hat{\mathbf{G}}}{\partial \zeta}=\hat{\mathbf{S_V}},
+\end{equation*}
+\f]
+where
+\f[
+\begin{equation*}
+\hat{\mathbf{Q}}=\frac{\mathbf{Q}}{J}, \quad \hat{\mathbf{E}}=\frac{\xi_x \mathbf{E} +\xi_y \mathbf{F} +\xi_z \mathbf{G}}{J}, \quad \hat{\mathbf{F}}=\frac{\eta_x \mathbf{E}+\eta_y \mathbf{F} +\eta_z \mathbf{G}}{J},\quad \hat{\mathbf{G}}=\frac{\zeta_x \mathbf{E}+\zeta_y \mathbf{F} +\zeta_z \mathbf{G}}{J}, \quad \hat{\mathbf{S_V}}=\frac{\mathbf{S_V}}{J}.
+\end{equation*}
+\f]
+In this formulation, the Cartesian coordinates are mapped to a time-dependent coordinate system \f$(\xi, \tau)\f$, and \f$J\f$ is the Jacobian of the transformation. \f$\mathbf{Q}\f$ is the vector of conserved variables, \f$\mathbf{S_V}\f$ is the source term, and \f$\mathbf{E}\f$, \f$\mathbf{F}\f$, and \f$\mathbf{G}\f$ are the flux vectors in the \f$x\f$, \f$y\f$, and \f$z\f$ directions, respectively. 
+
+\f[
+\begin{equation*}
+\mathbf{Q}=
+\begin{bmatrix}
+ \rho \\ \rho u \\ \rho v  \\ \rho w \\ E
+\end{bmatrix}, \qquad 
+\mathbf{E}=
+\begin{bmatrix}
+\rho u \\ \rho u^2+p \\ \rho uv \\ \rho uw \\ u(\rho e+p)
+\end{bmatrix}, \qquad 
+\mathbf{F}=
+\begin{bmatrix}
+\rho v \\ \rho uv \\ \rho v^2+p \\ \rho vw \\ v(\rho e+p)
+\end{bmatrix}, \qquad 
+\mathbf{G}=
+\begin{bmatrix}
+\rho u \\ \rho uw \\ \rho vw \\ \rho w^2+p \\ w(\rho e+p)
+\end{bmatrix},
+\end{equation*}
+\f]
+where \f$\rho\f$ is density, \f$u\f$, \f$v\f$, and \f$w\f$ are the velocities, \f$p\f$ is the pressure, \f$e\f$ is the internal energy, and \f$E\f$ is the total energy.
+
+@section numerics Finite difference WENO
+
+For a finite difference scheme, the flux derivative is
+\f[
+\begin{equation*}
+\frac{\partial \hat{\mathbf{F}}}{\partial \eta}\bigg\rvert_{i}=\frac{ \hat{\mathbf{F}}_{i+\frac{1}{2}}-\hat{\mathbf{F}}_{i-\frac{1}{2}}}{\Delta \eta}, 
+\end{equation*}
+\f]
+and the goal is to calculate the fluxes at cell edges, while the conserved variables are stored at the center of each cell.
+The WENO procedure to obtain the numerical flux \f$\hat{\mathbf{F}}_{i+\frac{1}{2}}\f$ is \cite Jiang1996:fifth \cite Jiang1999:mhd \cite Christlieb2014:mhd :
+  \item Compute the physical flux at each grid point:
+\f[
+  \begin{align*}
+ \hat{\mathbf{F}}_{i} = \hat{\mathbf{F}}(\mathbf{Q}_{i}),
+  \end{align*}
+\f]
+ 
+  \item At each \f$\eta_{i+\frac{1}{2}}\f$, compute the left and right eigenvectors based on the Roe average between \f$\eta_i\f$ and \f$\eta_{i+1}\f$.
+  
+    \item Project the flux vector and the vector of conserved variables into the characteristic space:
+\f[
+  \begin{align*}
+  \tilde{\mathbf{Q}}_{j} &= \mathbf{L}_{i+\frac{1}{2}}\mathbf{Q}_{j} \text{{} and }\tilde{\mathbf{F}}_{j} = \mathbf{L}_{i+\frac{1}{2}}\mathbf{F}_{j},
+  \end{align*}
+\f]
+  for all points in the numerical stencil associated with \f$\eta_{i+\frac{1}{2}}\f$, i.e, \f$\eta = i-2, i-1, i, i+1, i+2, i+3\f$.
+  \item Perform a Lax-Friedrichs flux vector splitting for each component of the characteristic variables. Specifically, assume that the \f$s\f$th component of \f$\tilde{\mathbf{Q}}_{j}\f$ and \f$\tilde{\mathbf{F}}_{j}\f$ are \f$\tilde{Q}_{j,s}\f$ and \f$\tilde{F}_{j,s}\f$, respectively, then compute
+\f[
+  \begin{align*}
+  \tilde{F}_{j,s}^{\pm} =\frac{1}{2}(\tilde{F}_{j,s}\pm\alpha_{s}\tilde{Q}_{j,s}),
+  \end{align*}
+\f] 
+  where
+\f[
+  \begin{align*}\label{eq:alpha}
+  \alpha_{s} = \kappa \underset{k}\max \lvert \lambda_{s}(\vec{Q}_{k})\rvert,
+  \end{align*}
+\f]
+  is the maximal wave speed of the \f$s\f$th component of the characteristic variables over \f$i-2 \le k \le i+3\f$, and \f$\lambda_{s}\f$ is the \f$s\f$th eigenvalue in the diagonal matrix \f$\mathbf{\Lambda}\f$, and \f$\kappa=1.1\f$ \cite Jiang1996:fifth.
+  
+  
+  \item Perform a WENO reconstruction on each of the computed flux components \f$\tilde{F}_{j,s}^{\pm}\f$ to obtain the corresponding component of the numerical flux. If we let \f$\Phi_{WENO5}\f$ denote the fifth-order WENO reconstruction operator, then the flux is computed as follows:
+\f[
+  \begin{align*}
+  \tilde{F}_{i+\frac{1}{2},s}^{+} &= \Phi_{WENO5}(\tilde{F}_{i-2,s}^{+},\tilde{F}_{i-1,s}^{+},\tilde{F}_{i,s}^{+},\tilde{F}_{i+1,s}^{+},\tilde{F}_{i+2,s}^{+}), \\
+  \tilde{F}_{i+\frac{1}{2},s}^{-} &= \Phi_{WENO5}(\tilde{F}_{i+3,s}^{-},\tilde{F}_{i+2,s}^{-},\tilde{F}_{i+1,s}^{-},\tilde{F}_{i,s}^{-},\tilde{F}_{i-1,s}^{-}).
+  \end{align*} 
+\f]
+  Then set
+\f[
+  \begin{align*}
+  \tilde{F}_{i+\frac{1}{2},s} = \tilde{F}_{i+\frac{1}{2},s}^{+} + \tilde{F}_{i+\frac{1}{2},s}^{-},
+  \end{align*}
+\f]
+  where \f$\tilde{F}_{i+\frac{1}{2},s}\f$ is the \f$s\f$th component of \f$\tilde{\mathbf{F}}_{i+\frac{1}{2}}\f$.
+  \item Finally, project the numerical flux back to the conserved variables
+\f[
+  \begin{align*}
+  \hat{\mathbf{F}}_{i+\frac{1}{2}} = \mathbf{R}_{i+\frac{1}{2}}\tilde{\mathbf{F}}_{i+\frac{1}{2}}.
+  \end{align*}
+\f]
+
+
+
+@subsection reconstruction WENO reconstruction operator
+
+We consider the problem on a uniform grid with \f$N+1\f$ grid points,
+\f[
+\begin{align*}
+a = x_{0} < x_{1} < \cdots < x_{N} = b.
+\end{align*}
+\f]
+We would like to reconstruct \f$f\f$ at \f$x_{i+\frac{1}{2}}\f$ by WENO reconstruction on the stencil \f$S = \{I_{i-2},I_{i-1},...,I_{i+2}\}\f$. There are three sub-stencils for node \f$x_{i+\frac{1}{2}}$: $S^{0} = \{I_{i-2},I_{i-1},I_{i}\}\f$,  \f$S^{1} = \{I_{i-1},I_{i},I_{i+1}\}\f$ and \f$S^{2} = \{I_{i},I_{i+1},I_{i+2}\}\f$. In each sub-stencil \f$S_{i+\frac{1}{2}}^{k}\f$, the third-order accurate numerical flux \f$\hat{f}_{i+\frac{1}{2}}^{k}\f$ is given by
+\f[
+\begin{align*}
+\hat{f}_{i+\frac{1}{2}}^{0} &= \frac{1}{3}f_{i-2} - \frac{7}{6}f_{i-1} + \frac{11}{6}f_{i}, \\
+\hat{f}_{i+\frac{1}{2}}^{1} &= -\frac{1}{6}f_{i-1} + \frac{5}{6}f_{i} + \frac{1}{3}f_{i+1}, \\
+\hat{f}_{i+\frac{1}{2}}^{2} &= \frac{1}{3}f_{i} + \frac{5}{6}f_{i+1} - \frac{1}{6}f_{i+2}.
+\end{align*}
+\f]
+The numerical approximation \f$\hat{f}_{i+\frac{1}{2}}\f$ is defined as a linear convex combination of the above three approximations:
+\f[
+\begin{align*}
+\hat{f}_{i+\frac{1}{2}} = w_{0}\hat{f}_{i+\frac{1}{2}}^{0} + w_{1}\hat{f}_{i+\frac{1}{2}}^{1} + w_{2}\hat{f}_{i+\frac{1}{2}}^{2},
+\end{align*}
+\f]
+where the nonlinaer weights are defined as
+\f[
+\begin{align*}
+w_{k} &= \frac{\tilde{w}_{k}}{\tilde{w}_{0}+\tilde{w}_{1}+\tilde{w}_{2}}, \\
+\tilde{w}_{0} &= \frac{1}{(\epsilon+\beta_{0})^2},\quad  \tilde{w}_{1} = \frac{6}{(\epsilon+\beta_{1})^2}, \quad \tilde{w}_{2} = \frac{3}{(\epsilon+\beta_{2})^2}.
+\end{align*}
+\f]
+We take \f$\epsilon = 10^{-6}\f$ and the smoothness indicator parameters, \f$\beta_{k}\f$, are chosen as in \cite Jiang1996:fifth
+\f[ 
+\begin{align*}
+\beta_{0} &= \frac{13}{12}(f_{i-2}-2f_{i-1}+f_{i})^{2} + \frac{1}{4}(f_{i-2}-4f_{i-1}+3f_{i})^{2}, \\
+\beta_{1} &= \frac{13}{12}(f_{i-1}-2f_{i}+f_{i+1})^{2} + \frac{1}{4}(f_{i-1}-f_{i+1})^{2}, \\
+\beta_{2} &= \frac{13}{12}(f_{i}-2f_{i+1}+f_{i+2})^{2} + \frac{1}{4}(3f_{i}-4f_{i+1}+f_{i+2})^{2}.
+\end{align*}
+\f]
+From these we define the fifth-order WENO reconstruction operator \f$\Phi_{WENO5}\f$ as follows:
+\f[
+\begin{align*}
+\Phi_{WENO5}(f_{i-2},f_{i-1},f_{i},f_{i+1},f_{i+2}) = w_{0}\hat{f}_{i+\frac{1}{2}}^{0} + w_{1}\hat{f}_{i+\frac{1}{2}}^{1} + w_{2}\hat{f}_{i+\frac{1}{2}}^{2}.
+\end{align*}
+\f]
+
+
+@subsection freestream Freestream preservation on curvilinear grids
+
+For freestream preservation on curvilinear grids, steps 5 and 6 in the WENO procedure are modified following \cite nonomura2015new. The WENO flux is devided to a central and a dissipation part \cite jiang1999high
+\f[
+\begin{equation*}
+\mathbf{F}_{j+1/2}=\mathbf{F}_{\textrm{central},j+1/2}+\mathbf{F}_{\textrm{dissipation},j+1/2},
+\end{equation*} 
+\f]
+where
+\f[ 
+\begin{equation*}
+\mathbf{F}_{\textrm{central},j+1/2}=\frac{1}{60}\left(\mathbf{F}_{j-2}-8\mathbf{F}_{j-1}+37\mathbf{F}_j+37\mathbf{F}_{j+1}-8\mathbf{F}_{j+2}+\mathbf{F}_{j+3}\right),
+\end{equation*}
+\f]
+corresponds to a \f$6^{th}\f$-order central finite difference scheme. The dissipation part becomes
+\f[
+\begin{align*}
+F_{\textrm{dissipation,m},j+1/2}=\Sigma_m \frac{r_m}{60}\left[(20 w_m^{-1} -1) F_m'^{-1} -(10(w_m^{-1}+w_m^{-1})-5) F_m'^{-2}+F_m'^{-1}\right]\\
+-\Sigma_m \frac{r_m}{60}\left[(20 w_m^{+1} -1) F_m'^{+1} -(10(w_m^{+1}+w_m^{+1})-5) F_m'^{+2}+F_m'^{+1}\right],
+\end{align*}
+\f]
+where \f$r_m\f$ is the corresponding right eigenvector, and
+\f[
+\begin{align*}
+F_m'^{+1}= f_{j+1,m}^{+}-3 f_{j,m}^{+}+3 f_{j-1,m}^{+}-f_{j-2,m}^{+},\\
+F_m'^{+2}= f_{j+2,m}^{+}-3 f_{j+1,m}^{+}+3 f_{j,m}^{+}-f_{j-1,m}^{+},\\
+F_m'^{+3}= f_{j+3,m}^{+}-3 f_{j+2,m}^{+}+3 f_{j+1,m}^{+}-f_{j,m}^{+},\\
+F_m'^{-1}= f_{j+3,m}^{-}-3 f_{j+2,m}^{-}+3 f_{j+1,m}^{+}-f_{j,m}^{-},\\
+F_m'^{-2}= f_{j+2,m}^{-}-3 f_{j+1,m}^{-}+3 f_{j,m}^{+}-f_{j-1,m}^{-},\\
+F_m'^{-3}= f_{j+1,m}^{-}-3 f_{j,m}^{-}+3 f_{j-1,m}^{-}-f_{j-2,m}^{-}.
+\end{align*}
+\f]
+In this formulation
+\f[
+\begin{equation*}
+f^{\pm}_{k,m}=\frac{l_m}{2}\left[\left(\frac{\xi_x}{J}\right)_{j+1/2} \mathbf{E}_k +\left(\frac{\xi_y}{J}\right)_{j+1/2} \mathbf{F}_k +\left(\frac{\xi_z}{J}\right)_{j+1/2} \mathbf{G}_k +\pm \lambda_m \frac{\mathbf{Q}_k}{J_{i+1/2}} \right],
+\end{equation*}
+\f]
+where \f$l_m\f$ is the corresponding right eigenvector. For freestream preservation, the metric term for evaluation the dissipation part of the flux is defined as \cite jiang1999high 
+\f[
+\begin{equation*}
+\left(\frac{\xi_x}{J}\right)_{j+1/2}=\frac{1}{2}\left[\left(\frac{\xi_x}{J}\right)_j+\left(\frac{\xi_x}{J}\right)_{j+1}\right].
+\end{equation*}
+\f]
+
+
+@section nscbc Boundary treatment using the characteristic wave relations
+
+For points on the boundary, we may use the characteristic wave relations to obtain the flux at that point.
+
+
+@subsection charspace Characteristic space
+
+Equations in the characteristic space are \cite kim2004generalized 
+\f[
+\begin{equation*}
+\frac{\partial \mathbf{R}}{\partial t}+\mathbf{L}=\mathbf{S_c},
+\end{equation*}
+\f]
+where
+\f[
+\begin{equation*}
+\delta \mathbf{R}= P^{-1} \delta Q, \quad \mathbf{L}=\lambda \frac{\partial R}{\partial \xi}=P^{-1}\left(\xi_x \frac{\partial E}{\partial \xi}+
+\xi_y \frac{\partial F}{\partial \xi}+\xi_z \frac{\partial G}{\partial \xi} \right),
+\end{equation*}
+\f]
+and
+\f[ 
+\begin{equation*}
+\mathbf{S_c}=J P^{-1}\left[\hat{\mathbf{S}_v}-\left[\mathbf{E}\frac{\partial}{\partial \xi}\left(\frac{\xi_x}{J}\right)+\mathbf{F} \frac{\partial}{\partial \xi}\left(
+\xi_y\right)+\mathbf{G} \frac{\partial}{\partial \xi}\left(\frac{\xi_z}{J}\right)+\frac{\partial \hat{\mathbf{F}}}{\partial \eta}+\frac{\partial \hat{\mathbf{G}}}
+{\partial \zeta} \right]\right].
+\end{equation*}
+\f]
+Also note that
+\f[
+\begin{equation*}
+\left(\xi_x \frac{\partial E}{\partial \xi}+
+\xi_y \frac{\partial F}{\partial \xi}+\xi_z \frac{\partial G}{\partial \xi} \right)=J\left(\frac{\partial \hat{E}}{\partial \xi}-\left[E\frac{\partial}{\partial \xi}\left(\frac{\xi_x}{J}\right)+F \frac{\partial}{\partial \xi}\left(
+\xi_y\right)+G \frac{\partial}{\partial \xi}\left(\frac{\xi_z}{J}\right) \right]\right).
+\end{equation*}
+\f]
+Characteristic variables are 
+\f[
+\begin{equation*}
+\delta \mathbf{R}=\left[\delta \rho -\frac{\delta p}{c^2}, \delta \tilde{w},\delta \tilde{v},\frac{\delta p}{\rho c}+\delta \tilde{u}, \frac{\delta p}{\rho c}-\delta \tilde{u}\right]^T.
+\end{equation*}
+\f]
+where
+\f[
+\begin{equation*}
+u=\xi_x u +\xi_y v+\xi_z w, \quad \delta \tilde{u}=\tilde{\xi}_x \delta u+ \tilde{\xi}_y \delta v+\tilde{\xi}_z \delta w, \quad \delta \tilde{v}=-\tilde{\xi}_x \delta v +\tilde{\xi}_y \delta u, \quad \delta \tilde{w}=-\tilde{\xi}_x \delta w -\tilde{\xi}_z \delta u.
+\end{equation*}
+\f]
+and
+\f[
+\begin{equation*}
+\left[\tilde{\xi}_x,\tilde{\xi}_y,\tilde{\xi}_z\right]=\frac{\left[\xi_x, \xi_y, \xi_z \right]}{\sqrt{\xi_x^2+\xi_y^2+\xi_z^2}}
+\end{equation*}
+\f]
+Wave speeds are
+\f[
+\begin{equation*}
+\mathbf{\lambda}=\left[u,u,u,u+c\sqrt{\xi_x^2+\xi_y^2+\xi_z^2},u-c\sqrt{\xi_x^2+\xi_y^2+\xi_z^2}\right]^T.
+\end{equation*}
+\f]
+
+
+@subsection charprim Characteristic space in terms of primitive variables
+
+\f[
+\begin{equation*}
+\frac{\partial \rho}{\partial t}+L_1+\frac{\rho}{2c}(L_4+L_5)=S_{c1}+\frac{\rho}{2c}(S_{c4}+S_{c5})
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\frac{\partial \tilde{u}}{\partial t}+\frac{1}{2}(L_4-L_5)=\frac{1}{2}(S_{c4}-S_{c5})
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\frac{\partial \tilde{v}}{\partial t}+L_2=S_{c2}
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\frac{\partial \tilde{w}}{\partial t}+L_3=S_{c3}
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\frac{\partial p}{\partial t}+\frac{\rho c}{2}(L_4+L_5)=\frac{\rho c}{2}(S_{c4}+S_{c5})
+\end{equation*}
+\f]
+
+
+
+@subsection ovimp Overall implementation procedure
+
+Use one-sided finite differences to calculate \f$\partial \hat{\mathbf{E}}/\partial \xi\f$
+
+Evaluate the $L$ vector
+\f[
+\begin{equation*}
+\mathbf{L}=J P^{-1}\left[\frac{\partial \hat{E}}{\partial \xi}-\left[E\frac{\partial}{\partial \xi}\left(\frac{\xi_x}{J}\right)+F \frac{\partial}{\partial \xi}\left(
+\xi_y\right)+G \frac{\partial}{\partial \xi}\left(\frac{\xi_z}{J}\right) \right]\right]
+\end{equation*}
+\f]
+
+Evaluate \f$L^*\f$ based on the applied boundary condition
+
+Come back to the computational space from the characteristic space:
+\f[
+\begin{equation*}
+\left(\frac{\partial \hat{\mathbf{E}}}{\partial \xi} \right)^*=\frac{1}{J}P L^*+\left[E\frac{\partial}{\partial \xi}\left(\frac{\xi_x}{J}\right)+F \frac{\partial}{\partial \xi}\left(
+\xi_y\right)+G \frac{\partial}{\partial \xi}\left(\frac{\xi_z}{J}\right) \right]
+\end{equation*}
+\f]
+
+
+@subsection bcbc Applying boundary conditions on \f$\mathbf{L}^*\f$
+
+
+Subsonic inflow:
+
+solves for \f$\rho\f$
+\f[
+\begin{equation*}
+L_1=\frac{\gamma -1}{2}{\rho}{c}(L_4+L_5)+\frac{c^2}{\gamma-1}\frac{\partial T}{\partial t}.
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\text{if}\ \ n>0, \quad L_4=L_5-2\left(\frac{\partial u}{\partial t}\xi_x+\frac{\partial v}{\partial t}\xi_y\right),
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\text{if}\ \ n<0, \quad L_5=L_4+2\left(\frac{\partial u}{\partial t}\xi_x+\frac{\partial v}{\partial t}\xi_y\right),
+\end{equation}
+\f]
+where \f$n\f$ is the normal vector at the boundary.
+sets \f$u,v,w, T,Y_i\f$
+
+
+Supersonic inflow:
+
+sets everything \f$\rho,u,v,w,p,Y_i\f$
+
+
+Outflow no-reflection:
+solves for all variables
+\f[
+\begin{equation*}
+\text{if}\ \ n>0, \text{and} \ \ \alpha_i>0, \quad L_i=0
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\text{if}\ \ n<0, \text{and} \ \ \alpha_i<0, \quad L_i=0
+\end{equation*}
+\f]
+doesn't set any variables
+
+
+Adiabatic slip wall:
+Solves for everything
+\f[
+\begin{equation*}
+L_1=L_2=L_3=0, \quad L_{6,...}=0
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\text{if}\ \ n>0, \quad L_4=L_5-2A_{\text{wall}}
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\text{if}\ \ n<0, \quad L_5=L_4 +2 A_{\text{wall}}
+\end{equation*}
+\f]
+sets velocity \f$[u,v,w]\f$, enforces the normal velocity to be \f$A_{\text{wall}}\f$
+
+
+Isothermal no-slip wall:
+
+solves for \f$\rho, \rho Y_i\f$
+\f[
+\begin{equation*}
+L_1=L_2=L_3=0, \quad L_{6,...}=0
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\text{if}\ \ n>0, \quad L_4=L_5
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\text{if}\ \ n<0, \quad L_5=L_4
+\end{equation*}
+\f]
+sets velocity \f$[u,v,w]=\mathbf{V}_{\text{wall}}\f$
+
+sets \f$T\f$
+
+@section eigenvectors Right and left eigenvectors
+
+\f[
+\begin{equation*}
+b_1=\frac{p_e}{\rho c^2}=\frac{\gamma-1}{c^2}, \qquad b_2=1+b_1 q^2-b_1 H, \qquad b_3=-\Sigma_{i=1}^{N-1}\frac{Y_i p_{\rho Y_i}}{c^2}=b_1 \Sigma_{i=1}^{N-1}Y_i z_i, \quad \beta=\frac{\gamma -1}{\rho c},  
+\end{equation*}
+\begin{equation*}
+z_i=\frac{-1}{\gamma -1} \left(\frac{dp}{d(\rho Y_i)} \right)=\frac{c_p (R_N - R_i)T}{R}+h_i-h_N=-\frac{\rho p_{\rho Y_i}}{p_e}, \quad b_1z_i=-\frac{p_{\rho Y_i}}{c^2},
+\end{equation*}
+\f]
+
+
+Two-dimensional single-fluid:
+\f[
+\begin{equation*}
+R=
+\begin{bmatrix}
+1 & 0 & \frac{\rho}{2c} &  \frac{\rho}{2c}\\
+u & \rho \tilde{\xi_y} & \frac{\rho}{2c} \left(u+c \tilde{\xi_x}\right) & \frac{\rho}{2c} \left(u-c \tilde{\xi_x}\right) \\
+v & -\rho \tilde{\xi_x} & \frac{\rho}{2c} \left(v+c \tilde{\xi_y}\right) & \frac{\rho}{2c} \left(v-c \tilde{\xi_y}\right) \\
+H-\frac{\rho c^2}{p_e} & \rho \left( u \tilde{\xi_y} -v \tilde{\xi_x}\right) & \frac{\rho}{2c} \left(H+c \dot{V}_{\xi}\right) & \frac{\rho}{2c} \left(H-c \dot{V}_{\xi}\right) \\
+\end{bmatrix},
+\end{equation*}
+\f]
+and
+\f[ 
+\begin{equation*}
+L=
+\begin{bmatrix}
+1-b_2 & b_1 u & b_1 v & -b_1 \\
+-\frac{1}{\rho}(u \tilde{\xi_y}-v\tilde{\xi_x}) & \frac{1}{\rho}\tilde{\xi_y} & \frac{-1}{\rho}\tilde{\xi_x} \\
+\beta c^2(b_2-\frac{\hat{u}}{c}) & \beta c (\tilde \xi_x  - b_1 u c) & \beta c (\tilde\xi_y  -b_1 vc) & \beta b_1 c^2 & -\beta b_1z_1 c^2 \\
+\beta c^2(b_2+\frac{\hat{u}}{c}) & -\beta c (\tilde\xi_x  + b_1 u c) & -\beta c (\tilde \xi_y  +b_1 vc) & \beta b_1 c^2 \\
+\end{bmatrix}.
+\end{equation*}
+\f]
+
+
+Two-dimensional multi-component:
+
+\f[
+\begin{equation*}
+R=
+\begin{bmatrix}
+1 & 0 & \alpha &  \alpha & 0 & 0& 0\\
+u & \rho \tilde{\xi_y} & \alpha \left(u+c \tilde{\xi_x}\right) &\alpha \left(u-c \tilde{\xi_x}\right)& 0 & 0& 0 \\
+v & -\rho \tilde{\xi_x} & \alpha \left(v+c \tilde{\xi_y}\right) & \alpha \left(v-c \tilde{\xi_y}\right) & 0 & 0& 0 \\
+H-\frac{\rho c^2}{p_e} & \rho \left( u \tilde{\xi_y} -v \tilde{\xi_x}\right) & \alpha \left(H+c \hat{u}\right) &\alpha \left(H-c \hat{u}\right) & z_1 & z_2 & z_3\\
+Y_1 & 0  & \alpha Y_1 & \alpha Y_1 & 1 & 0 & 0 \\
+Y_2 & 0  & \alpha Y_2 & \alpha Y_2 &0 & 1 & 0 \\
+Y_3 & 0  & \alpha Y_3 & \alpha Y_3 &0 & 0 & 1 \\
+\end{bmatrix},
+\end{equation*}
+\f]
+
+and
+
+\f[
+\begin{equation*}
+L=
+\begin{bmatrix}
+1-b_2-b_3 & b_1 u & b_1 v & -b_1 & b_1z_1 & b_1 z_2 & b_1 z_3\\
+-\frac{1}{\rho}(u \tilde{\xi_y}-v\tilde{\xi_x}) & \frac{1}{\rho}\tilde{\xi_y} & \frac{-1}{\rho}\tilde{\xi_x} & 0 & 0 & 0 &0\\
+\beta c^2(b_2+b_3-\frac{\hat{u}}{c}) & \beta c (\tilde \xi_x  - b_1 u c) & \beta c (\tilde\xi_y  -b_1 vc) & \beta b_1 c^2 & -\beta b_1z_1 c^2 & -\beta b_1z_2 c^2 & -\beta b_1 z_3 c^2\\
+\beta c^2(b_2+b_3+\frac{\hat{u}}{c}) & -\beta c (\tilde\xi_x  + b_1 u c) & -\beta c (\tilde \xi_y  +b_1 vc) & \beta b_1 c^2 & -\beta b_1z_1 c^2 & -\beta b_1z_2 c^2 & -\beta b_1 z_3 c^2\\
+-Y_1 & 0 & 0 & 0 & 1 & 0 & 0\\
+-Y_2 & 0 & 0 & 0 & 0 &  1 & 0\\
+-Y_3 & 0 & 0 & 0 & 0 & 0 & 1\\
+\end{bmatrix}.
+\end{equation*}
+\f]
+
+
+Improved three-dimensional eigenvectors following \cite nonomura2017characteristic used with the WENO solver:
+
+Three-dimensional single-fluid:
+
+For eigenvectors in the \f$x-\f$direction:
+\f[
+\begin{equation*}
+(k_x,k_y,k_z)=\frac{(\xi_x,\xi_y,\xi_z)}{\sqrt{\xi_x^2+\xi_y^2+\xi_z^2}},\quad
+(l_x,l_y,l_z)=\frac{(\eta_x,\eta_y,\eta_z)}{\sqrt{\eta_x^2+\eta_y^2+\eta_z^2}},\quad
+(m_x,m_y,m_z)=\frac{(\zeta_x,\zeta_y,\zeta_z)}{\sqrt{\zeta_x^2+\zeta_y^2+\zeta_z^2}},
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\tilde{u}=k_x u+k_y v+k_z w, \quad \tilde{v}=l_x u+l_y v+l_z w, \quad \tilde{w}=m_x u+m_y v+m_z w,
+\end{equation*}
+\f]
+
+\f[
+\begin{equation*}
+\alpha= \frac{\rho}{2c},
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+R=
+\begin{bmatrix}
+1 & 0 & 0  &  \alpha & \alpha \\
+u  & \rho l_x& \rho m_x & \alpha (u+c k_x) & \alpha (u-c k_x) \\
+v  & \rho l_y & \rho m_y & \alpha (v+c k_y) & \alpha (v-c k_y) \\
+w & \rho l_z & \rho m_z & \alpha (w+c k_z) & \alpha (w-c k_z) \\
+\frac{1}{2}(u^2+v^2+w^2) &  \rho \tilde{v} & \rho \tilde{w} &\alpha (H+c \tilde{u}) & \alpha (H-c \tilde{u} )
+\end{bmatrix},
+\end{equation*}
+\f]
+and
+\f[
+\begin{equation*}
+\alpha=\frac{\gamma-1}{c^2}, \quad b_1=\frac{\gamma -1}{c^2}, \quad b_2= \frac{\gamma -2}{2}M^2, \quad M^2=\frac{u^2+v^2+w^2}{c^2},
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+L=
+\begin{bmatrix}
+1-b_2 & b_1 u & b_1 v &  b_1 w & -b_1  \\
+-\frac{\tilde{v}}{\rho} & \frac{l_x}{\rho}& \frac{l_y}{\rho}& \frac{l_z}{\rho} & 0\\
+-\frac{\tilde{w}}{\rho} & \frac{m_x}{\rho}& \frac{m_y}{\rho}& \frac{m_z}{\rho} & 0\\ 
+\frac{1}{2\alpha}\left(b_2-\frac{\tilde{u}}{c}\right)& \frac{-1}{2\alpha}\left(b_1u-\frac{k_x}{c}\right)&  \frac{-1}{2\alpha}\left(b_1v-\frac{k_y}{c}\right) &  \frac{-1}{2\alpha}\left(b_1w-\frac{k_z}{c}\right) & \frac{1}{2\alpha}b_1\\
+\frac{1}{2\alpha}\left(b_2+\frac{\tilde{u}}{c}\right)& \frac{-1}{2\alpha}\left(b_1u+\frac{k_x}{c}\right)&  \frac{-1}{2\alpha}\left(b_1v+\frac{k_y}{c}\right) &  \frac{-1}{2\alpha}\left(b_1w+\frac{k_z}{c}\right) & \frac{1}{2\alpha}b_1\\
+\end{bmatrix}.
+\end{equation*}
+\f]
+
+Three-dimensional multi-component:
+
+\f[
+\begin{equation*}
+R=
+\begin{bmatrix}
+1 & 0 & 0  &  \alpha & \alpha  & 0 & 0 & 0\\
+u  & \rho l_x& \rho m_x & \alpha (u+c k_x) & \alpha (u-c k_x) & 0 & 0 & 0\\
+v  & \rho l_y & \rho m_y & \alpha (v+c k_y) & \alpha (v-c k_y) & 0 & 0 & 0\\
+w & \rho l_z & \rho m_z & \alpha (w+c k_z) & \alpha (w-c k_z)& 0 & 0 & 0 \\
+\frac{1}{2}(u^2+v^2+w^2) &  \rho \tilde{v} & \rho \tilde{w} &\alpha (H+c \tilde{u}) & \alpha (H-c \tilde{u} )& z_1 & z_2 & z_3\\
+Y_1 & 0 & 0 & \alpha Y_1 & \alpha Y_1 & 1 & 0 & 0\\
+Y_2 & 0 & 0 & \alpha Y_2 & \alpha Y_2& 0 & 1 & 0\\
+Y_3 & 0 & 0 & \alpha Y_3 & \alpha Y_3 & 0 & 0 & 1\\
+\end{bmatrix},
+\end{equation*}
+\f]
+
+and
+
+\f[
+\begin{equation*}
+L=
+\begin{bmatrix}
+1-b_2-b_3 & b_1 u & b_1 v &  b_1 w & -b_1  & b_1z_1 & b_1 z_2 & b_1 z_3\\
+-\frac{\tilde{v}}{\rho} & \frac{l_x}{\rho}& \frac{l_y}{\rho}& \frac{l_z}{\rho} & 0 & 0 & 0 & 0\\
+-\frac{\tilde{w}}{\rho} & \frac{m_x}{\rho}& \frac{m_y}{\rho}& \frac{m_z}{\rho} & 0 & 0 & 0 & 0\\ 
+\frac{1}{2\alpha}\left(b_2+b_3-\frac{\tilde{u}}{c}\right)& \frac{-1}{2\alpha}\left(b_1u-\frac{k_x}{c}\right)&  \frac{-1}{2\alpha}\left(b_1v-\frac{k_y}{c}\right) &  \frac{-1}{2\alpha}\left(b_1w-\frac{k_z}{c}\right) & \frac{1}{2\alpha}b_1 & \frac{-b_1z_1c}{\rho} & \frac{-b_1z_2c}{\rho} & \frac{-b_1z_3c}{\rho}\\
+\frac{1}{2\alpha}\left(b_2+b_3\frac{\tilde{u}}{c}\right)& \frac{-1}{2\alpha}\left(b_1u+\frac{k_x}{c}\right)&  \frac{-1}{2\alpha}\left(b_1v+\frac{k_y}{c}\right) &  \frac{-1}{2\alpha}\left(b_1w+\frac{k_z}{c}\right) & \frac{1}{2\alpha}b_1  & \frac{-b_1z_1c}{\rho} & \frac{-b_1z_2c}{\rho} & \frac{-b_1z_3c}{\rho}\\
+-Y_1 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+-Y_2 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+-Y_3 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+\end{bmatrix}.
+\end{equation*}
+\f]
+
+
+
+
+
+@section Roeaverage Roe average
+
+
+The WENO reconstruction is performed in the characteristic space. Consequently, the left and right eigenvectors are required to transform the fluxes from the physical space to the characteristic space. When calculating the flux at a cell edge \f$i+\frac{1}{2}\f$, the Roe average between points \f$i\f$ and \f$i+1\f$ are used to construct the right and left eigenvectors shown in section~\ref{sec:eigenvectors}. The Roe average state \f$\tilde{U}\f$ is defined such that  \cite shuen1992upwind \cite shuen1990inviscid
+\f[
+\begin{equation*}\label{eq:Roe}
+\Delta F = \tilde{A}\Delta U, \quad \tilde{A}=\tilde{A}(\tilde{U}),\quad \tilde{U}=\tilde{U}(U_L, U_R),
+\end{equation*}
+\f]
+where 
+\f[
+\begin{equation*}
+\Delta(\cdot)=(\cdot)_L-(\cdot)_R.
+\end{equation*}
+\f]
+The Roe average operator \f$R\f$  is 
+\f[
+\begin{equation*}
+R(f)= \frac{\sqrt{\rho_R}f_R+\sqrt{\rho_L}f_L}{\sqrt{\rho_R}+\sqrt{\rho_L}}.
+\end{equation*}
+\f]
+It can be shown that (\ref{eq:Roe}) is satisfied by
+\f[
+\begin{equation*}
+\tilde{\rho}=\sqrt{\rho_L\rho_R}, \quad \tilde{u}=R(u), \quad\tilde{e}=R(e), \quad\tilde{H}=R(H), \quad \tilde{Y_i}=R(Y_i).
+\end{equation*}
+\f]
+For a thermally perfect gas mixture, we choose the set \f$(\tilde{\rho},\tilde{u}, \tilde{e},\tilde{H},\tilde{Y_i},\tilde{p_{\rho}},\tilde{p_e},\tilde{p_{\rho Y_i}})\f$, which should satisfy the pressure constraint 
+\f[
+\begin{equation*}\label{eq:pconstraint}
+\Delta p=\tilde{p_{\rho}}\Delta \rho +\tilde{p_e}\Delta e+\Sigma_{i=1}^{N-1}\tilde{p_{\rho Y_i}}\Delta \rho Y_i.
+\end{equation*}
+\f]
+The next step is to define \f$(\tilde{p_{\rho}},\tilde{p_e},\tilde{p_{\rho Y_i}})\f$ in a consistent way satisfying the above constraint. First, we calculate 
+\f[
+\begin{equation*}
+\bar{p_{\rho}}=p_{\rho}(\tilde{\rho},\tilde{u}, \tilde{e},\tilde{Y_1},...,\tilde{Y_{N-1}}),
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\bar{p_{e}}=p_{\rho}(\tilde{\rho},\tilde{u}, \tilde{e},\tilde{Y_1},...,\tilde{Y_{N-1}}),
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\bar{p_{\rho Y_i}}=p_{\rho}(\tilde{\rho},\tilde{u}, \tilde{e},\tilde{Y_1},...,\tilde{Y_{N-1}}), \qquad i=1,...,N-1.
+\end{equation*}
+\f]
+Next, the pressure residual \f$\delta p\f$ is evaluated
+\f[
+\begin{equation*}
+\delta p=\Delta p-\left(\bar{p_{\rho}}\Delta \rho+\bar{p_e}\Delta e+\Sigma_{i=1}^{N-1}\bar{p_{\rho Y_i}}\Delta \rho Y_i \right).
+\end{equation*}
+\f]
+The Roe average state for the pressure derivatives are then defined as 
+\f[
+\begin{equation*}
+\tilde{p_e}=\bar{p_e}\left(1+\frac{\bar{p_e}\Delta e}{(\bar{p_e}\Delta e)^2+(\bar{p_{\rho}}\Delta \rho)^2+\Sigma_{i=1}^{N-1}(\bar{p_{\rho Y_i}}\Delta \rho Y_i)^2 } \delta p\right),
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\tilde{p_{\rho}}=\bar{p_{\rho}}\left(1+\frac{\bar{p_{\rho}}\Delta \rho}{(\bar{p_e}\Delta e)^2+(\bar{p_{\rho}}\Delta \rho)^2+\Sigma_{i=1}^{N-1}(\bar{p_{\rho Y_i}}\Delta \rho Y_i)^2 } \delta p\right),
+\end{equation*}
+\f]
+\f[
+\begin{equation*}
+\tilde{p_{\rho Y_i}}=\bar{p_{\rho Y_i}}\left(1+\frac{\bar{p_{\rho Y_i}}\Delta \rho Y_i}{(\bar{p_e}\Delta e)^2+(\bar{p_{\rho}}\Delta \rho)^2+\Sigma_{i=1}^{N-1}(\bar{p_{\rho Y_i}}\Delta \rho Y_i)^2 } \delta p\right),
+\end{equation*}
+\f]
+which ensures satisfying (\ref{eq:pconstraint}). The Roe average for thermally perfect gas mixtures is not a unique procedure, but it returns the standard formulation for a calorically perfect gas as \f$\delta p\f$ vanishes. 
+
+The Roe average sound speed is 
+\f[
+\begin{equation*}
+\tilde{a}^2=\tilde{p_\rho}+\frac{\tilde{p_e}}{\tilde{\rho}}(\tilde{H}-\tilde{e}-\tilde{ke})+\Sigma_{i=1}^{N-1}\tilde Y_i \tilde{p_{\rho Y_i}}.
+\end{equation*}
+\f]
+
+
+
+
+
+*/
+
+
+

@@ -1,0 +1,48 @@
+/**
+
+@page kernel_documentation Computational Kernel Documentation
+
+This is a guide to computational kernels used in *PlasCom2*. 
+
+____
+
+@section SimpleKernels Simple kernels
+
+Simple kernels are defined by the following:
+
+  - atomic, void
+  - explicit, clearly marked arguments (with intent)
+  - Minimal logic (i.e. no drivers)
+  - C and Fortran callable
+  - no external, or implicit data dependencies
+  - no calls to external (non-intrinsic) functions 
+  - does not communicate
+
+@em All of the kernels in the @ref simple kernel collection are simple kernels. The following kernels also meet the definition of simple kernels.
+
+ - operators::applyoperator
+ - operators::applyoperatorv
+ - operators::applysinglestencil
+
+@section MesoKernels Meso-kernels
+
+Meso-kernels follow all of the rules for a kernel, with the following exceptions:
+
+  - Can call <b>other kernels</b>
+
+The following are examples of meso-kernels:
+
+  - euler::flux1d
+  - euler::scalarflux1d
+  - operators::applyoperatorblobs
+  - metricops::vhatcomponent
+  - metricops::ijkgradtoxyzdiv
+
+@section SuperKernels Super kernels
+
+Super kernels have kernel-like structure, but are allowed the following:
+
+  - Controlling, more complex logic (i.e. driver-like)
+
+
+*/

@@ -1,0 +1,3 @@
+./cleandocs
+doxygen PlasCom2.cfg
+tar zcvf plascom2_html_docs.tgz html

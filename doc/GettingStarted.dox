@@ -1,0 +1,76 @@
+/**
+
+@page getting_started Getting Started with PlasCom2
+
+@section quickstart Quickstart
+
+For the impatient. Must haves:\n
+- git
+- C++/F90 Compiler
+- CMake
+- MPI
+- Paralell HDF5
+
+Optional:\n
+
+- Doxygen (for documentation)
+- Cantera (for reactive flow)
+
+Get, build, and test:\n
+
+> git clone --recursive git@bitbucket.org:/xpacc-dev/PlasCom2\n
+> mkdir PlasCom2/build\n
+> cd PlasCom2/build\n
+> cmake ../\n
+> make\n
+> make test\n
+
+Read on as needed for details.
+
+@section obtain Getting the code
+
+PlasCom2 can be obtained from the <a href="https://bitbucket.org:/xpacc-dev/PlasCom2">XPACC Bitbucket repository</a>. Make sure to use the "--recursive" option when cloning the repository so that all sub-modules will be picked up.  For example:\n
+
+> git clone --recursive git@bitbucket.org:/xpacc-dev/PlasCom2 \[PC2SRCPATH\]\n
+
+The above command should create a clone of the PlasCom2 repository in at your local path \[PC2SRCPATH\]. If \[PC2SRCPATH\] argument is not supplied, then the default path will be ./PlasCom2. The path to your clone of PlasCom2 will hereafter be referred to as PC2SRCPATH.
+ 
+@note Sometimes PlasCom2 fails to clone unless the user has SSH keys set up with Bitbucket. If there is trouble cloning, please try setting up SSH key-based access.
+
+@section build Building PlasCom2
+
+@subsection prereq Prerequisites
+
+- C++/F90 compilers\n
+  Most modern C++ and F90 compilers should work. Most commonly used and tested are GCC, Intel, LLVM/Clang/Flang, and IBM. PlasCom2 currently requires only C++98, although should build without issue against C++11.
+- CMake 2.8 or higher
+- MPI\n
+  Currently only MPI1 is required, although MPI2 is likely on the horizon. PlasCom2 should build OK against nearly any flavor of MPI that implements MPI1.  Most commonly used and tested are MPICH, OpenMPI, and MVAPICH.
+- HDF5\n
+  PlasCom2 uses parallel HDF5 for all heavy-lifting I/O and requires at least HDF5-1.8.20. HDF5 should be built with the MPI compiler wrappers with parallel enabled (--enable-parallel). If HDF5 is installed in user space (i.e. not in a system-wide location), then PlasCom2 will need to be made aware of its location at configuration time.
+- Cantera\n
+  This packages is only required if flow chemistry or combustion is enabled. Refer to Cantera build/install instructions for the process of getting and building it.
+  
+@subsection configbuild Configuration and Compiling
+
+PlasCom2 uses CMake (2.8+) for configuration, and build management.  It is highly recommended to create a build directory that is separate from your PlasCom2 source path (PC2SRCPATH).  Typically, this is done by creating a build directory below the PC2SRCPATH. For example:\n
+
+> mkdir PC2SRCPATH/build \&\& cd PC2SRCPATH/build\n
+
+Regardless of where the build will be conducted, the build directory will hereafter be referred to as PC2BLDPATH. There are a few environment variables that can be helpful when configuring PlasCom2. If you do not set these environment variables, CMake will attempt to find the appropriate setup by searching your environment and common system paths. PlasCom2 requires MPI, and to ensure the correct building environment is found, it can be useful to set the following:\n
+
+> CC=mpicc\n
+> CXX=mpicxx\n
+> FC=mpif90\n
+
+If used, the above environment variables should be set to the desired MPI compilers before invoking CMake to configure PlasCom2.  In addition, if third-party packages (e.g. HDF5 and/or Cantera) are installed in non-standard, or user-owned file spaces, then CMake must be made aware of the path to those packages.  The following environment variable can be used to indicate third-party or non-standard paths:\n
+
+> CMAKE_PREFIX_PATH=/path/to/hdf5:/path/to/cantera\n
+
+CMake will search the bin, lib, share, and include subdirectories of any paths included in CMAKE_PREFIX_PATH for tools, libraries, and include files required by the build.
+
+
+
+@section test Testing
+
+*/

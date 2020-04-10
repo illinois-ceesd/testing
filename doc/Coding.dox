@@ -1,0 +1,63 @@
+/**
+
+@page xpacc_coding_guide XPACC Coding Guide for C/C++ in PlasCom2
+
+@section General Coding Style
+An existing and useful guide on C coding is the one for the Linux kernel here:
+[Linux Kernel Coding Style Guide](http://elixir.free-electrons.com/linux/latest/source/Documentation/process/coding-style.rst)
+
+The Linux Kernel Style Guide is a bit overboard for our purposes, and doesn't provide any C++-specific
+guidelines. The following is a start on some guidelines for C++, and some general
+exceptions to the guidelines presented in the Linux Kernel Style Guide.
+
+@section PlasCom2-specific 
+- Braces - use function-like braces (i.e. curly braces begin on next line) for the following C++ constructs:
+         - Classes
+         - Namespaces
+         - Functions ( not strict, sometimes same-line braces make sense)
+- Use of namespaces 
+         - Project-specific namespaces - Each project should have its own namespace
+         - Each major self-contained programmatic construct should be contained in a namespace (e.g. domain, grid, state) 
+         - The standard namespace, std, should be explicitly resolved on each construct from the standard namespace (as opposed to doing "using namespace std". It is also acceptable to use specific functions from the standard namespace, e.g. "using std::cout".
+- Variable, function, and construct naming conventions 
+         - There is no need to be as pedantic about variable naming conventions as the Linux Kernel Style Guide. Just create readable, maintainable code.
+         - Much of the code follows a loose variable naming scheme:
+             - Start with lower case letters, followed by camel case (ex: deltaTime, interFaceNormal)
+             - Be descriptive with variable names, avoid things like *x*, and *tmp* for all but the most trivial and localized use
+             - Embedding some type descriptions can be useful (ex: coordinatesPtr, xValueVec), depending on context
+             - Function names should be capitalized, camel case (ex: GetCurrentTime)
+         - When using references, use the same rule as for pointers where the reference qualifier rides with the variable name, not the type.\n
+Like this:\n
+@code
+int *pointerVar; (good)
+int &referenceVar; (good)
+@endcode
+<b>Not</b> like this:\n
+@code
+int* pointerVar; (other than good)
+int& referenceVar; (other than good)
+@endcode
+
+- Use spaces between stream operators and their arguments:\n
+@code
+std::cout << "Hello world!" << std::endl; (good)
+std::cout<<"Hardertoread"<<std::endl; (other than good)
+@endcode
+- File Names
+         - C-style headers = ".h"
+         - C source code = ".c"
+         - C++ headers = ".H,.hpp"
+         - C++ source code = ".C,.cpp"
+         - F90 source code = ".f90"
+- Indentation and line lengths
+         - An indent is 3 (or 4) spaces
+         - All code must be consistently "block indented" in multiples of 3 (or 4) space indentations
+         - We strongly prefer to not have "tab" characters in our sources
+         - We strongly prefer to not have lines greater than 80 characters in length.
+
+Currently, there are no style checking or forcing mechanisms for PlasCom2. One can be certain that
+if the above style guide is followed, that nobody will complain about the resulting code
+formatting, but as long as a code is readable, understandable, and maintainable then that is
+the main overarching concern.
+
+ */

@@ -1,0 +1,42 @@
+/**
+
+@mainpage PlasCom2 Documentation
+
+@section plascom2_intro Introduction 
+PlasCom2 is XPACC's next-generation multiphysics simulation application, developed
+as a replacement for the current flagship, PlasComCM. PlasCom2 uses the
+@ref ix_main "IX" (Illinois Interface to *X*) toolkit and uses the following internal
+and third-party packages:
+- [CMake](http://www.cmake.org "Cross Platform Make")
+- [Doxygen](http://www.stack.nl/~dimitri/doxygen/ "Code documentation system")
+- @subpage ix_main "IX"
+- [MPI](http://www.mcs.anl.gov/research/projects/mpi/ "Message Passing Interface")
+- [HDF](http://www.hdfgroup.org "Hierarchical Data Format")
+
+PlasCom2 also interfaces to many of XPACC's Computer Science tools through 
+the CS-Tool Unification Framework (@ref cst_main "CSTUF"). Online 
+documentation for CSTUF can be located [here](https://xpacc-dev.bitbucket.io/CSTUF). 
+
+@section layout Documentation Layout
+
+The documentation is broken into several sections to guide users and developers
+in working with PlasCom2.
+
+- @subpage getting_started
+- @subpage user_reference
+- @subpage theory
+- @subpage numerics
+- @subpage testing_reference
+- @subpage integrated_testing
+- @subpage developer_reference
+- @subpage weno
+
+@section xpacc_guides Guides
+
+In addition, there are several guides and XPACC developers may find of use
+
+- @subpage testingproject_guide
+- @subpage xpacc_documentation_guide
+- @subpage xpacc_coding_guide
+
+ */

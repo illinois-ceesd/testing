@@ -1,0 +1,145 @@
+/**
+
+@page user_reference User Reference
+
+The intent of this page is to provide some usage information for <em>PlasCom2</em>.
+
+@section basic Basic Usage
+
+The main <em>PlasCom2</em> executable is:\n
+
+> plascom2x
+
+@subsection inlinehelp Inline Help
+
+Invoke with -h or --help for an inline help for command-line options:\n
+
+> plascom2x -h\n
+> plascom2x: PlasCom2 alpha development.\n
+> plascom2x: \n
+> plascom2x: Usage:\n 
+> plascom2x: \n
+> plascom2x: plascom2x [-h] [-d [arg] -v [arg] -p [arg] -c <configfile> ] [restartFile] [targetFile] \n
+> plascom2x: \n
+> plascom2x: 	-d,--debuglevel [arg]\n
+> plascom2x: 		Set the debugging level for the program.(default=1)\n
+> plascom2x: \n
+> plascom2x: 	-h,--help\n
+> plascom2x: 		Produces this long help message\n
+> plascom2x: \n
+> plascom2x: 	-v,--verblevel [arg]\n
+> plascom2x: 		Set the verbosity level for the program. Anything\n
+> plascom2x: 		larger than 3 is debugging level.\n
+> plascom2x: 		Examples:\n
+> plascom2x: 			-v (defaults to 1)\n
+> plascom2x: 			-v 0  (silence)\n
+> plascom2x: 			-v 1  (default: some normal output)\n
+> plascom2x: 			-v 2  (verbose: more than normal output)\n 
+> plascom2x: 			-v 3  (verbose indeed: some control flow information)\n
+> plascom2x: 			-v 4  (ridiculously verbose debugging mode)\n
+> plascom2x: 			-v 10 (ranks other than 0 create output logs.\n
+> plascom2x: \n
+> plascom2x: 	-p,--enable-profiling [arg]\n
+> plascom2x: 		Enable profiling. Profiling level > 1 enables profiling\n
+> plascom2x: 		barriers, with the following settings available:\n
+> plascom2x: 			level=1 enables async profiling w/report on rank 0.\n
+> plascom2x: 			level=2 enables barrier sync w/report on rank 0.\n
+> plascom2x: 			level=3 enables async with output on all ranks.\n
+> plascom2x: 			level=4 enables sync with output on all ranks.\n
+> plascom2x: \n
+> plascom2x: 	-c,--config <configfile>\n
+> plascom2x: 		Set the configuration file.\n
+> plascom2x: \n
+> plascom2x: 	[restartFile]\n
+> plascom2x: 		HDF5 restart file.\n
+> plascom2x: \n
+> plascom2x: 	[targetFile]\n
+> plascom2x: 		HDF5 file with target data.\n
+>\n
+
+@subsection typicalusage Typical Usage
+
+Typical usage examples:
+
+- Start <em>PlasCom2</em> from scratch using built-in grid generators:
+
+> mpiexec -n <numproc> plascom2x -v 2 -p 2 -c <configfile>\n
+
+@note The "-v 2" and "-p 2" options are optional and set the verbosity and profiling levels, repsectively
+
+- Restart <em>PlasCom2</em> with no configuration changes from initial run:
+
+> mpiexec -n <numproc> plascom2x -v 2 -p 2 <restartfile> <targetfile>\n
+
+- Restart <em>PlasCom2</em> with changes to configuration:
+
+> mpiexec -n <numproc> plascom2x -v 2 -p 2 -c <configfile> <restartfile> <targetfile>\n
+
+- Restart <em>PlasCom2</em> from a <em>PlasComCM</em> input deck:
+
+> mpiexec -n <numproc> plascom2x -v 2 -p 2 -c <plascomcm.inp> <PlasComCM *.h5 restart file> <PlasComCM *.h5 target file>\n
+
+@note <em>PlasCom2</em> will create a (mostly) <em>PlasCom2</em>-compatible configuration file and a solution dump. The generated config file needs to be stripped of <em>PlasComCM</em> parameters before used directly in <em>PlasCom2</em>.
+
+@section configurationfile Configuration File
+
+PlasCom2 is configured with a configuration file, analagous to the legacy <pre>plascomcm.inp</pre>. Please see below for documentation on specific parameters by section.
+
+@subsection configplascom2 PlasCom2 Section
+
+The PlasCom2 parameter section controls the overall system-level stepping, and major run modes. 
+
+- **PlasCom2:NumSteps**       - max number of steps in the simulation
+- **PlasCom2:NumStepsIO**     - number of steps between solution dumps 
+- **PlasCom2:NumStepsStatus** - number of steps between status reports 
+- **PlasCom2:RunMode**        - indicates the major running mode of PlasCom2 
+  - **RunMode** = PC2  - runs <em>PlasCom2</em> in the usual "simulation" mode 
+  - **RunMode** = Maxwell - runs <em>PlasCom2</em> in Maxwell solver mode
+  - **RunMode** = BareBones - just makes sure <em>PlasCom2</em> can run - no simulation is started 
+  .
+
+@subsection configgeometry Geometry Section
+
+The Geometry configuration section specifies the settings for the geometries and grids used in the simulation.  Each so-called *geometry* is just a collection of grids.
+
+- **Geometry:Names** = <geomName1> <geomName2> <geomName3>   - space delimited list of geometry names
+- **geometryName:GridNames** = <gridName1> <gridName2> <gridName3> - space delimited list of grids for geometry *<geometryName>*
+- **geometryName:gridName:Dimension** = 2 | 3 - specifies spatial dimensionality of grid
+- **geometryName:gridName:NumPoints** = nX nY [nZ] - number of points in each dimension of the grid
+- **geometryName:gridName:Type** = Uniform | Rectilinear | Curvilinear - chooses the type of grid metric used for this grid
+- **geometryName:gridName:PhysicalExtent** = xStart xEnd yStart yEnd [zStart zEnd] - for uniform grids, the extents of the physical coordinates
+- **geometryName:gridName:GridFile = <h5 file name> - HDF5 file from which the grid should be read
+- **geometryName:gridName:GenerateGrid** = YES | NO - indicates whether the grid should be generated by the PC2 grid generator
+- **geometryName:gridName:GeneratorMode** = <modeName> - indicates which grid generator should be used
+- **geometryName:gridName:DecompDirs** = 1|0 1|0 1|0 - indicates which directions allow MPI partitioning
+- **geometryName:gridName:ThreadDecompDirs** = 1|0 1|0 1|0 - indicates which directions allow OpenMP partitioning
+- **geometryName:gridName:DecompSizes** = nXi nEta [nZeta] - prescribes the number of MPI partitions in each dimension
+- **geometryName:gridName:PeriodicDirs** = 1|0 1|0 1|0 - prescribes which directions should *default* to periodic 
+
+@note Any boundary condition placed on a "periodic" boundary overrides any previous periodicity settings
+
+@subsubsection configgridboundaries Grid Region Configuration
+
+Subregions of grids (including boundaries) are configured in the *grid region* configuration section. The following parameters set up the region(s).
+
+
+- **geometryName:gridName:RegionNames** = <regionName1> <regionName2> <regionName3> - space delimited list of region names
+- **geometryName:gridName:regionName** = <normalDirection> [ <xiStart> <xiEnd> <etaStart> <etaEnd> <zetaStart> <zetaEnd>
+  - **normalDirection** = 0 | +/- 1 | +/- 2 | +/- 3 - indicates the *inward pointing* normal for the grid region
+  - **xi|eta|zeta Start|End** = <integer> - indicates the *1-based* starting|ending index (a negative number indicates starting from the *right* side of the domain)
+
+@note (xi,eta,zeta)(Start,End) default to being the full domain-wide grid line, so they may be omitted if a proper sub-range is not needed  
+
+@subsubsection configgridgen Grid Generator Configuration
+
+@subsubsection configgeomproc Geometry Processing Configuration
+
+@subsection configdomain Domain Section
+
+@subsubsection configdata Data Dictionary Stuff
+
+@subsubsection configbc  Boundary Condition Stuff
+ 
+@subsubsection configsoln Solution Initialization Stuff
+
+*/

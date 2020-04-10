@@ -1,0 +1,334 @@
+/**
+
+@page theory Theory
+
+@section navierStokes Fluid Dynamics
+
+@subsection conserve Conservation equations
+
+In fluid domains, the code solves the compressible Navier-Stokes equations
+ in curvilinear coordinates.  The basic equations, in a cartesian coordinate space, for the conserved mass 
+density \f$\rho\f$, momentum density \f$\rho u_i\f$, and total energy 
+density \f$\rho E\f$ are, in index form with summation convention are given as
+
+\f[
+\begin{align}
+\frac{\partial \rho}{\partial t} + \frac{\partial }{\partial x_j} \rho u_j &= S_\rho \\
+\frac{\partial \rho u_i}{\partial t} + \frac{\partial}{\partial x_j}\left(\rho u_i u_j + p\delta_{ij} - \tau_{ij}\right) &= S_{\rho u_i} \\
+\frac{\partial \rho E}{\partial t} + \frac{\partial}{\partial x_j}\left(\left\{\rho E + p\right\}u_j + q_j - u_i \tau_{ij}\right) &= S_{\rho E} 
+\end{align}
+\f]
+
+where \f$p\f$ is the thermodynamic pressure, \f$\tau_{ij}\f$ is the 
+viscous stress tensor, and \f$q_i\f$ is the heat flux in the \f$i\f$th 
+direction. \f$S_\rho\f$, \f$S_{\rho u_i}\f$, and \f$S_{\rho E}\f$ are are mass, momentum, and energy density source terms.  These equations can be written in the compact form
+
+\f[
+\frac{\partial Q}{\partial t} + \frac{\partial \vec{F}_j}{\partial x_j} = S
+\f]
+
+where \f$Q = [\rho\,\rho \vec{u}\,\rho E]^T\f$ is the vector of conserved 
+variables, \f$\vec{F} = \vec{F}^I - \vec{F}^V\f$ is the flux vector account for both visicd and invisci terms, and \f$S\f$ is the source term vector. The so-called *RHS* \f$ = S - \frac{\partial}{\partial x_j}\vec{F}_j\f$ is evaluated by the top-level \ref  navierstokes::rhs< GridT, StateT, OperatorT >::RHS() "RHS driver function" in include/NavierStokesRHS.H.
+
+@subsection viscous Viscous stress constitutive relation
+
+The viscous stress tensor is defined as 
+
+\f[
+\tau_{ij} = \mu \left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i}\right) + \lambda \frac{\partial u_k}{\partial x_k}\delta_{ij}
+\f]
+
+where \f$\mu\f$ and \f$\lambda\f$ are the first and second coefficients 
+of viscosity, respectively; both may be a function of temperature.  Note 
+that Stokes' hypothesis \f$(\lambda = -\frac{2}{3}\mu)\f$ is @e not 
+automatically enforced and that \f$\lambda\f$ is related to bulk 
+viscosity \f$\mu_B\f$ as \f$\lambda = \mu_B - (2/3)\mu\f$. 
+
+\f$\tau_{ij}\f$ is computed by \ref viscid::util::ComputeTauBuffer "ComputeTauBuffer" in src/ViscidUtil.C.
+
+@subsection heat Heat flux constitutive relation
+
+The heat flux vector is defined as 
+
+\f[
+q_i = - \kappa \frac{\partial T}{\partial x_i}
+\f]
+
+where \f$\kappa\f$ is the thermal conductivity. The heat flux vector, \f$q_i\f$, is computed 
+by \ref viscid::util::ComputeHeatFluxBuffer "ComputeHeatFluxBuffer" in src/ViscidUtil.C.
+
+@section trans Transport Coefficient Models
+
+The first viscosity coefficient \f$\mu\f$, bulk viscosity coefficient, 
+\f$\mu_B\f$, and the thermal conductivity \f$k\f$ depend on the thermodynamic 
+state of the fluid. Currently, only one implementation is available, although others can be 
+easily implemented in ViscidUtil.C. 
+
+@subsection transModelPower Power Law
+
+The Power Law transport model in implemented in 
+\ref viscid::util::ComputeTVBufferPower "ComputeTVBufferPower".
+
+The power law model gives the dynamic viscosity, \f$\mu\f$ as 
+
+\f[
+\mu = \beta T^n
+\f]
+
+where \f$\beta\f$ and \f$n\f$ are user specified parameters, 
+typically \f$n = 0.666\f$ and \f$\beta = 4.093 x 10^{-7}\f$ for air. 
+
+The bulk viscosity is defined as 
+
+\f[
+\mu_B = \alpha \mu
+\f]
+
+where \f$\alpha\f$ is a user specified parameter, typically \f$\alpha = 0.6\f$ for air.
+
+Thus the second coefficient of viscosity can be calculated as 
+
+\f[
+\lambda = \left(\alpha - 2/3\right) \mu
+\f]
+
+The power law model calculates the :w
+
+@section eos Equations of state
+
+The equations of state provides closure by relating the intensive state variables, 
+pressure and temperature, to the extensive state variables, specific internal energy and volume.  
+Currently, only one implementation is available, although others can be 
+easily implemented in EulerUtil.C.
+
+@subsection calIdealGas Calorically perfect ideal gas
+
+The equation of state currently available is that of an ideal gas, 
+assuming constant specific heats.  The equations of state are
+
+\f[
+P = \rho R T 
+\f]
+
+where \f$R\f$ is the specific gas constant, defined as \f$R = R_u / W\f$ with
+\f$R_u\f$ the universal gas constant, and \f$W\f$ the molecular weight.
+
+The specific heat capacity at constant volume and pressure are defined as
+
+\f[
+\begin{align}
+C_v &= \left(\frac{\partial E}{\partial T}\right)_v  \\
+C_p &= \left(\frac{\partial H}{\partial T}\right)_p 
+\end{align}
+\f]
+
+Then, by substitution into the equation of state we get the following relation
+
+\f[
+R = C_p - C_v
+\f]
+
+By defining the specific heat ratio, \f$\gamma = \frac{C_p}{C_v}\f$, the 
+following expressions give the realtionship between specific energy, pressure, 
+and temperature as implemented by \ref euler::util::ComputeDVBufferIdeal "ComputeDVBufferIdeal".
+
+\f[
+\begin{align}
+P &= (\gamma -1) \rho e \\
+T &= \frac{\gamma-1}{R} e
+\end{align}
+\f]
+
+@section nondimen Non-dimensionalization
+
+\PC2 can run in either a dimensional or non-dimensional mode. 
+The code uses the following variables to define the non-dimensional scaling:
+
+\f$\rho^*_\infty\f$, \f$P^*_\infty\f$, 
+\f$T^*_\infty\f$, and \f$L^*\f$, 
+a length scale.  Where \f$*\f$ denotes a dimensional value and \f$\infty\f$ denotes
+the reference state. There are two optional non-dimensional spaces available to the user, as shown in the table below.
+
+<table>
+<caption id="multi_row">PlasCom2 Non-Dimensional spaces</caption>
+<tr><th> Standard (nonDimensional=1) <th> Legacy PlasComCM (nonDimensional=2)
+<tr><td> \f$ u^*_\infty = \sqrt \frac{P^*_\infty}{\rho^*_\infty} \f$
+<td> \f$ u^*_\infty = \sqrt \frac{\gamma P^*_\infty}{\rho^*_\infty} \f$
+<tr><td> \f$ e^*_\infty = u^*_\infty^2 = \frac{P^*_\infty}{\rho^*_\infty} \f$
+<td> \f$ e^*_\infty = u^*_\infty^2 = \frac{\gamma P^*_\infty}{\rho^*_\infty} \f$
+<tr><td>\f$ \rho = \rho^* /\rho^*_\infty \f$
+<td>\f$ \rho = \rho^* /\rho^*_\infty \f$
+<tr><td>\f$ P = P^* /P^*_\infty \f$
+<td>\f$ P = P^* /(\rho^*_\infty u^*_\infty^2) \f$
+<tr><td>\f$ T = T^* /T^*_\infty \f$
+<td>\f$ T = T^* /((\gamma-1)T^*_\infty) \f$
+<tr><td>\f$ u_i = u^*_i /u^*_\infty \f$
+<td>\f$ u_i = u^*_i /u^*_\infty \f$
+<tr><td>\f$ e = e^* /e^*_\infty \f$
+<td>\f$ e = e^* /e^*_\infty \f$
+<tr><td>\f$ t = t^* /(L^* / u^*_\infty) \f$
+<td>\f$ t = t^* /(L^* / u^*_\infty) \f$
+<tr><td>\f$ x_i = x_i^* /L^* \f$
+<td>\f$ x_i = x_i^* /L^* \f$
+
+</table>
+
+Substitution into the dimensional form of the Navier-Stokes equations yields 
+the non-dimensional equivalent
+
+\f[
+\begin{align}
+\frac{\partial \rho}{\partial t} + \frac{\partial }{\partial x_j} \rho u_j &= 
+   S_\rho \\
+\frac{\partial \rho u_i}{\partial t} + \frac{\partial}{\partial x_j}\left(\rho u_i u_j 
+   + p\delta_{ij} - \tau_{ij}\right) &= S_{\rho u_i} \\
+\frac{\partial \rho E}{\partial t} + 
+  \frac{\partial}{\partial x_j}\left(\left\{\rho E + p\right\}u_j + 
+  q_j - u_i \tau_{ij}\right) &= S_{\rho E} 
+\end{align}
+\f]
+
+with the following non-dimensionalization for the source terms
+
+\f[\begin{align}
+S_\rho        &= \frac{S^*_\rho L^*}{\rho^*_\infty U^*_\infty} \\
+S_{\rho u_i}  &= \frac{S^*_{\rho u_i } L^*}{\rho^*_\infty U^*_\infty^2 } \\
+S_{\rho E}    &= \frac{S^*_{\rho E} L^*}{\rho^*_\infty U^*_\infty^3}
+\end{align}
+\f]
+
+by choosing the following non-dimensionalizations for the transport coefficients
+
+\f[\begin{align}
+\mu       &= \mu^* /\mu^*_\infty \\
+\lambda   &= \lambda^* /\lambda^*_\infty \\
+\kappa   &= \kappa^* /\kappa^*_\infty \\
+\end{align}
+\f]
+
+the non-dimensional viscous stress tensor and heat flux vector can be written as
+
+\f[\begin{align}
+\tau_{ij} &= \frac{\mu}{\RE} \left(\frac{\partial u_i}{\partial x_j} + 
+  \frac{\partial u_j}{\partial x_i}\right) + 
+  \frac{\lambda}{\RE} \frac{\partial u_k}{\partial x_k}\delta_{ij} \\
+q_i &= - \frac{\mu}{\RE \Pr} \frac{\partial T}{\partial x_i}
+\end{align}
+\f]
+
+where \RE is defined as the code Reynolds number, 
+\f$\RE = \frac{\rho^*_\infty U^*_\infty L^*}{\mu^*_\infty}\f$
+and \PR is defined as the Prandtl number, 
+\f$\PR = \frac{C^*_p_\infty\mu^*_\infty}{k^*_\infty} = \frac{C_p\mu}{k}\f$
+which define the dimensional reference values \f$\mu^*_\infty\f$ and \f$\kappa^*_\infty\f$ respectively.
+
+@subsection nonDimenEOS Non-dimensional equation of state
+
+There are no special modifications to the calorically perfect gas equation of state, with the exception of the 
+specific gas constant. The reference gas constant is calculated and non-dimensionalized as follows
+
+\f[\begin{align}
+R^*_\infty     &= \frac{P^*_\infty}{\rho^*_\infty T^*_\infty} \\
+R       &= R^* /R^*_\infty \\
+\end{align}
+\f]
+
+For the standard non-dimensionalization, \f$R\f$ is exactly 1.0. For the legacy 
+non-dimensionalization, \f$R = \frac{\gamma-1}{\gamma}\f$.
+
+@section gridMetrics Curvilinear coordinate systems
+
+It is possible to express the Navier-Stokes equations in any other coordinate system 
+\f$\xi_i\f$ provided the mapping \f$\Xi\f$ from \f$x_i\f$ to \f$\xi_i\f$ 
+is given.  The Cartesian coordinates \f$(\vec{x},t)\f$ can be mapped to another
+coordinate system \f$(\vec{\xi},\tau)\f$ via the time-dependent mappings
+
+\f[
+ \vec{x} = {X}(\vec{\xi},\tau) \qquad \mbox{ with inverse } \qquad \vec{\xi} = \Xi(\vec{x},t)
+\f]
+
+where \f$X^{-1} = \Xi\f$ and we only consider non-singular mappings such
+that \f$X^{-1}\f$ exists and is well defined.  Moreover we take 
+\f$t = \tau\f$.  The Jacobian of the transformation is defined as 
+\f$J = \mathrm{det}(\partial \Xi_i/\partial x_j)\f$ and is strictly positive.
+
+Under these conditions and with simple application of the chain rule it 
+can be shown\cite vinokur:1974  that the vector (compact) form tranforms to 
+
+\f[
+\frac{\partial}{\partial \tau}\left(\frac{Q}{J}\right) + \frac{\partial \hat{\vec{F}}^I_i}{\partial \xi_i} - \frac{\partial \hat{\vec{F}}^V_i}{\partial \xi_i}= \frac{S}{J}
+\f]
+
+after using the identities
+
+\f[
+\begin{split}
+\frac{\partial}{\partial \xi_j}\left(\frac{1}{J}\frac{\partial \xi_j}{\partial x_i}\right) &= 0 \qquad \mbox{ for $i = 1, \dots, N$} \\
+\frac{\partial}{\partial \tau}\left(\frac{1}{J}\right) + \frac{\partial}{\partial \xi_j}\left(\frac{1}{J}\frac{\partial \xi_j}{\partial t}\right) &= 0,
+\end{split}
+\f]
+
+where \f$N\f$ is the number of dimensions. If we define the weighted metric 
+\f$\hat{\xi_i} = J^{-1}(\partial \xi/\partial x_i)\f$ and contravariant 
+velocity \f$\hat{U} = u_j \hat{\xi}_j + \hat{\xi}_t\f$, with similar 
+expressions for the remaining components, then the inviscid fluxes 
+\f$\hat{F}^I_i\f$ are
+
+\f[
+\hat{\vec{F}}^I_1 = \begin{bmatrix} \rho \hat{U} \\ \rho u \hat{U} + p\hat{\xi}_x \\ \rho v \hat{U} + p \hat{\xi}_y \\ (\rho E + p)\hat{U} - \hat{\xi}_t p \end{bmatrix}\qquad \mbox{ and } \qquad \hat{\vec{F}}^I_2 = \begin{bmatrix} \rho \hat{V} \\ \rho u \hat{V} + p\hat{\eta}_x \\ \rho v \hat{V} + p \hat{\eta}_y \\ (\rho E + p)\hat{V} - \hat{\eta}_t p \end{bmatrix}
+\f]
+
+in two dimensions and
+
+\f[
+\hat{\vec{F}}^I_1 = 
+\begin{bmatrix} \rho \hat{U} \\ \rho u \hat{U} + p\hat{\xi}_x \\ \rho v \hat{U} + p \hat{\xi}_y \\ \rho w \hat{U} + p\hat{\xi}_z \\ (\rho E + p)\hat{U} - \hat{\xi}_t p \end{bmatrix},
+\quad \hat{\vec{F}}^I_2 = 
+\begin{bmatrix} \rho \hat{V} \\ \rho u \hat{V} + p\hat{\eta}_x \\ \rho v \hat{V} + p \hat{\eta}_y \\ \rho w \hat{V} + p \hat{\eta}_z \\ (\rho E + p)\hat{V} - \hat{\eta}_t p \end{bmatrix},
+\quad \mbox{and} \quad \hat{\vec{F}}^I_3 = 
+\begin{bmatrix} \rho \hat{W} \\ \rho u \hat{W} + p\hat{\zeta}_x \\ \rho w \hat{W} + p \hat{\zeta}_y \\ \rho w \hat{W} + p \hat{\zeta}_z \\ (\rho E + p)\hat{W} - \hat{\zeta}_t p \end{bmatrix}
+\f]
+
+
+The inviscid fluxes are computed dimension-at-a-time by \ref euler::flux1d "Euler::Flux1D" in kernels/Euler.f90.
+
+@subsection viscousForms Forms of the viscous terms
+
+The viscous fluxes may be expressed in a number of forms, depending on the
+particular goal.  The main difference between the particular forms is how 
+second derivatives are taken; namely, either \f$\partial^2/\partial x^2\f$ 
+is taken directly or as two repeated derivatives, 
+\f$\partial/\partial x\left(\partial/\partial x\right)\f$. 
+The use of \f$\partial^2/\partial x^2\f$ is advantageous in that it allows 
+for the most physical dissipation in the code, as determined by the modified 
+wavenumber. (See, \eg, Lele\cite lele:1992 for a discussion of the modified 
+wavenumber and its meaning.)  However, it is also expensive, especially in 
+three or more dimensions.  Using repeated derivatives in advantageous for 
+two reasons: (i) it keeps the equations in <em>conservative form</em> which 
+is useful for shock capturing and (ii) it is less expensive (by a factor 
+around 2.5 in three dimensions) than the fully expanded form.  However, 
+it provides less physical dissipation, especially at the highest 
+wavenumbers, exactly where it is most needed.
+
+@subsubsection strongVisc Strong form of the viscous terms in xi-coordinates
+
+Following Anderson, Tanehill, and Pletcher (1984), the strong form of 
+the viscous terms is as follows
+
+\f[
+\begin{align}
+\frac{\partial}{\partial t}\left(\frac{\rho u_1}{J}\right) &= \cdots \frac{\partial}{\partial \xi}\left(\hat{\xi}_i\tau_{i1}\right) + \frac{\partial}{\partial \eta}\left(\hat{\eta}_i\tau_{i1}\right)
++ \frac{\partial}{\partial \zeta}\left(\hat{\zeta}_i\tau_{i1}\right) \\
+\frac{\partial}{\partial t}\left(\frac{\rho u_2}{J}\right) &= \cdots \frac{\partial}{\partial \xi}\left(\hat{\xi}_i\tau_{i2}\right) + \frac{\partial}{\partial \eta}\left(\hat{\eta}_i\tau_{i2}\right)
++ \frac{\partial}{\partial \zeta}\left(\hat{\zeta}_i\tau_{i2}\right) \\
+\frac{\partial}{\partial t}\left(\frac{\rho u_3}{J}\right) &= \cdots \frac{\partial}{\partial \xi}\left(\hat{\xi}_i\tau_{i3}\right) + \frac{\partial}{\partial \eta}\left(\hat{\eta}_i\tau_{i3}\right)
++ \frac{\partial}{\partial \zeta}\left(\hat{\zeta}_i\tau_{i3}\right) \\
+\frac{\partial}{\partial t}\left(\frac{\rho E}{J}\right) &= \cdots \frac{\partial}{\partial \xi}\left(\hat{\xi}_i [ u_j \tau_{ij} - q_i ]\right) + \frac{\partial}{\partial \eta}\left(\hat{\eta}_i [ u_j \tau_{ij} - q_i ]\right) + \frac{\partial}{\partial \zeta}\left(\hat{\zeta}_i [ u_j \tau_{ij} - q_i ]\right)
+\end{align}
+\f]
+
+This form is much faster than the other forms, but does not have any dissipation at the highest wavenumbers. The viscous flux components are computed dimension-at-a-time by \ref viscid::strongflux1d "Viscid::StrongFlux1D" in kernels/Viscid.f90.
+
+Selected by the user with <tt>METRICTYPE = NONORTHOGONAL_STRONGFORM</tt> in \PC2inp.
+
+*/
