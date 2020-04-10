@@ -4,26 +4,26 @@ This is a stand-alone library of simple computational kernels used in _PlasCom2_
 and self-contained kernelized implementation of the _PlasCom2_ Equation of State (EOS). All kernels, including the EOS, are 
 available through a C and Fortran-compatible API. 
 
-# Obtain justkernels
+# Clone 
 > git clone https:://github.com/illinois-ceesd/justkernels
 
-# Configuration
+# Configure
 Configuration requires [_CMake_](https://cmake.org). Out-of-source builds are recommended. 
 
 > mkdir /path/to/build\
 > cd /path/to/build\
-> cmake /path/to/justkernels\
+> cmake /path/to/justkernels
 
-# Building the kernels
-
+# Build the kernels
+Fortran and C++ compilers are required to build the kernels.
 > make [-j]
 
-# Documentation
+# Build the documentation
 Building documentation requires [Doxygen](https://doxygen.nl), and [GraphViz](https://graphviz.org) is recommended.
 
 > make documentation
 
-After building the documentation, point your browser at:
+After building the documentation, point your web browser at:
 `/path/to/build/docs/html/index.html`. Choose *Computational Kernel Documentation* 
 in the left browser menu.
 
