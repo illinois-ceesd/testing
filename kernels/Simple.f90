@@ -106,6 +106,39 @@ CONTAINS
 
   END SUBROUTINE ZAXPY
   
+  !> @brief ZAXPY3 3D point-wise operator performing Z = aX + Y (scalar a)
+  !>
+  !> ZAXPY3 performs Z = XY where inputs @em X, @em Y and output @em Z 
+  !> are each three-dimensional arrays.
+  !> The kernel operates on the rectangular interval specified by
+  !> @em bufferInterval.
+  !> The shape of the input and output arrays are
+  !> specified by @em bufferSize, which is an @em numDim - dimensional
+  !> array that specifies the size in each of @em numDim dimesions.
+  !>
+  !> @param bufferInterval - const 64-bit integer array of size 2 x @em numDim indicating the rectangular interval in which the kernel should operate; e.g. [ @em iStart @em iEnd @em jStart @em jEnd ]
+  !> @param a - const double precision input scalar
+  !> @param X - const double precision input array
+  !> @param Y - const double precision input array
+  !> @param Z - double precision output array
+  SUBROUTINE ZAXPY3(bufferInterval,a,X,Y,Z)
+
+    INTEGER(KIND=8), INTENT(IN)      :: bufferInterval(6)
+    REAL(KIND=8),    INTENT(IN)      :: a,X(:,:,:),Y(:,:,:)
+    REAL(KIND=8),    INTENT(OUT)     :: Z(:,:,:)
+
+    INTEGER(KIND=8) :: I, J, K
+
+    DO K = bufferInterval(5), bufferInterval(6)
+       DO J = bufferInterval(3), bufferInterval(4)
+          DO I = bufferInterval(1), bufferInterval(2)
+             Z(I,J,K) = Y(I,J,K) + a*X(I,J,K)
+          END DO
+       END DO
+    END DO
+
+  END SUBROUTINE ZAXPY3
+
   !> @brief ZAXPBY point-wise operator performing Z = aX + bY (scalar a,b)
   SUBROUTINE ZAXPBY(numDim,numPoints,bufferSize,bufferInterval,a,b,X,Y,Z)
 
