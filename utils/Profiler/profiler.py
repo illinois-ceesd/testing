@@ -2,163 +2,161 @@ from mpi4py import MPI
 from time import perf_counter as GetTime
 import numpy as NUMPY
 
+
 class Profiler:
-  
-  #  t0 = 0.0
-  #  openSections = []
-  #  sectionTimes = []
-  #  timerBarrier = True
-  #  mpiCommObj = MPI.COMM_WORLD
-  #  myRank     = mpiCommObj.Get_rank()
-  #  numProc    = mpiCommObj.Get_size()
-  
-  def ResetTime(self):
-    self.t0 = GetTime()
-    
-  def SetBarrier(self,inOption):
-    self.timerBarrier = inOption
 
-  def SetMPICommunicator(self,inMPICommunicator):
-    self.mpiCommObj = inMPICommunicator
-    self.myRank     = self.mpiCommObj.Get_rank()
-    self.numProc    = self.mpiCommObj.Get_size()
+    def ResetTime(self):
+        self.t0 = GetTime()
 
-  def __init__(self,inMPICommunicator):
-    self.SetMPICommunicator(inMPICommunicator)
-    self.ResetTime()
-    self.openSections = []
-    self.sectionTimes = []
-    self.timerBarrier = True
+    def SetBarrier(self, inOption):
+        self.timerBarrier = inOption
 
-  def StartTimer(self,sectionName='MAIN'):
+    def SetMPICommunicator(self, inMPICommunicator):
+        self.mpiCommObj = inMPICommunicator
+        self.myRank = self.mpiCommObj.Get_rank()
+        self.numProc = self.mpiCommObj.Get_size()
 
-    if sectionName == 'MAIN':
-      self.ResetTime()
+    def __init__(self, inMPICommunicator):
+        self.SetMPICommunicator(inMPICommunicator)
+        self.ResetTime()
+        self.openSections = []
+        self.sectionTimes = []
+        self.timerBarrier = True
 
-    numOpenSections = len(self.openSections)
+    def StartTimer(self, sectionName='MAIN'):
 
-    openSection = [numOpenSections,sectionName,1,0,0]
-      
-    if self.timerBarrier == True:
-      self.mpiCommObj.Barrier()
-          
-    openSection[3] = GetTime()
-          
-    self.openSections.append(openSection)
+        if sectionName == 'MAIN':
+            self.ResetTime()
 
-  def EndTimer(self,sectionName='MAIN'):
-    numOpenSections = len(self.openSections)
+        numOpenSections = len(self.openSections)
 
-    if numOpenSections <= 0:
-      print("Error: EndTimer(",sectionName,") called with no matching StartTimer.")
-      1/0
+        openSection = [numOpenSections, sectionName, 1, 0, 0]
 
-    sectionTime = GetTime()
+        if self.timerBarrier:
+            self.mpiCommObj.Barrier()
 
-    if self.timerBarrier == True:
-      self.mpiCommObj.Barrier()
+        openSection[3] = GetTime()
 
-    openSectionIndex = numOpenSections - 1
+        self.openSections.append(openSection)
 
-    if(sectionName != self.openSections[openSectionIndex][1]):
-      print("SectionName: Expected(",self.openSections[openSectionIndex][1],")",
-            ", Got(",sectionName,")")
-      1/0
+    def EndTimer(self, sectionName='MAIN'):
+        numOpenSections = len(self.openSections)
 
-    openSection = self.openSections.pop()
-    sectionTime = sectionTime - openSection[3]
-    openSection[3] = sectionTime
-    openSectionIndex = openSectionIndex - 1
+        if numOpenSections <= 0:
+            print("Error: EndTimer(", sectionName,
+                  ") called with no matching StartTimer.")
+            1 / 0
 
-    # Update parent's sub-timers
-    if(openSectionIndex >= 0):
-      self.openSections[openSectionIndex][4] += sectionTime
+        sectionTime = GetTime()
 
-    
-    # Update section if it exists
-    numSections = len(self.sectionTimes)
-    match = False
-    for i in range(numSections):
-      if(self.sectionTimes[i][1] == sectionName):
-        existingSection = self.sectionTimes[i]
-        existingSection[2] += 1
-        existingSection[3] += sectionTime
-        existingSection[4] += openSection[4]
-        match = True
-        break
-    
-    # Create new section if it didn't exist
-    if(match == False):
-      self.sectionTimes.append(openSection)
+        if self.timerBarrier:
+            self.mpiCommObj.Barrier()
 
-  def WriteTimers(self):
+        openSectionIndex = numOpenSections - 1
 
-    # copy the timers to avoid destructing the list when printing
-    sectionTimers = list(self.sectionTimes)
+        if(sectionName != self.openSections[openSectionIndex][1]):
+            print("SectionName: Expected(",
+                  self.openSections[openSectionIndex][1],
+                  ")", ", Got(", sectionName, ")")
+            1 / 0
 
-    numSections = len(sectionTimers)
-    numCurrentSections = numSections
-    minLevel = 0
-    
-    while(numCurrentSections > 0):
-      match = False
-      for i in range(numCurrentSections):
-        if(sectionTimers[i][0] == minLevel):
-          sectionTimer = sectionTimers.pop()
-          # print out SectionName NumCalls TotalTime ChildTime 
-          print(sectionTimer[1]," N:",sectionTimer[2]," T:",sectionTimer[3],
-                " C:",sectionTimer[4])
-          match = True
-          break
-      if match == False:
-        minLevel += 1
-      numCurrentSections = len(sectionTimers)
+        openSection = self.openSections.pop()
+        sectionTime = sectionTime - openSection[3]
+        openSection[3] = sectionTime
+        openSectionIndex = openSectionIndex - 1
 
-  def ReduceTimers(self):
+        # Update parent's sub-timers
+        if(openSectionIndex >= 0):
+            self.openSections[openSectionIndex][4] += sectionTime
 
-    sectionTimers = list(self.sectionTimes)
+        # Update section if it exists
+        numSections = len(self.sectionTimes)
+        match = False
 
-    numSections = len(sectionTimers)
-    myNumSections = NUMPY.zeros(1,dtype=int)
-    myCheck       = NUMPY.zeros(1,dtype=int)
-      
-    self.mpiCommObj.Barrier()
-      
-    if self.myRank == 0:
-      myNumSections[0] = numSections
-          
-    self.mpiCommObj.Bcast(myNumSections,root=0)
-    
-    if numSections == myNumSections[0]:
-      myNumSections[0] = 0
-    else:
-      myNumSections[0] = 1
-      print("(",myRank,"): ",numSections," != ",myNumSections[0])
-      1/0
-      
-    self.mpiCommObj.Reduce(myNumSections,myCheck,MPI.MAX,0)
-    
-    if myCheck > 0:
-      print("ReduceTimers:Error: Disparate number of sections across processors.")
-      1/0
-    
-    mySectionTimes = NUMPY.zeros(numSections,dtype='float')
-    minTimes       = NUMPY.zeros(numSections,dtype='float')
-    maxTimes       = NUMPY.zeros(numSections,dtype='float')
-    sumTimes       = NUMPY.zeros(numSections,dtype='float')
+        for i in range(numSections):
+            if(self.sectionTimes[i][1] == sectionName):
+                existingSection = self.sectionTimes[i]
+                existingSection[2] += 1
+                existingSection[3] += sectionTime
+                existingSection[4] += openSection[4]
+                match = True
+                break
 
-    for i in range(numSections):
-      mySectionTimes[i] = sectionTimers[i][3]
-        
-    self.mpiCommObj.Reduce(mySectionTimes,minTimes,MPI.MIN,0)
-    self.mpiCommObj.Reduce(mySectionTimes,maxTimes,MPI.MAX,0)
-    self.mpiCommObj.Reduce(mySectionTimes,sumTimes,MPI.SUM,0)
+        # Create new section if it didn't exist
+        if not match:
+            self.sectionTimes.append(openSection)
 
-    if self.myRank == 0:
-      for i in range(numSections):
-        sectionTime = sectionTimers[i]
-        print(sectionTime[1],":  Min: ",minTimes[i],"  Max: ",
-              maxTimes[i],"  Mean: ",sumTimes[i]/float(self.numProc))
-              
-    self.mpiCommObj.Barrier()
-    
+    def WriteTimers(self):
+
+        # copy the timers to avoid destructing the list when printing
+        sectionTimers = list(self.sectionTimes)
+
+        numSections = len(sectionTimers)
+        numCurrentSections = numSections
+        minLevel = 0
+
+        while(numCurrentSections > 0):
+            match = False
+            for i in range(numCurrentSections):
+                if(sectionTimers[i][0] == minLevel):
+                    sectionTimer = sectionTimers.pop()
+                    # print out SectionName NumCalls TotalTime ChildTime
+                    print(sectionTimer[1], " N:", sectionTimer[2], " T:",
+                          sectionTimer[3], " C:", sectionTimer[4])
+                    match = True
+                    break
+
+            if match is False:
+                minLevel += 1
+
+            numCurrentSections = len(sectionTimers)
+
+    def ReduceTimers(self):
+        sectionTimers = list(self.sectionTimes)
+
+        numSections = len(sectionTimers)
+        myNumSections = NUMPY.zeros(1, dtype=int)
+        myCheck = NUMPY.zeros(1, dtype=int)
+
+        self.mpiCommObj.Barrier()
+
+        if self.myRank == 0:
+            myNumSections[0] = numSections
+
+        self.mpiCommObj.Bcast(myNumSections, root=0)
+
+        if numSections == myNumSections[0]:
+            myNumSections[0] = 0
+        else:
+            myNumSections[0] = 1
+            print("(", self.myRank, "): ", numSections,
+                  " != ", myNumSections[0])
+            1 / 0
+
+        self.mpiCommObj.Reduce(myNumSections, myCheck, MPI.MAX, 0)
+
+        if myCheck > 0:
+            print("ReduceTimers:Error: Disparate number of sections ",
+                  "across processors.")
+            1 / 0
+
+        mySectionTimes = NUMPY.zeros(numSections, dtype='float')
+        minTimes = NUMPY.zeros(numSections, dtype='float')
+        maxTimes = NUMPY.zeros(numSections, dtype='float')
+        sumTimes = NUMPY.zeros(numSections, dtype='float')
+
+        for i in range(numSections):
+            mySectionTimes[i] = sectionTimers[i][3]
+
+        self.mpiCommObj.Reduce(mySectionTimes, minTimes, MPI.MIN, 0)
+        self.mpiCommObj.Reduce(mySectionTimes, maxTimes, MPI.MAX, 0)
+        self.mpiCommObj.Reduce(mySectionTimes, sumTimes, MPI.SUM, 0)
+
+        if self.myRank == 0:
+            for i in range(numSections):
+                sectionTime = sectionTimers[i]
+                print(sectionTime[1], ":  Min: ", minTimes[i], "  Max: ",
+                      maxTimes[i], "  Mean: ",
+                      sumTimes[i] / float(self.numProc))
+
+        self.mpiCommObj.Barrier()
