@@ -1,0 +1,4 @@
+Simple parallel timing utility.  Test it out with:
+
+mpiexec -n 8 python Hello2.py
+
