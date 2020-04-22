@@ -1,0 +1,6 @@
+HaveNUMPY
+HaveMPI4PY
+HaveLOOPY
+HavePYOPENCL
+HaveFAILS
+
