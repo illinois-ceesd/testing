@@ -38,20 +38,20 @@ OPTION(DISABLE_FAILING_TESTS "Disable running of tests that are known to fail." 
 OPTION(ENABLE_THREAD_SANITIZER "Enable thread sanitizer thread debugger." OFF)
 OPTION(ENABLE_CUDA "Enable CUDA kernels and tests." OFF)
 
-if (NOT CMAKE_BUILD_TYPE)
-  message(STATUS "${Green}${PROJECT_NAME}: No build type selected, default to Release${ColorReset}")
-  set(CMAKE_BUILD_TYPE "Release")
-endif()
-
 SET(CMAKE_CXX_FLAGS_RELEASE "-g1 -O3 -DNDEBUG")
 SET(CMAKE_Fortran_FLAGS_RELEASE "-g1 -O2 -DNDEBUG")
 SET(CMAKE_C_FLAGS_RELEASE "-g1 -O3 -DNDEBUG")
+
+if (NOT CMAKE_BUILD_TYPE)
+  message(STATUS "${BoldYellow}${PROJECT_NAME}: Warning: No build type selected, default to Release${ColorReset}")
+  set(CMAKE_BUILD_TYPE "Release")
+endif()
 
 
 #IF(ENABLE_EOS_TIMERS)
 #  ADD_DEFINITIONS(-DEOS_TIMERS)
 #ENDIF()
-
+FIND_PACKAGE(Python REQUIRED)
 
 IF(ENABLE_CUDA)
   ENABLE_LANGUAGE(CUDA)
@@ -343,8 +343,9 @@ endif()
 #
 #
 # Enable utilities
-#add_subdirectory(utils)
+add_subdirectory(utils)
 #
+
 if(ENABLE_HYDRA)
   set(kernel_prefix hydra)
 else()
@@ -526,9 +527,9 @@ endif()
 
 # ========= USE IN EXISTING PROJECT ==============
 
-#IF(BUILD_TESTS) 
-#  ADD_SUBDIRECTORY(Testing)
-#ENDIF()
+IF(BUILD_TESTS) 
+  ADD_SUBDIRECTORY(Testing)
+ENDIF()
 
 
 # Print configuration
