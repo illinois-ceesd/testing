@@ -18,6 +18,13 @@ Configuration requires [_CMake_](https://cmake.org). Out-of-source builds are re
 Fortran and C++ compilers are required to build the kernels.
 > make [-j]
 
+# Test the build
+> make test
+
+# Check Python Style & Syntax
+Python checks require [Flake8](https://flake8.pycqa.org/en/latest/).
+> make checkpy
+
 # Build the documentation
 Building documentation requires [Doxygen](https://doxygen.nl), and [GraphViz](https://graphviz.org) is recommended.
 
