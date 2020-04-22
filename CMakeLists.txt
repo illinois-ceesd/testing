@@ -37,6 +37,7 @@ OPTION(ENABLE_HYDRA "Enable Hydra offloading support" OFF)
 OPTION(DISABLE_FAILING_TESTS "Disable running of tests that are known to fail." OFF)
 OPTION(ENABLE_THREAD_SANITIZER "Enable thread sanitizer thread debugger." OFF)
 OPTION(ENABLE_CUDA "Enable CUDA kernels and tests." OFF)
+OPTION(NOISY_LINTING "Enable more messages when checking Python." OFF)
 
 SET(CMAKE_CXX_FLAGS_RELEASE "-g1 -O3 -DNDEBUG")
 SET(CMAKE_Fortran_FLAGS_RELEASE "-g1 -O2 -DNDEBUG")

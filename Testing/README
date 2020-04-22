@@ -1,0 +1,20 @@
+======== General Info =======
+CMake will automatically check the file (testdirectory.txt) for
+a list of testing directories.  Each line of testdirectory.txt
+should contain a TESTINGPATH.
+
+For each TESTINGPATH, CMake will look for the file named
+(./${TESTINGPATH}/testlist.txt). Each line of testlist.txt
+should contain a TESTNAME.
+
+For each TESTNAME, CMake will add a test executing the following:
+python ./${TESTINGPATH}/${TESTNAME}.py
+
+====== Adding Tests ======
+To ADD a test into an existing directory, add your test in
+${TESTINGPATH}/${TESTNAME}.py, and add a line for your test
+in ${TESTINGPATH}/testlist.txt
+
+To ADD a new testing directory, make the directory and add
+it to ./testdirectory.txt.
+

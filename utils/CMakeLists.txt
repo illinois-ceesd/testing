@@ -8,7 +8,7 @@ ELSE()
   MESSAGE(STATUS "${Green}${PROJECT_NAME}: Use 'make checkpy' to check Python.${ColorReset}")
   ADD_CUSTOM_TARGET(
     checkpy
-    COMMAND flake8 ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/Checker/checker.sh ${CMAKE_SOURCE_DIR} ${NOISY_LINTING}
     COMMENT "${Cyan}${PROJECT_NAME}: Checking Python style and syntax with ${PYLINTER} ...${ColorReset}"
   )
 ENDIF()
