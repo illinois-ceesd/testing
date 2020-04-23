@@ -1,26 +1,22 @@
 /**
 
-@mainpage PlasCom2 Documentation
+@mainpage JustKernels Documentation
 
-@section plascom2_intro Introduction 
-PlasCom2 is XPACC's next-generation multiphysics simulation application, developed
-as a replacement for the current flagship, PlasComCM. PlasCom2 uses the
-@ref ix_main "IX" (Illinois Interface to *X*) toolkit and uses the following internal
-and third-party packages:
+@section jk_intro Introduction 
+JustKernels is a collection of numerical kernels used in multiphysics simulation applications,
+initially developed by XPACC@Illinois for use in @em PlasCom2.   
+JustKernels uses the following third-party packages:
 - [CMake](http://www.cmake.org "Cross Platform Make")
+- [Python](https://www.python.org/ "Python")
+- [Loopy](https://documen.tician.de/loopy/ "Loopy")
 - [Doxygen](http://www.stack.nl/~dimitri/doxygen/ "Code documentation system")
-- @subpage ix_main "IX"
 - [MPI](http://www.mcs.anl.gov/research/projects/mpi/ "Message Passing Interface")
 - [HDF](http://www.hdfgroup.org "Hierarchical Data Format")
-
-PlasCom2 also interfaces to many of XPACC's Computer Science tools through 
-the CS-Tool Unification Framework (@ref cst_main "CSTUF"). Online 
-documentation for CSTUF can be located [here](https://xpacc-dev.bitbucket.io/CSTUF). 
 
 @section layout Documentation Layout
 
 The documentation is broken into several sections to guide users and developers
-in working with PlasCom2.
+in working with JustKernels.
 
 - @subpage getting_started
 - @subpage user_reference
@@ -33,7 +29,7 @@ in working with PlasCom2.
 
 @section xpacc_guides Guides
 
-In addition, there are several guides and XPACC developers may find of use
+In addition, there are several guides and CEESD developers may find of use
 
 - @subpage testingproject_guide
 - @subpage xpacc_documentation_guide

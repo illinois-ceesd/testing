@@ -16,10 +16,14 @@ FOREACH(TEST_SUBDIR ${testPathList})
     IF(SHOWTESTS) 
       MESSAGE(STATUS "${Cyan}\t Adding test: ${testName}${ColorReset}")
     ENDIF()
-    ADD_TEST(${testName} python ${TEST_DIRECTORY}/${testName}.py)
+    ADD_TEST(${testName} python ${TEST_DIRECTORY}/${testName}.py
+      ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
+    SET_TESTS_PROPERTIES(${testName} PROPERTIES ENVIRONMENT
+      "PYTHONPATH=${PROJECT_BINARY_DIR}/PyJuKe:$ENV{PYTHONPATH}")
     IF(${testName} MATCHES "FAILS")
       SET_TESTS_PROPERTIES(${testName} PROPERTIES WILL_FAIL TRUE)
     ENDIF()
   ENDFOREACH()
 
 ENDFOREACH()
+
