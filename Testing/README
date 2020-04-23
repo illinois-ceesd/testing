@@ -10,6 +10,13 @@ should contain a TESTNAME.
 For each TESTNAME, CMake will add a test executing the following:
 python ./${TESTINGPATH}/${TESTNAME}.py ${CMAKE_SOURCE_DIR} ${PROJECT_BINARY_DIR}
 
+The return code of the above command indicates whether the 
+test passes or fails. (0=pass)
+
+*Note: If the TESTNAME contains the word "FAILS", then
+CMake will expect the test to FAIL and automatically 
+flips the meaning of the exit code (0=fail).
+
 ====== Adding Tests ======
 To ADD a test into an existing directory, add your test in
 ${TESTINGPATH}/${TESTNAME}.py, and add a line for your test
