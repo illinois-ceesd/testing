@@ -1,13 +1,13 @@
 
-FIND_PROGRAM(PYLINTER_PATH flake8)
-IF(PYLINTER_PATH-NOTFOUND)
+FIND_PROGRAM(PYLINTERPATH flake8)
+IF(NOT PYLINTERPATH)
   MESSAGE(STATUS "${BoldYellow}${PROJECT_NAME}: Warning: Python linter not found; Python checking disabled.${ColorReset}")
 ELSE()
   IF(NOISY_LINTING)
     set(NOISYOP YES)
   ENDIF()
-  GET_FILENAME_COMPONENT(PYLINTER ${PYLINTER_PATH} NAME)
-  MESSAGE(STATUS "${Green}${PROJECT_NAME}: Found Python linter: ${PYLINTER_PATH}${ColorReset}")
+  GET_FILENAME_COMPONENT(PYLINTER ${PYLINTERPATH} NAME)
+  MESSAGE(STATUS "${Green}${PROJECT_NAME}: Found Python linter: ${PYLINTERPATH}${ColorReset}")
   MESSAGE(STATUS "${Green}${PROJECT_NAME}: Use 'make checkpy' to check Python.${ColorReset}")
   ADD_CUSTOM_TARGET(
     checkpy
@@ -17,8 +17,12 @@ ELSE()
 ENDIF()
 
 IF(BUILD_PROVENANCE)
+  MESSAGE(STATUS "${Green}${PROJECT_NAME}: Enabling GIT provenance.${ColorReset}")
   set(PROVOP YES)
+ELSE()
+  MESSAGE(STATUS "${BoldYellow}${PROJECT_NAME}: GIT provenance is OFF.${ColorReset}")
 ENDIF()
+
 add_custom_target(
   pyjuke
   COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/PyJuKe/pyjuke.sh ${CMAKE_CURRENT_SOURCE_DIR} ${PROJECT_BINARY_DIR} ${PROVOP}

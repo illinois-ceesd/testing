@@ -3,4 +3,7 @@ HaveMPI4PY
 HaveLOOPY
 HavePYOPENCL
 HaveFAILS
+HaveGrudge
+HaveProfiler
+HaveJuKe
 
