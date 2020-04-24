@@ -1,4 +1,5 @@
 from __future__ import division, absolute_import, print_function
+from mpi4py import MPI
 from profiler import Profiler
 
 __copyright__ = """
@@ -34,6 +35,10 @@ logger = logging.getLogger(__name__)
 from grudge import sym, bind, DGDiscretizationWithBoundaries
 from grudge.shortcuts import set_up_rk4
 
+mpiCommObj = MPI.COMM_WORLD
+myProfiler = Profiler(mpiCommObj)
+
+myProfiler.StartTimer()
 
 def simple_mpi_communication_entrypoint():
     cl_ctx = cl.create_some_context(False,[0,0])
@@ -95,21 +100,29 @@ def simple_mpi_communication_entrypoint():
 
 
 def mpi_communication_entrypoint():
+
+    global myProfiler
+    global mpiCommObj
+    
+    myProfiler.StartTimer("CLContext")
     cl_ctx = cl.create_some_context()
     queue = cl.CommandQueue(cl_ctx)
+    myProfiler.EndTimer("CLContext")
 
-    from mpi4py import MPI
-    comm = MPI.COMM_WORLD
+#    from mpi4py import MPI
+    comm = mpiCommObj
     i_local_rank = comm.Get_rank()
     num_parts = comm.Get_size()
 
+    myProfiler.StartTimer("MeshPrep")
     from meshmode.distributed import MPIMeshDistributor, get_partition_by_pymetis
     mesh_dist = MPIMeshDistributor(comm)
 
     dim = 2
     dt = 0.04
     order = 4
-
+    myProfiler.EndTimer("MeshPrep")
+    myProfiler.StartTimer("MeshGen")
     if mesh_dist.is_mananger_rank():
         from meshmode.mesh.generation import generate_regular_rect_mesh
         mesh = generate_regular_rect_mesh(a=(-0.5,)*dim,
@@ -122,8 +135,12 @@ def mpi_communication_entrypoint():
     else:
         local_mesh = mesh_dist.receive_mesh_part()
 
+    myProfiler.EndTimer("MeshGen")
+
+    myProfiler.StartTimer("DGDiscretization")
     vol_discr = DGDiscretizationWithBoundaries(cl_ctx, local_mesh, order=order,
                                                mpi_communicator=comm)
+    myProfiler.EndTimer("DGDiscretization")
 
     source_center = np.array([0.1, 0.22, 0.33])[:local_mesh.dim]
     source_width = 0.05
@@ -133,6 +150,7 @@ def mpi_communication_entrypoint():
     sym_source_center_dist = sym_x - source_center
     sym_t = sym.ScalarVariable("t")
 
+    myProfiler.StartTimer("Setup")
     from grudge.models.wave import StrongWaveOperator
     from meshmode.mesh import BTAG_ALL, BTAG_NONE
     op = StrongWaveOperator(-0.1, vol_discr.dim,
@@ -198,7 +216,7 @@ def mpi_communication_entrypoint():
 
     dt_stepper = set_up_rk4("w", dt, fields, rhs)
 
-    final_t = 4
+    final_t = 2
     nsteps = int(final_t/dt)
     print("rank=%d dt=%g nsteps=%d" % (i_local_rank, dt, nsteps))
 
@@ -211,15 +229,17 @@ def mpi_communication_entrypoint():
 
     from time import time
     t_last_step = time()
+    myProfiler.EndTimer("Setup")
 
+    myProfiler.StartTimer("Stepping")
     logmgr.tick_before()
     for event in dt_stepper.run(t_end=final_t):
         if isinstance(event, dt_stepper.StateComputed):
             assert event.component_id == "w"
 
             step += 1
-            print(step, event.t, norm(queue, u=event.state_component[0]),
-                  time()-t_last_step)
+#            print(step, event.t, norm(queue, u=event.state_component[0]),
+#                  time()-t_last_step)
 
             # if step % 10 == 0:
             #     vis.write_vtk_file("rank%d-fld-%04d.vtu" % (i_local_rank, step),
@@ -229,6 +249,7 @@ def mpi_communication_entrypoint():
             logmgr.tick_after()
             logmgr.tick_before()
     logmgr.tick_after()
+    myProfiler.EndTimer("Stepping")
 
     def print_profile_data(data):
         print("""execute() for rank %d:
@@ -285,16 +306,32 @@ def test_simple_mpi(num_ranks):
 if __name__ == "__main__":
 #    if "RUN_WITHIN_MPI" in os.environ:
 #        if "TEST_MPI_COMMUNICATION" in os.environ:
-#            mpi_communication_entrypoint()
-#        elif "TEST_SIMPLE_MPI_COMMUNICATION" in os.environ:
-#    test_simple_mpi(4)
-    simple_mpi_communication_entrypoint()
-#    else:
-#        import sys
-#        if len(sys.argv) > 1:
-#            exec(sys.argv[1])
-#        else:
-#            from py.test.cmdline import main
-#            main([__file__])
+#    global myProfiler
+#    global mpiCommObj
+
+    myRank = mpiCommObj.Get_rank()
+    numProc = mpiCommObj.Get_size()
+    
+    myProfiler.StartTimer("Test")
+    mpi_communication_entrypoint()
+    myProfiler.EndTimer("Test")
+    myProfiler.EndTimer()
+    #        elif "TEST_SIMPLE_MPI_COMMUNICATION" in os.environ:
+    #    test_simple_mpi(4)
+    #    simple_mpi_communication_entrypoint()
+    #    else:
+    #        import sys
+    #        if len(sys.argv) > 1:
+    #            exec(sys.argv[1])
+    #        else:
+    #            from py.test.cmdline import main
+    #            main([__file__])
+    if(myRank == 0):
+        print(" ==== Rank 0 Timing === ")
+        myProfiler.WriteTimers()
+        if(numProc > 1):
+            print(" ==== Parallel Profile === ")
+    if(numProc > 1):
+        myProfiler.ReduceTimers()
 
 # vim: fdm=marker

@@ -6,24 +6,34 @@ import pyopencl as cl
 import pyopencl.array
 import pyopencl.clrandom
 
+from mpi4py import MPI
 import loopy as lp
-# from profiler import Profiler
+from profiler import Profiler
 import pyjuke
 
+mpiCommObj = MPI.COMM_WORLD
+myProfiler = Profiler(mpiCommObj)
 
 def main(dataPath):
 
+    global myProfiler
+
+    
     fn = dataPath+"zaxpy3.f90"
 
     with open(fn, "r") as inf:
         source = inf.read()
 
+    myProfiler.StartTimer("LoopyParse")
 #    dgemm, = lp.parse_transformed_fortran(source, filename=fn)
     zaxpy3, = lp.parse_fortran(source, filename=fn)
     zaxpy3 = lp.set_options(zaxpy3, write_code=True)
+    myProfiler.EndTimer("LoopyParse")
 
+    myProfiler.StartTimer("CLContext")
     ctx = cl.create_some_context(False, pyjuke.cl_context_answers)
     queue = cl.CommandQueue(ctx)
+    myProfiler.EndTimer("CLContext")
 
     iSize = 128
     jSize = 128
@@ -37,6 +47,7 @@ def main(dataPath):
     jmax = jSize
     kmax = kSize
 
+    myProfiler.StartTimer("CLInit")
     x = cl.array.empty(queue, (iSize, jSize, kSize),
                        dtype=np.float64, order="F")
     y = cl.array.empty(queue, (iSize, jSize, kSize),
@@ -47,17 +58,26 @@ def main(dataPath):
     cl.clrandom.fill_rand(x)
     cl.clrandom.fill_rand(y)
     a = 1.0
+    myProfiler.EndTimer("CLInit")
 
+    myProfiler.StartTimer("zaxpy3")
     zaxpy3(queue, imin=imin, imax=imax, jmin=jmin,
            jmax=jmax, kmin=kmin, kmax=kmax, a=a, x=x, y=y, z=z)
 #    dgemm(queue,roi=roi,a=1.0, x=x, y=y, z=z)
+    myProfiler.EndTimer("zaxpy3")
 
+    myProfiler.StartTimer("CheckResult")
     z_ref = (x.get() + a*y.get())
-    assert la.norm(z_ref - z.get())/la.norm(z_ref) < 1e-10
+    errNorm = la.norm(z_ref - z.get())/la.norm(z_ref) 
+    myProfiler.EndTimer("CheckResult")
+    
+    assert errNorm < 1e-10
 
 
 if __name__ == "__main__":
 
+    myProfiler.StartTimer()
+    
     dataPath = "./"
     numArgs = len(sys.argv)
     if numArgs > 1:
@@ -65,4 +85,9 @@ if __name__ == "__main__":
         dataPath += "/kernels/"
         print("DataPath: ", dataPath)
 
+    myProfiler.StartTimer("main")
     main(dataPath)
+    myProfiler.EndTimer("main")
+    myProfiler.EndTimer()
+    myProfiler.WriteTimers()
+    
