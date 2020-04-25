@@ -34,7 +34,10 @@ After building the documentation, point your web browser at:
 `/path/to/build/docs/html/index.html`. Choose *Computational Kernel Documentation* 
 in the left browser menu.
 
+# Testing dashboard
+The testing dashboard is located [here](https://my.cdash.org/index.php?project=JustKernels). To test your configuration, build, and submit the results to the testing dashboard:
 
+> make Experimental
 
 
 
