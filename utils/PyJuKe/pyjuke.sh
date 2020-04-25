@@ -42,18 +42,21 @@ if [ "$OUTFILE" != "" ]; then
     
     if [ -e ${OUTFILE} ]; then rm ${OUTFILE}; fi
     
-    printf "sourcepath = \"${SRCPATH}\"\n"   > ${OUTFILE}
-    printf "binpath = \"${BINPATH}\"\n"       >> ${OUTFILE}
-    printf "reponame = \"${REPONAME}\"\n"     >> ${OUTFILE}
-    printf "branchname = \"${BRANCHNAME}\"\n" >> ${OUTFILE}
-    printf "revision = \"${REVISION}\"\n"     >> ${OUTFILE}
-    printf "localrev = \"${LOCALREV}\"\n"     >> ${OUTFILE}
-    printf "remoterev = \"${REMOTEREV}\"\n"   >> ${OUTFILE}
-    printf "buildhost = \"${BUILDHOST}\"\n"   >> ${OUTFILE}
-    printf "builddate = \"${BUILDDATE}\"\n"   >> ${OUTFILE}
-    printf "changed = \"${CHANGED}\"\n"       >> ${OUTFILE}
-    printf "cl_context_answers = [0, 0]\n"    >> ${OUTFILE}
+    printf "sourcepath = \"${SRCPATH}\"\n"       > ${OUTFILE}
+    printf "binpath = \"${BINPATH}\"\n"         >> ${OUTFILE}
+    printf "reponame = \"${REPONAME}\"\n"       >> ${OUTFILE}
+    printf "branchname = \"${BRANCHNAME}\"\n"   >> ${OUTFILE}
+    printf "revision = \"${REVISION}\"\n"       >> ${OUTFILE}
+    printf "localrev = \"${LOCALREV}\"\n"       >> ${OUTFILE}
+    printf "remoterev = \"${REMOTEREV}\"\n"     >> ${OUTFILE}
+    printf "buildhost = \"${BUILDHOST}\"\n"     >> ${OUTFILE}
+    printf "builddate = \"${BUILDDATE}\"\n"     >> ${OUTFILE}
+    printf "changed = \"${CHANGED}\"\n"         >> ${OUTFILE}
+    printf "cl_context_answers = [0, 0]\n"      >> ${OUTFILE}
+    printf "jukepath = \"${BINPATH}/PyJuKe\"\n" >> ${OUTFILE}
+    
 else
+    
     printf "sourcepath = \"${SRCPATH}\"\n"
     printf "binpath    = \"${BINPATH}\"\n"   
     printf "reponame   = \"${REPONAME}\"\n"      
@@ -65,5 +68,7 @@ else
     printf "builddate  = \"${BUILDDATE}\"\n"   
     printf "changed    = \"${CHANGED}\"\n"       
     printf "cl_context_answers = [0, 0]\n"    
+    printf "jukepath = \"${BINPATH}/PyJuKe\"\n"
+    
 fi
 cd ${ORIGPATH}

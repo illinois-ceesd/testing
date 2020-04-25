@@ -14,11 +14,11 @@ import pyjuke
 mpiCommObj = MPI.COMM_WORLD
 myProfiler = Profiler(mpiCommObj)
 
+
 def main(dataPath):
 
     global myProfiler
 
-    
     fn = dataPath+"zaxpy3.f90"
 
     with open(fn, "r") as inf:
@@ -68,16 +68,16 @@ def main(dataPath):
 
     myProfiler.StartTimer("CheckResult")
     z_ref = (x.get() + a*y.get())
-    errNorm = la.norm(z_ref - z.get())/la.norm(z_ref) 
+    errNorm = la.norm(z_ref - z.get())/la.norm(z_ref)
     myProfiler.EndTimer("CheckResult")
-    
+
     assert errNorm < 1e-10
 
 
 if __name__ == "__main__":
 
     myProfiler.StartTimer()
-    
+
     dataPath = "./"
     numArgs = len(sys.argv)
     if numArgs > 1:
@@ -90,4 +90,3 @@ if __name__ == "__main__":
     myProfiler.EndTimer("main")
     myProfiler.EndTimer()
     myProfiler.WriteTimers()
-    

@@ -4,9 +4,13 @@
 
 for filename in $(find ${1} -name "*.py")
 do
-    if [ ! -z ${2} ]; then printf "Checking ${filename}...\n"; fi
-    flake8 ${filename}
-done    
-
+    if [ ! -z ${2} ];
+    then
+        printf "Checking ${filename}...\n"
+        flake8 ${filename}
+    else
+        flake8 --ignore=F401,F841,W293 ${filename}
+    fi
+done
 
 

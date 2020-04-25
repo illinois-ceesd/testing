@@ -14,6 +14,12 @@ ELSE()
     COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/Checker/checker.sh ${CMAKE_SOURCE_DIR} ${NOISYOP}
     COMMENT "${Cyan}${PROJECT_NAME}: Checking Python style and syntax with ${PYLINTER} ...${ColorReset}"
   )
+  MESSAGE(STATUS "${Green}${PROJECT_NAME}: Use 'make strictpy' to strictly check Python.${ColorReset}")
+  ADD_CUSTOM_TARGET(
+    strictpy
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/Checker/checker.sh ${CMAKE_SOURCE_DIR} "STRICT"
+    COMMENT "${Cyan}${PROJECT_NAME}: Checking Python style and syntax with ${PYLINTER} ...${ColorReset}"
+  )
 ENDIF()
 
 IF(BUILD_PROVENANCE)
@@ -32,6 +38,6 @@ add_custom_target(
 add_custom_target(
   pympiprof
   DEPENDS pyjuke
-  COMMAND cp ${CMAKE_SOURCE_DIR}/utils/Profiler/profiler.py ${PROJECT_BINARY_DIR}/PyJuke 
+  COMMAND cp ${CMAKE_SOURCE_DIR}/utils/Profiler/profiler.py ${PROJECT_BINARY_DIR}/PyJuke/ 
   COMMENT "${Cyan}${PROJECT_NAME}: Installing JuKe Profiler module ...${ColorReset}"
 )

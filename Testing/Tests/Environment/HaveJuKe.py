@@ -1,4 +1,3 @@
 import pyjuke
 
-print("Found JustKernels module:", pyjuke.binpath+"/PyJuKe/pyjuke.py")
-
+print("Found JustKernels module:", pyjuke.jukepath+"/pyjuke.py")

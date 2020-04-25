@@ -4,6 +4,8 @@ from profiler import Profiler
 import time
 import sys
 import os
+import pyjuke
+
 
 testName = "HelloPyMPI"
 mpiCommObj = MPI.COMM_WORLD

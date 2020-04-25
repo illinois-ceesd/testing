@@ -2,6 +2,7 @@ import sys
 import os
 import platform
 import stat
+import pyjuke
 
 
 def generate_suite_runner(suiteName, suitePath, outputPath):
@@ -25,6 +26,9 @@ def generate_suite_runner(suiteName, suitePath, outputPath):
     scriptFileName = outputPath + "/" + scriptName
     resultsFileName = outputPath + "/parallel_" + suiteName + "_results.txt"
     testListFile = suitePath + "/testlist.txt"
+    jukePath = pyjuke.jukepath
+    jukeSourcePath = pyjuke.sourcepath
+    jukeBinPath = pyjuke.binpath
 
 #    testNames = open(testListFile).readlines()
 #    numTests = len(testNames)
@@ -47,16 +51,23 @@ def generate_suite_runner(suiteName, suitePath, outputPath):
     if(systemType == "workstation"):
         # Then it's an mpiexec situation
         print("#!/bin/sh\n\n", file=outScript)
+        print("numProcs=\"4\"", file=outScript)
+        print("if [ ! -z ${1} ]; then numProcs=${1}; fi", file=outScript)
+        print("set -x", file=outScript)
+        print("export PYTHONPATH=\"${jukePath}:${PYTHONPATH}\"",
+              file=outScript)
         print("rm -f ", resultsFileName, file=outScript)
         print("for testname in $(cat ", testListFile, ")\n", file=outScript)
         print("do\n", file=outScript)
         print("     printf \"", scriptShortName, ": Running test",
               " (${testname})...\\n\"", file=outScript)
         print("     printf \"", scriptShortName, ": Command: ",
-              " mpiexec -n 4 python ", suitePath + "/${testname}.py ",
+              " mpiexec -n ${numProcs} python ",
+              suitePath + "/${testname}.py ",
               resultsFileName, "\\n\"\n", file=outScript)
         print("     date\n", file=outScript)
-        print("     mpiexec -n 4 python ", suitePath + "/${testname}.py ",
+        print("     mpiexec -n ${numProcs} python ",
+              suitePath + "/${testname}.py ",
               resultsFileName, "\n", file=outScript)
         print("     date\n", file=outScript)
         print("done\n", file=outScript)
