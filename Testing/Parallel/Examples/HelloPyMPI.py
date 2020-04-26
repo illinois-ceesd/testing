@@ -3,9 +3,7 @@ from mpi4py import MPI
 from profiler import Profiler
 import time
 import sys
-import os
-import pyjuke
-
+import juketest
 
 testName = "HelloPyMPI"
 mpiCommObj = MPI.COMM_WORLD
@@ -51,14 +49,12 @@ if myRank == 0:
 # this is a collective call to give parallel stats
 myProfiler.ReduceTimers()
 
-numArgs = len(sys.argv)
-if(numArgs > 1):
-    outFileName = sys.argv[1]
-    if(os.path.exists(outFileName)):
-        outFile = open(outFileName, 'a')
-    else:
-        outFile = open(outFileName, 'w')
-    print(testName + " = PASS", file=outFile)
-    outFile.close()
-else:
-    print(testName+" = PASS")
+if myRank == 0:
+    numArgs = len(sys.argv)
+    outFileName = ""
+
+    if numArgs > 1:
+        outFileName = sys.argv[1]
+
+    testResult = {testName: "Pass"}
+    juketest.UpdateTestResults(testResult, outFileName)

@@ -4,10 +4,12 @@ from profiler import Profiler
 from grudge import sym, bind, DGDiscretizationWithBoundaries
 from grudge.shortcuts import set_up_rk4
 import pytest
+
 # import os
 import numpy as np
 import pyopencl as cl
 import logging
+import juketest
 
 __copyright__ = """
 Copyright (C) 2017 Ellis Hoag
@@ -35,6 +37,7 @@ THE SOFTWARE.
 logger = logging.getLogger(__name__)
 
 
+testName = "GrudgeMPI"
 mpiCommObj = MPI.COMM_WORLD
 myProfiler = Profiler(mpiCommObj)
 
@@ -51,6 +54,7 @@ def simple_mpi_communication_entrypoint():
     from meshmode.distributed import get_partition_by_pymetis
 
     from mpi4py import MPI
+
     comm = MPI.COMM_WORLD
     num_parts = comm.Get_size()
 
@@ -58,43 +62,51 @@ def simple_mpi_communication_entrypoint():
 
     if mesh_dist.is_mananger_rank():
         from meshmode.mesh.generation import generate_regular_rect_mesh
-        mesh = generate_regular_rect_mesh(a=(-1,)*2,
-                                          b=(1,)*2,
-                                          n=(3,)*2)
+
+        mesh = generate_regular_rect_mesh(a=(-1,) * 2, b=(1,) * 2, n=(3,) * 2)
 
         part_per_element = get_partition_by_pymetis(mesh, num_parts)
 
-        local_mesh = mesh_dist.send_mesh_parts(mesh, part_per_element,
-                                               num_parts)
+        local_mesh = mesh_dist.send_mesh_parts(
+            mesh, part_per_element, num_parts
+        )
     else:
         local_mesh = mesh_dist.receive_mesh_part()
 
-    vol_discr = DGDiscretizationWithBoundaries(cl_ctx, local_mesh,
-                                               order=5, mpi_communicator=comm)
+    vol_discr = DGDiscretizationWithBoundaries(
+        cl_ctx, local_mesh, order=5, mpi_communicator=comm
+    )
 
     sym_x = sym.nodes(local_mesh.dim)
     myfunc_symb = sym.sin(np.dot(sym_x, [2, 3]))
     myfunc = bind(vol_discr, myfunc_symb)(queue)
 
     sym_all_faces_func = sym.cse(
-        sym.interp("vol", "all_faces")(sym.var("myfunc")))
+        sym.interp("vol", "all_faces")(sym.var("myfunc"))
+    )
     sym_int_faces_func = sym.cse(
-        sym.interp("vol", "int_faces")(sym.var("myfunc")))
+        sym.interp("vol", "int_faces")(sym.var("myfunc"))
+    )
     sym_bdry_faces_func = sym.cse(
         sym.interp(sym.BTAG_ALL, "all_faces")(
-            sym.interp("vol", sym.BTAG_ALL)(sym.var("myfunc"))))
+            sym.interp("vol", sym.BTAG_ALL)(sym.var("myfunc"))
+        )
+    )
 
-    bound_face_swap = bind(vol_discr,
-                           sym.interp("int_faces", "all_faces")(
-                               sym.OppositeInteriorFaceSwap("int_faces")(
-                                   sym_int_faces_func)) -
-                           (sym_all_faces_func - sym_bdry_faces_func))
+    bound_face_swap = bind(
+        vol_discr,
+        sym.interp("int_faces", "all_faces")(
+            sym.OppositeInteriorFaceSwap("int_faces")(sym_int_faces_func)
+        )
+        - (sym_all_faces_func - sym_bdry_faces_func),
+    )
 
     # print(bound_face_swap)
     # 1/0
 
     hopefully_zero = bound_face_swap(queue, myfunc=myfunc)
     import numpy.linalg as la
+
     error = la.norm(hopefully_zero.get())
 
     np.set_printoptions(threshold=100000000, suppress=True)
@@ -114,7 +126,7 @@ def mpi_communication_entrypoint():
     queue = cl.CommandQueue(cl_ctx)
     myProfiler.EndTimer("CLContext")
 
-#    from mpi4py import MPI
+    #    from mpi4py import MPI
     comm = mpiCommObj
     i_local_rank = comm.Get_rank()
     num_parts = comm.Get_size()
@@ -132,26 +144,28 @@ def mpi_communication_entrypoint():
     myProfiler.StartTimer("MeshGen")
     if mesh_dist.is_mananger_rank():
         from meshmode.mesh.generation import generate_regular_rect_mesh
-        mesh = generate_regular_rect_mesh(a=(-0.5,)*dim,
-                                          b=(0.5,)*dim,
-                                          n=(16,)*dim)
+
+        mesh = generate_regular_rect_mesh(
+            a=(-0.5,) * dim, b=(0.5,) * dim, n=(16,) * dim
+        )
 
         part_per_element = get_partition_by_pymetis(mesh, num_parts)
 
-        local_mesh = mesh_dist.send_mesh_parts(mesh, part_per_element,
-                                               num_parts)
+        local_mesh = mesh_dist.send_mesh_parts(
+            mesh, part_per_element, num_parts
+        )
     else:
         local_mesh = mesh_dist.receive_mesh_part()
 
     myProfiler.EndTimer("MeshGen")
 
     myProfiler.StartTimer("DGDiscretization")
-    vol_discr = DGDiscretizationWithBoundaries(cl_ctx, local_mesh,
-                                               order=order,
-                                               mpi_communicator=comm)
+    vol_discr = DGDiscretizationWithBoundaries(
+        cl_ctx, local_mesh, order=order, mpi_communicator=comm
+    )
     myProfiler.EndTimer("DGDiscretization")
 
-    source_center = np.array([0.1, 0.22, 0.33])[:local_mesh.dim]
+    source_center = np.array([0.1, 0.22, 0.33])[: local_mesh.dim]
     source_width = 0.05
     source_omega = 3
 
@@ -162,22 +176,29 @@ def mpi_communication_entrypoint():
     myProfiler.StartTimer("Setup")
     from grudge.models.wave import StrongWaveOperator
     from meshmode.mesh import BTAG_ALL, BTAG_NONE
-    op = StrongWaveOperator(-0.1, vol_discr.dim,
-                            source_f=(
-                                sym.sin(source_omega*sym_t)
-                                * sym.exp(
-                                    -np.dot(sym_source_center_dist,
-                                            sym_source_center_dist)
-                                    / source_width**2)),
-                            dirichlet_tag=BTAG_NONE,
-                            neumann_tag=BTAG_NONE,
-                            radiation_tag=BTAG_ALL,
-                            flux_type="upwind")
+
+    op = StrongWaveOperator(
+        -0.1,
+        vol_discr.dim,
+        source_f=(
+            sym.sin(source_omega * sym_t)
+            * sym.exp(
+                -np.dot(sym_source_center_dist, sym_source_center_dist)
+                / source_width ** 2
+            )
+        ),
+        dirichlet_tag=BTAG_NONE,
+        neumann_tag=BTAG_NONE,
+        radiation_tag=BTAG_ALL,
+        flux_type="upwind",
+    )
 
     from pytools.obj_array import join_fields
-    fields = join_fields(vol_discr.zeros(queue),
-                         [vol_discr.zeros(queue)
-                          for i in range(vol_discr.dim)])
+
+    fields = join_fields(
+        vol_discr.zeros(queue),
+        [vol_discr.zeros(queue) for i in range(vol_discr.dim)],
+    )
 
     # FIXME
     # dt = op.estimate_rk4_timestep(vol_discr, fields=fields)
@@ -186,35 +207,41 @@ def mpi_communication_entrypoint():
     #           Fails because: "found faces without boundary conditions"
     # op.check_bc_coverage(local_mesh)
 
-    from pytools.log import LogManager, \
-        add_general_quantities, \
-        add_run_info, \
-        IntervalTimer, EventCounter
+    from pytools.log import (
+        LogManager,
+        add_general_quantities,
+        add_run_info,
+        IntervalTimer,
+        EventCounter,
+    )
+
     log_filename = None
     # NOTE: LogManager hangs when using a file on a shared directory.
     # log_filename = 'grudge_log.dat'
     logmgr = LogManager(log_filename, "w", comm)
     add_run_info(logmgr)
     add_general_quantities(logmgr)
-    log_quantities =\
-        {"rank_data_swap_timer":
-         IntervalTimer("rank_data_swap_timer",
-                       "Time spent evaluating RankDataSwapAssign"),
-         "rank_data_swap_counter":
-         EventCounter("rank_data_swap_counter",
-                      "Number of RankDataSwapAssign instructions evaluated"),
-         "exec_timer":
-         IntervalTimer("exec_timer",
-                       "Total time spent executing instructions"),
-         "insn_eval_timer":
-         IntervalTimer("insn_eval_timer",
-                       "Time spend evaluating instructions"),
-         "future_eval_timer":
-         IntervalTimer("future_eval_timer",
-                       "Time spent evaluating futures"),
-         "busy_wait_timer":
-         IntervalTimer("busy_wait_timer",
-                       "Time wasted doing busy wait")}
+    log_quantities = {
+        "rank_data_swap_timer": IntervalTimer(
+            "rank_data_swap_timer", "Time spent evaluating RankDataSwapAssign"
+        ),
+        "rank_data_swap_counter": EventCounter(
+            "rank_data_swap_counter",
+            "Number of RankDataSwapAssign instructions evaluated",
+        ),
+        "exec_timer": IntervalTimer(
+            "exec_timer", "Total time spent executing instructions"
+        ),
+        "insn_eval_timer": IntervalTimer(
+            "insn_eval_timer", "Time spend evaluating instructions"
+        ),
+        "future_eval_timer": IntervalTimer(
+            "future_eval_timer", "Time spent evaluating futures"
+        ),
+        "busy_wait_timer": IntervalTimer(
+            "busy_wait_timer", "Time wasted doing busy wait"
+        ),
+    }
 
     for quantity in log_quantities.values():
         logmgr.add_quantity(quantity)
@@ -225,17 +252,21 @@ def mpi_communication_entrypoint():
     # 1/0
 
     def rhs(t, w):
-        val, rhs.profile_data = bound_op(queue, profile_data=rhs.profile_data,
-                                         log_quantities=log_quantities,
-                                         t=t, w=w)
+        val, rhs.profile_data = bound_op(
+            queue,
+            profile_data=rhs.profile_data,
+            log_quantities=log_quantities,
+            t=t,
+            w=w,
+        )
         return val
 
     rhs.profile_data = {}
 
     dt_stepper = set_up_rk4("w", dt, fields, rhs)
 
-    final_t = .5
-    nsteps = int(final_t/dt)
+    final_t = 0.5
+    nsteps = int(final_t / dt)
     print("rank=%d dt=%g nsteps=%d" % (i_local_rank, dt, nsteps))
 
     # from grudge.shortcuts import make_visualizer
@@ -243,10 +274,10 @@ def mpi_communication_entrypoint():
 
     step = 0
 
-#    norm = bind(vol_discr, sym.norm(2, sym.var("u")))
+    #    norm = bind(vol_discr, sym.norm(2, sym.var("u")))
 
-#    from time import time
-#    t_last_step = time()
+    #    from time import time
+    #    t_last_step = time()
     myProfiler.EndTimer("Setup")
 
     myProfiler.StartTimer("Stepping")
@@ -256,31 +287,36 @@ def mpi_communication_entrypoint():
             assert event.component_id == "w"
 
             step += 1
-#            print(step, event.t, norm(queue, u=event.state_component[0]),
-#                  time()-t_last_step)
+            #            print(step, event.t, norm(queue,
+            #                  u=event.state_component[0]),
+            #                  time()-t_last_step)
 
             # if step % 10 == 0:
             #     vis.write_vtk_file("rank%d-fld-%04d.vtu" %
             #                       (i_local_rank, step),
             #                        [("u", event.state_component[0]),
             #                         ("v", event.state_component[1:])])
-#            t_last_step = time()
+            #            t_last_step = time()
             logmgr.tick_after()
             logmgr.tick_before()
     logmgr.tick_after()
     myProfiler.EndTimer("Stepping")
 
     def print_profile_data(data):
-        print("""execute() for rank %d:
+        print(
+            """execute() for rank %d:
         \tInstruction Evaluation: %f%%
         \tFuture Evaluation: %f%%
         \tBusy Wait: %f%%
-        \tTotal: %f seconds""" %
-              (i_local_rank,
-               data['insn_eval_time'] / data['total_time'] * 100,
-               data['future_eval_time'] / data['total_time'] * 100,
-               data['busy_wait_time'] / data['total_time'] * 100,
-               data['total_time']))
+        \tTotal: %f seconds"""
+            % (
+                i_local_rank,
+                data["insn_eval_time"] / data["total_time"] * 100,
+                data["future_eval_time"] / data["total_time"] * 100,
+                data["busy_wait_time"] / data["total_time"] * 100,
+                data["total_time"],
+            )
+        )
 
     print_profile_data(rhs.profile_data)
     logmgr.close()
@@ -288,6 +324,7 @@ def mpi_communication_entrypoint():
 
 
 # {{{ MPI test pytest entrypoint
+
 
 @pytest.mark.mpi
 @pytest.mark.parametrize("num_ranks", [2])
@@ -297,11 +334,20 @@ def test_mpi(num_ranks):
 
     from subprocess import check_call
     import sys
-    check_call([
-        "mpiexec", "-n", str(num_ranks),
-        "-x", "RUN_WITHIN_MPI=1",
-        "-x", "TEST_MPI_COMMUNICATION=1",
-        sys.executable, __file__])
+
+    check_call(
+        [
+            "mpiexec",
+            "-n",
+            str(num_ranks),
+            "-x",
+            "RUN_WITHIN_MPI=1",
+            "-x",
+            "TEST_MPI_COMMUNICATION=1",
+            sys.executable,
+            __file__,
+        ]
+    )
 
 
 @pytest.mark.mpi
@@ -312,18 +358,36 @@ def test_simple_mpi(num_ranks):
 
     from subprocess import check_call
     import sys
-    check_call([
-        "mpiexec", "-n", str(num_ranks),
-        "-x", "RUN_WITHIN_MPI=1",
-        "-x", "TEST_SIMPLE_MPI_COMMUNICATION=1",
-        # https://mpi4py.readthedocs.io/en/stable/mpi4py.run.html
-        sys.executable, "-m", "mpi4py.run", __file__])
+
+    check_call(
+        [
+            "mpiexec",
+            "-n",
+            str(num_ranks),
+            "-x",
+            "RUN_WITHIN_MPI=1",
+            "-x",
+            "TEST_SIMPLE_MPI_COMMUNICATION=1",
+            # https://mpi4py.readthedocs.io/en/stable/mpi4py.run.html
+            sys.executable,
+            "-m",
+            "mpi4py.run",
+            __file__,
+        ]
+    )
+
 
 # }}}
 
 
 if __name__ == "__main__":
 
+    import sys
+
+    numArgs = len(sys.argv)
+    resultsFileName = ""
+    if numArgs > 1:
+        resultsFileName = sys.argv[1]
     #    if "RUN_WITHIN_MPI" in os.environ:
     #        if "TEST_MPI_COMMUNICATION" in os.environ:
     #    global myProfiler
@@ -346,12 +410,16 @@ if __name__ == "__main__":
     #        else:
     #            from py.test.cmdline import main
     #            main([__file__])
-    if(myRank == 0):
+    if myRank == 0:
         print(" ==== Rank 0 Timing === ")
         myProfiler.WriteTimers()
-        if(numProc > 1):
+        if numProc > 1:
             print(" ==== Parallel Profile === ")
-    if(numProc > 1):
+    if numProc > 1:
         myProfiler.ReduceTimers()
+
+    if myRank == 0:
+        testResult = {testName: "PASS"}
+        juketest.UpdateTestResults(testResult, resultsFileName)
 
 # vim: fdm=marker
