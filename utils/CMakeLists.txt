@@ -34,12 +34,3 @@ add_custom_target(
   COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/PyJuKe/pyjuke.sh ${CMAKE_CURRENT_SOURCE_DIR} ${PROJECT_BINARY_DIR} ${PROVOP}
   COMMENT "${Cyan}${PROJECT_NAME}: Generating JuKe Python module ...${ColorReset}"
   )
-
-file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/PyJuKe/)
-
-add_custom_target(
-  pympiprof
-  DEPENDS pyjuke
-  COMMAND cp ${CMAKE_SOURCE_DIR}/utils/Profiler/profiler.py ${PROJECT_BINARY_DIR}/PyJuKe/ 
-  COMMENT "${Cyan}${PROJECT_NAME}: Installing JuKe Profiler module ...${ColorReset}"
-)
