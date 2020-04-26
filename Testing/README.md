@@ -4,8 +4,10 @@ The current testing infrastructure is capable of detecting and driving
 tests and suites of serial and parallel tests on most platforms.
 To exercise the project's tests, after *cmake* and *make*, use:
 
-> make test
+> make test  
+
 -or-
+
 > make Experimental (submits results to the dashboard)
 
 The output stdout/stderr created by the testing infrastructure and
