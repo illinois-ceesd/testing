@@ -13,7 +13,7 @@ To exercise the project's tests, after *cmake* and *make*, use:
 
 -or-
 
-> make Experimental (submits results to the dashboard)
+> make Experimental (submits results to the [Dashboard](https://cdash.org/index.php?project=JustKernels))
 
 The output stdout/stderr created by the testing infrastructure and
 the tests themselves is collected in:
