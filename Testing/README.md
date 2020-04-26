@@ -49,7 +49,7 @@ should contain a TESTNAME.
 For each TESTNAME, CMake will add a test named ${TESTNAME} that
 executes the following command:
 
-> python ${PROJECTSRC}/Testing/${TESTPATH}/${TESTNAME}.py ${CMAKE_SOURCE_DIR} ${PROJECT_BINARY_DIR}
+> python ${PROJECTSRC}/Testing/${TESTPATH}/${TESTNAME}.py ${PROJECTSRC} ${PROJECTBIN}
 
 The return code of the above command indicates whether the 
 test passes or fails. (0=pass)
@@ -83,12 +83,25 @@ empty testing templates provided in:
 
 # Parallel Python tests
 
+Parallel testing is a little more troublesome than serial 
+testing.  Parallel tests often need to navigate a system's 
+resource management stack to get at the compute resources 
+needed to run the tests.
+
+The infrastructure for parallel python tests is implemented 
+in *CMake* in the file (${PROJECTSRC}/Testing/CMakeLists.txt).  
+In short, parallel tests are arranged more strictly into 
+*parallel suites*.  Each suite executes in its own *batch* 
+through a suite-and-platform-specific *suite runner* script.
+
+Each of the components and procedures for the parallel testing 
+is described in the following sections.  Adding new parallel tests 
+and suites is also covered.
+
 ## Configuration-time infrastructure
 
-The infrastructure for parallel python tests is implemented in *CMake*
-in the file (${PROJECTSRC}/Testing/CMakeLists.txt). At configuration-time
-(i.e. when the user issues *cmake*), the testing infrastructure looks
-at the file:
+At configuration-time (i.e. when the user issues *cmake*), the testing 
+infrastructure looks at the file:
 
 > ${PROJECTSRC}/Testing/Parallel/parallelsuites.txt
 
