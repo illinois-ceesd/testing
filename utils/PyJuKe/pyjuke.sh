@@ -36,9 +36,10 @@ if [ "${GETREPO}" != "" ]; then
     fi
 fi
 
+if [ ! -e ${OUTDIR} ]; then mkdir -p ${OUTDIR}; fi
+
 if [ "$OUTFILE" != "" ]; then
     
-    if [ ! -e ${OUTDIR} ]; then mkdir -p ${OUTDIR}; fi
     
     if [ -e ${OUTFILE} ]; then rm ${OUTFILE}; fi
     
@@ -71,4 +72,7 @@ else
     printf "jukepath = \"${BINPATH}/PyJuKe\"\n"
     
 fi
+
+cp ${SRCPATH}/PyJuKe/*.py ${OUTDIR}
+
 cd ${ORIGPATH}
