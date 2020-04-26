@@ -19,7 +19,12 @@ Fortran and C++ compilers are required to build the kernels.
 > make [-j]
 
 # Test the build
-> make test
+
+> make test  
+
+-or-
+
+> make Experimental (submits results to the [dashboard](https://my.cdash.org/index.php?project=JustKernels))
 
 # Check Python Style & Syntax
 Python checks require [Flake8](https://flake8.pycqa.org/en/latest/).
