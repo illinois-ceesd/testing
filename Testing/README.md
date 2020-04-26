@@ -1,5 +1,10 @@
 # Testing 
 
+In the following documentation, these platform-and-installation-specific file system paths will be used:
+
+- PROJECTSRC: The path to your clone of the project repo
+- PROJECTBIN: The path to your build directory
+
 The current testing infrastructure is capable of detecting and driving
 tests and suites of serial and parallel tests on most platforms.
 To exercise the project's tests, after *cmake* and *make*, use:
@@ -24,11 +29,6 @@ for the following types of tests:
 The following sections will outline the automated system
 for detecting and driving tests, and cover how to add new
 tests and testing suites to the system.
-
-In the following documentation, these platform-and-installation-specific file system paths will be used:
-
-- PROJECTSRC: The path to your clone of the JustKernels repo
-- PROJECTBIN: The path to your build directory
 
 # Serial Python tests
 
