@@ -89,4 +89,4 @@ if __name__ == "__main__":
     main(dataPath)
     myProfiler.EndTimer("main")
     myProfiler.EndTimer()
-    myProfiler.WriteTimers()
+    myProfiler.WriteSerialProfile("LoopyZAXPY3_SerialTiming")

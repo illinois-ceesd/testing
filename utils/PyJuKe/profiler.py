@@ -1,10 +1,10 @@
 from mpi4py import MPI
 from time import perf_counter as GetTime
 import numpy as NUMPY
+import sys
 
 
 class Profiler:
-
     def ResetTime(self):
         self.t0 = GetTime()
 
@@ -23,9 +23,9 @@ class Profiler:
         self.sectionTimes = []
         self.timerBarrier = True
 
-    def StartTimer(self, sectionName='MAIN'):
+    def StartTimer(self, sectionName="MAIN"):
 
-        if sectionName == 'MAIN':
+        if sectionName == "MAIN":
             self.ResetTime()
 
         numOpenSections = len(self.openSections)
@@ -39,12 +39,15 @@ class Profiler:
 
         self.openSections.append(openSection)
 
-    def EndTimer(self, sectionName='MAIN'):
+    def EndTimer(self, sectionName="MAIN"):
         numOpenSections = len(self.openSections)
 
         if numOpenSections <= 0:
-            print("Error: EndTimer(", sectionName,
-                  ") called with no matching StartTimer.")
+            print(
+                "Error: EndTimer(",
+                sectionName,
+                ") called with no matching StartTimer.",
+            )
             1 / 0
 
         sectionTime = GetTime()
@@ -54,10 +57,15 @@ class Profiler:
 
         openSectionIndex = numOpenSections - 1
 
-        if(sectionName != self.openSections[openSectionIndex][1]):
-            print("SectionName: Expected(",
-                  self.openSections[openSectionIndex][1],
-                  ")", ", Got(", sectionName, ")")
+        if sectionName != self.openSections[openSectionIndex][1]:
+            print(
+                "SectionName: Expected(",
+                self.openSections[openSectionIndex][1],
+                ")",
+                ", Got(",
+                sectionName,
+                ")",
+            )
             1 / 0
 
         openSection = self.openSections.pop()
@@ -66,7 +74,7 @@ class Profiler:
         openSectionIndex = openSectionIndex - 1
 
         # Update parent's sub-timers
-        if(openSectionIndex >= 0):
+        if openSectionIndex >= 0:
             self.openSections[openSectionIndex][4] += sectionTime
 
         # Update section if it exists
@@ -74,7 +82,7 @@ class Profiler:
         match = False
 
         for i in range(numSections):
-            if(self.sectionTimes[i][1] == sectionName):
+            if self.sectionTimes[i][1] == sectionName:
                 existingSection = self.sectionTimes[i]
                 existingSection[2] += 1
                 existingSection[3] += sectionTime
@@ -86,7 +94,7 @@ class Profiler:
         if not match:
             self.sectionTimes.append(openSection)
 
-    def WriteTimers(self):
+    def WriteSerialProfile(self, fileName=""):
 
         # copy the timers to avoid destructing the list when printing
         sectionTimers = list(self.sectionTimes)
@@ -95,14 +103,30 @@ class Profiler:
         numCurrentSections = numSections
         minLevel = 0
 
-        while(numCurrentSections > 0):
+        profileFile = sys.stdout
+
+        if fileName != "":
+            profileFile = open(fileName, "w")
+
+        if numCurrentSections > 0:
+            print(
+                "# SectionName   NumCalls  TotalTime   ChildTime",
+                file=profileFile,
+            )
+
+        while numCurrentSections > 0:
             match = False
             for i in range(numCurrentSections):
-                if(sectionTimers[i][0] == minLevel):
+                if sectionTimers[i][0] == minLevel:
                     sectionTimer = sectionTimers.pop()
                     # print out SectionName NumCalls TotalTime ChildTime
-                    print(sectionTimer[1], " N:", sectionTimer[2], " T:",
-                          sectionTimer[3], " C:", sectionTimer[4])
+                    print(
+                        sectionTimer[1],
+                        sectionTimer[2],
+                        sectionTimer[3],
+                        sectionTimer[4],
+                        file=profileFile,
+                    )
                     match = True
                     break
 
@@ -111,7 +135,12 @@ class Profiler:
 
             numCurrentSections = len(sectionTimers)
 
-    def ReduceTimers(self):
+        if fileName != "":
+            profileFile.close()
+
+    # WriteParallelProfile is a collective call, must be called on all procs
+    def WriteParallelProfile(self, fileName=""):
+
         sectionTimers = list(self.sectionTimes)
 
         numSections = len(sectionTimers)
@@ -119,6 +148,7 @@ class Profiler:
         myCheck = NUMPY.zeros(1, dtype=int)
 
         self.mpiCommObj.Barrier()
+        numProc = self.mpiCommObj.Get_size()
 
         if self.myRank == 0:
             myNumSections[0] = numSections
@@ -129,21 +159,24 @@ class Profiler:
             myNumSections[0] = 0
         else:
             myNumSections[0] = 1
-            print("(", self.myRank, "): ", numSections,
-                  " != ", myNumSections[0])
+            print(
+                "(", self.myRank, "): ", numSections, " != ", myNumSections[0]
+            )
             1 / 0
 
         self.mpiCommObj.Reduce(myNumSections, myCheck, MPI.MAX, 0)
 
         if myCheck > 0:
-            print("ReduceTimers:Error: Disparate number of sections ",
-                  "across processors.")
+            print(
+                "ReduceTimers:Error: Disparate number of sections ",
+                "across processors.",
+            )
             1 / 0
 
-        mySectionTimes = NUMPY.zeros(numSections, dtype='float')
-        minTimes = NUMPY.zeros(numSections, dtype='float')
-        maxTimes = NUMPY.zeros(numSections, dtype='float')
-        sumTimes = NUMPY.zeros(numSections, dtype='float')
+        mySectionTimes = NUMPY.zeros(numSections, dtype="float")
+        minTimes = NUMPY.zeros(numSections, dtype="float")
+        maxTimes = NUMPY.zeros(numSections, dtype="float")
+        sumTimes = NUMPY.zeros(numSections, dtype="float")
 
         for i in range(numSections):
             mySectionTimes[i] = sectionTimers[i][3]
@@ -153,10 +186,38 @@ class Profiler:
         self.mpiCommObj.Reduce(mySectionTimes, sumTimes, MPI.SUM, 0)
 
         if self.myRank == 0:
+
+            profileFile = sys.stdout
+            if fileName != "":
+                profileFile = open(fileName, "w")
+            print("# NumProcs: ", numProc, file=profileFile)
+            print(
+                "# SectionName   MinTime   MaxTime   MeanTime",
+                file=profileFile,
+            )
             for i in range(numSections):
                 sectionTime = sectionTimers[i]
-                print(sectionTime[1], ":  Min: ", minTimes[i], "  Max: ",
-                      maxTimes[i], "  Mean: ",
-                      sumTimes[i] / float(self.numProc))
+                print(
+                    sectionTime[1],
+                    minTimes[i],
+                    maxTimes[i],
+                    sumTimes[i] / float(self.numProc),
+                    file=profileFile,
+                )
+
+            if fileName != "":
+                profileFile.close()
 
         self.mpiCommObj.Barrier()
+
+    def ParallelProfileFileName(self, rootName=""):
+
+        myRootName = rootName
+        if myRootName == "":
+            myRootName = "Profiler"
+
+        numProc = self.mpiCommObj.Get_size()
+
+        profileFileName = myRootName + "_ParTimes_" + str(numProc)
+
+        return profileFileName

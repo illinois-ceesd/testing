@@ -43,11 +43,18 @@ myProfiler.EndTimer()
 if myRank == 0:
     print("All done.")
     print("Rank 0 Profile:")
-    myProfiler.WriteTimers()
+    myProfiler.WriteSerialProfile()
+    # Could use this to write it to file:
+    # myProfiler.WriteSerialProfile(testName+"_rank0_"+str(numProc))
     print("----- Parallel Profile -----")
 
 # this is a collective call to give parallel stats
-myProfiler.ReduceTimers()
+# stdout if optional filename argument is missing
+myProfiler.WriteParallelProfile()
+# Profiler can help you form a filename if you want
+# to write the parallel profile to file:
+# parallelProfileFileName = myProfiler.ParallelProfileFileName(testName)
+# myProfiler.WriteParallelProfile(parallelProfileFileName)
 
 if myRank == 0:
     numArgs = len(sys.argv)

@@ -411,12 +411,11 @@ if __name__ == "__main__":
     #            from py.test.cmdline import main
     #            main([__file__])
     if myRank == 0:
-        print(" ==== Rank 0 Timing === ")
-        myProfiler.WriteTimers()
-        if numProc > 1:
-            print(" ==== Parallel Profile === ")
+        myProfiler.WriteSerialProfile(testName+"_rank0_profile_"+str(numProc))
+
     if numProc > 1:
-        myProfiler.ReduceTimers()
+        parallelProfileFileName = myProfiler.ParallelProfileFileName(testName)
+        myProfiler.WriteParallelProfile(parallelProfileFileName)
 
     if myRank == 0:
         testResult = {testName: "PASS"}
