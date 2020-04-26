@@ -58,7 +58,7 @@ test passes or fails. (0=pass)
 CMake will expect the test to FAIL and automatically 
 flips the meaning of the exit code (0=fail).
 
-## Adding tests to an existing suits
+## Adding tests to an existing suites
 
 To ADD a test into an existing directory, add your test in:
 
@@ -177,6 +177,40 @@ which simply checks the results with the following command:
 This command returns a 0 (pass), or a 1 (fail).  A message about the
 cause of failure is also written to the stdout/stderr for the testing
 and can be found in ${PROJECTBIN}/Testing/Temporary/LastTest.log.
+
+## Adding new parallel python tests to existing parallel suites
+
+Adding new parallel python tests is accomplished by adding a new python
+file:
+
+> ${SUITEPATH}/${TESTNAME}.py
+
+and then adding ${TESTNAME} to the list of tests in:
+
+> ${SUITEPATH}/testlist.txt
+
+Since the suite runner and/or batch scripts are created at test-time,
+_CMake_ **does not** need to be re-run in order to slurp in new
+parallel tests in an existing suite.
+
+## Adding new parallel testing suites
+
+To add a new parallel suite, add a unique SUITENAME to:
+
+> ${PROJECTSRC}/Testing/Parallel/parallelsuites.txt
+
+and create the SUITEPATH directory:
+
+> ${PROJECTSRC}/Testing/Parallel/${SUITENAME}
+
+**_CMake_ must be re-run after adding new parallel suites**
+
+## Example parallel python tests
+
+Examples of parallel python tests can be found in the
+parallel example suite with SUITEPATH:
+
+> ${PROJECTSRC}/Testing/Parallel/Examples
 
 # Testing configuration options
 
