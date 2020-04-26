@@ -60,18 +60,22 @@ flips the meaning of the exit code (0=fail).
 
 ## Adding tests to an existing suits
 
-To ADD a test into an existing directory, add your test in
-${PROJECTSRC}/Testing/${TESTPATH}/${TESTNAME}.py, and add a line for your test
-in ${PROJECTSRC}/Testing/${TESTPATH}/testlist.txt.
+To ADD a test into an existing directory, add your test in:
 
-** *CMake* must be re-run after adding new tests.**
+> ${PROJECTSRC}/Testing/${TESTPATH}/${TESTNAME}.py
+
+and add a line for your test in:
+
+> ${PROJECTSRC}/Testing/${TESTPATH}/testlist.txt.
+
+**_CMake_ must be re-run after adding new tests.**
 
 ## Adding new serial suites
 
 To ADD a new testing directory, make the directory and add
 it to ./testdirectory.txt.
 
-** *CMake* must be re-run after adding new test suites.**
+**_CMake_ must be re-run after adding new test suites.**
 
 ## Example serial test(s)
 
@@ -114,8 +118,8 @@ located in the *SUITEPATH*:
 
 For each SUITENAME, *CMake* will add 2 tests:
 
- - Parallel:${SUITENAME}:Setup (creates a batch script for the suite)
- - Parallel:${SUITENAME}:Run   (runs the batch script for the suite)
+ 1. Parallel:${SUITENAME}:Setup (creates a batch script for the suite)
+ 1. Parallel:${SUITENAME}:Run   (runs the batch script for the suite)
 
 For each SUITENAME, *CMake* will also look for the file named
 (${SUITEPATH}/testlist.txt). Each line of testlist.txt should contain 
