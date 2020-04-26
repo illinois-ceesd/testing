@@ -107,7 +107,10 @@ infrastructure looks at the file:
 
 *CMake* will automatically check the file (parallelsuites.txt) for
 a list of parallel suites.  Each line of parallelsuites.txt
-should contain a SUITENAME.
+should contain a SUITENAME. The tests for each suite should be 
+located in the *SUITEPATH*:
+
+> SUITEPATH = ${PROJECTSRC}/Testing/Parallel/${SUITENAME}
 
 For each SUITENAME, *CMake* will add 2 tests:
 
@@ -115,8 +118,8 @@ For each SUITENAME, *CMake* will add 2 tests:
  - Parallel:${SUITENAME}:Run   (runs the batch script for the suite)
 
 For each SUITENAME, *CMake* will also look for the file named
-(${PROJECTSRC}/Testing/Parallel/${SUITENAME}/testlist.txt). Each line of
-testlist.txt should contain a TESTNAME.
+(${SUITEPATH}/testlist.txt). Each line of testlist.txt should contain 
+a TESTNAME.
 
 For each TESTNAME, *CMake* will add the following test:
 
@@ -125,19 +128,23 @@ For each TESTNAME, *CMake* will add the following test:
 For each TESTNAME, *CMake* will also add a line to the suite runner or batch
 script executing the equivalent of the following:
 
-> mpiexec -n <numProc> python ${PROJECTSRC}/Testing/Parallel/${SUITENAME}/${TESTNAME}.py ${PROJECTBIN}/Testing/parallel_${SUITENAME}_results.txt
+> mpiexec -n <numProc> python ${SUITEPATH}/${TESTNAME}.py ${SUITERESULTS}
+
+Where SUITERESULTS is set as:
+
+> SUITERESULTS = ${PROJECTBIN}/Testing/parallel\_${SUITENAME}\_results.txt
 
 A single argument is passed to each parallel test which contains the
-path to the output file where all tests from the parallel suite will
-store their results.
+path to SUITERESULTS file (i.e. the output file where all tests from the parallel suite will
+store their results).  The *suite runner* will be discussed further below.
 
 ## Test-time infrastructure
 
 At testing-time (i.e. when the user issues *make test*), the *Setup* part
 of the parallel suite runs in the test called (Parallel:${SUITENAME}:Setup)
-and executs the following command:
+and executes the following command:
 
-> ${PROJECTSRC}/utils/PyJuKe/generate_suite_runner.py ${SUITENAME} ${PROJECTSRC}/Testing/Parallel/${SUITENAME} ${PROJECTBIN}/Testing
+> python ${PROJECTSRC}/utils/PyJuKe/generate_suite_runner.py ${SUITENAME} ${SUITEPATH} ${PROJECTBIN}/Testing
 
 The Setup test creates the platform-specific script (called the *suite runner*) 
 that will execute the suite of parallel tests in its own batch script if required. The
@@ -150,17 +157,18 @@ the test named (Parallel:${SUITENAME}:Run), which executes the parallel
 suite runner script which will be responsible for navigating the batch
 queue and running all the tests in the suite.
 
-The PASS/FAIL results of all tests in a parallel suite are collected to the file:
+The PASS/FAIL results of all tests in a parallel suite are collected to 
+the SUITERESULTS file:
 
-> ${PROJECTBIN}/Testing/parallel_${SUITENAME}_results.txt
+> ${PROJECTBIN}/Testing/parallel\_${SUITENAME}\_results.txt
 
 After the suite runner completes, all tests inside the suite have been
 executed and their results stored to the results file.  For each of the
-tests named in (${PROJECTSRC}/Parallel/${SUITENAME}/testlist.txt), The
+tests named in (${SUITEPATH}/testlist.txt), The
 infrastructure then runs the test named (Parallel:${SUITENAME}:${TESTNAME})
 which simply checks the results with the following command:
 
-> python ${PROJECTSRC}/utils/Checker/CheckTest.py ${TESTNAME} ${PROJECTBIN}/Testing/parallel_${SUITENAME}_results.txt
+> python ${PROJECTSRC}/utils/Checker/CheckTest.py ${TESTNAME} ${SUITERESULTS}
 
 This command returns a 0 (pass), or a 1 (fail).  A message about the
 cause of failure is also written to the stdout/stderr for the testing
