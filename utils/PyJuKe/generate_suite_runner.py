@@ -24,6 +24,8 @@ def generate_suite_runner(suiteName, suitePath, outputPath):
     scriptShortName = "parallel_"+suiteName
     scriptName = scriptShortName + ".sh"
     scriptFileName = outputPath + "/" + scriptName
+    spawnerName = scriptShortName+"_spawner.sh"
+    spawnerPath = outputPath+"/"+spawnerName
     resultsFileName = outputPath + "/parallel_" + suiteName + "_results.txt"
     testListFile = suitePath + "/testlist.txt"
     jukePath = pyjuke.jukepath
@@ -47,13 +49,15 @@ def generate_suite_runner(suiteName, suitePath, outputPath):
     print(programName, ": scriptFileName  = ", scriptFileName)
     print(programName, ": resultsFileName = ", resultsFileName)
 
-    outScript = open(scriptFileName, "w")
     if(systemType == "workstation"):
+        print("GenerateSuiteRunner: Generating for user workstation.")
         # Then it's an mpiexec situation
+        outScript = open(scriptFileName, "w")
         print("#!/bin/sh\n\n", file=outScript)
         print("numProcs=\"4\"", file=outScript)
         print("if [ ! -z ${1} ]; then numProcs=${1}; fi", file=outScript)
         print("set -x", file=outScript)
+        print("export PYOPENCL_CTX='0'", file=outSript)
         print("export PYTHONPATH=\"${jukePath}:${PYTHONPATH}\"",
               file=outScript)
         print("rm -f ", resultsFileName, file=outScript)
@@ -71,10 +75,57 @@ def generate_suite_runner(suiteName, suitePath, outputPath):
               resultsFileName, "\n", file=outScript)
         print("     date\n", file=outScript)
         print("done\n", file=outScript)
+        outScript.close()
+        os.chmod(scriptFileName, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
 
-    outScript.close()
+    if(systemType == "quartz"):
+        print("GenerateSuiteRunner: Generating for Quartz@LLNL.")
+        # We need to generate a suite runner that runs a parallel
+        # spawning script. First; the spawning script:
+        outScript = open(spawnerPath, "w")
+        print("#!/bin/sh\n\n", file=outScript)
+        print("numProcs=\"4\"", file=outScript)
+        print("if [ ! -z ${1} ]; then numProcs=${1}; fi", file=outScript)
+        print("set -x", file=outScript)
+        print("export PYOPENCL_CTX=''", file=outScript)
+        print("export PYTHONPATH=\""+jukePath+":${PYTHONPATH}\"",
+              file=outScript)
+        print("rm -f ", resultsFileName, file=outScript)
+        print("for testname in $(cat ", testListFile, ")\n", file=outScript)
+        print("do\n", file=outScript)
+        print("     printf \"", scriptShortName, ": Running test",
+              " (${testname})...\\n\"", file=outScript)
+        print("     printf \"", scriptShortName, ": Command: ",
+              " srun -n ${numProcs} python ",
+              suitePath + "/${testname}.py ",
+              resultsFileName, "\\n\"\n", file=outScript)
+        print("     date\n", file=outScript)
+        print("     srun -n ${numProcs} python ",
+              suitePath + "/${testname}.py ",
+              resultsFileName, "\n", file=outScript)
+        print("     date\n", file=outScript)
+        print("done\n", file=outScript)
+        outScript.close()
+        os.chmod(spawnerPath, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
+        
+        # Now the suite runner:
+        outScript = open(scriptFileName, "w")
+        numNodes = 1
+        numProcJob = 36
+        numProcTest = 4
+        timeOut = 10
+        print("#!/bin/bash\n\nset -x\ndate", file=outScript)
+        print("salloc -N "+str(numNodes)+" -n "+str(numProcJob)+
+              " -t "+str(timeOut)+" -ppdebug "+spawnerPath+" "+
+              str(numProcTest), file=outScript)
+        print("errorCode=$?", file=outScript)
+        print("date", file=outScript)
+        print("exit $errorCode", file=outScript)
+#        print("if test $errorCode -neq 0\nthen\n  exit(1)\nfi\n", file=outScript)
+#        print("exit 0", file=outScript) 
+        outScript.close()
+        os.chmod(scriptFileName, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
 
-    os.chmod(scriptFileName, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
 
 
 if __name__ == "__main__":

@@ -53,8 +53,8 @@ if [ "$OUTFILE" != "" ]; then
     printf "buildhost = \"${BUILDHOST}\"\n"     >> ${OUTFILE}
     printf "builddate = \"${BUILDDATE}\"\n"     >> ${OUTFILE}
     printf "changed = \"${CHANGED}\"\n"         >> ${OUTFILE}
-    printf "cl_context_answers = [0, 0]\n"      >> ${OUTFILE}
     printf "jukepath = \"${BINPATH}/PyJuKe\"\n" >> ${OUTFILE}
+    printf "cl_context_answers = [0, 0]\n"      >> ${OUTFILE}
     
 else
     

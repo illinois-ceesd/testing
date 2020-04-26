@@ -31,7 +31,8 @@ def main(dataPath):
     myProfiler.EndTimer("LoopyParse")
 
     myProfiler.StartTimer("CLContext")
-    ctx = cl.create_some_context(False, pyjuke.cl_context_answers)
+#    ctx = cl.create_some_context(False, pyjuke.cl_context_answers)
+    ctx = cl.create_some_context(False)
     queue = cl.CommandQueue(ctx)
     myProfiler.EndTimer("CLContext")
 
