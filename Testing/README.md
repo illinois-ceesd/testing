@@ -11,7 +11,7 @@ To exercise the project's tests, after *cmake* and *make*, use:
 The output stdout/stderr created by the testing infrastructure and
 the tests themselves is collected in:
 
-> ${PROJECT_BUILD}/Testing/Temporary/LastTest.log
+> ${PROJECTBIN}/Testing/Temporary/LastTest.log
 
 Automated test detection and driving mechanisms are implemented
 for the following types of tests:
@@ -23,26 +23,31 @@ The following sections will outline the automated system
 for detecting and driving tests, and cover how to add new
 tests and testing suites to the system.
 
+In the following documentation, these platform-and-installation-specific file system paths will be used:
+
+- PROJECTSRC: The path to your clone of the JustKernels repo
+- PROJECTBIN: The path to your build directory
+
 # Serial Python tests
 
 The infrastructure for serial python tests is implemented in *CMake*
-in the file (<project>/Testing/CMakeLists.txt). At configuration-time,
+in the file (${PROJECTSRC}/Testing/CMakeLists.txt). At configuration-time,
 the testing infrastructure looks at the file:
 
-> <project>/Testing/testdirectory.txt
+> ${PROJECTSRC}/Testing/testdirectory.txt
 
 *CMake* will automatically check the file (testdirectory.txt) for
 a list of suites.  Each line of testdirectory.txt should contain a
 TESTPATH.
 
 For each TESTPATH, *CMake* will look for the file named
-(<project>/Testing/${TESTPATH}/testlist.txt). Each line of testlist.txt
+(${PROJECTSRC}/Testing/${TESTPATH}/testlist.txt). Each line of testlist.txt
 should contain a TESTNAME.
 
 For each TESTNAME, CMake will add a test named ${TESTNAME} that
 executes the following command:
 
-> python <project>/Testing/${TESTPATH}/${TESTNAME}.py ${CMAKE_SOURCE_DIR} ${PROJECT_BINARY_DIR}
+> python ${PROJECTSRC}/Testing/${TESTPATH}/${TESTNAME}.py ${CMAKE_SOURCE_DIR} ${PROJECT_BINARY_DIR}
 
 The return code of the above command indicates whether the 
 test passes or fails. (0=pass)
@@ -54,8 +59,8 @@ flips the meaning of the exit code (0=fail).
 ## Adding tests to an existing suits
 
 To ADD a test into an existing directory, add your test in
-<project>/Testing/${TESTPATH}/${TESTNAME}.py, and add a line for your test
-in <project>/Testing/${TESTPATH}/testlist.txt.
+${PROJECTSRC}/Testing/${TESTPATH}/${TESTNAME}.py, and add a line for your test
+in ${PROJECTSRC}/Testing/${TESTPATH}/testlist.txt.
 
 ** *CMake* must be re-run after adding new tests.**
 
@@ -79,11 +84,11 @@ empty testing templates provided in:
 ## Configuration-time infrastructure
 
 The infrastructure for parallel python tests is implemented in *CMake*
-in the file (<project>/Testing/CMakeLists.txt). At configuration-time
+in the file (${PROJECTSRC}/Testing/CMakeLists.txt). At configuration-time
 (i.e. when the user issues *cmake*), the testing infrastructure looks
 at the file:
 
-> <project>/Testing/Parallel/parallelsuites.txt
+> ${PROJECTSRC}/Testing/Parallel/parallelsuites.txt
 
 *CMake* will automatically check the file (parallelsuites.txt) for
 a list of parallel suites.  Each line of parallelsuites.txt
@@ -95,7 +100,7 @@ For each SUITENAME, *CMake* will add 2 tests:
  - Parallel:${SUITENAME}:Run   (runs the batch script for the suite)
 
 For each SUITENAME, *CMake* will also look for the file named
-(<project>/Testing/Parallel/${SUITENAME}/testlist.txt). Each line of
+(${PROJECTSRC}/Testing/Parallel/${SUITENAME}/testlist.txt). Each line of
 testlist.txt should contain a TESTNAME.
 
 For each TESTNAME, *CMake* will add the following test:
@@ -105,7 +110,7 @@ For each TESTNAME, *CMake* will add the following test:
 For each TESTNAME, *CMake* will also add a line to the suite runner or batch
 script executing the equivalent of the following:
 
-> mpiexec -n <numProc> python <project>/Testing/Parallel/${SUITENAME}/${TESTNAME}.py ${PROJECT_BUILD}/Testing/parallel_${SUITENAME}_results.txt
+> mpiexec -n <numProc> python ${PROJECTSRC}/Testing/Parallel/${SUITENAME}/${TESTNAME}.py ${PROJECTBIN}/Testing/parallel_${SUITENAME}_results.txt
 
 A single argument is passed to each parallel test which contains the
 path to the output file where all tests from the parallel suite will
@@ -117,13 +122,13 @@ At testing-time (i.e. when the user issues *make test*), the *Setup* part
 of the parallel suite runs in the test called (Parallel:${SUITENAME}:Setup)
 and executs the following command:
 
-> <project>/utils/PyJuKe/generate_suite_runner.py ${SUITENAME} <project>/Testing/Parallel/${SUITENAME} ${PROJECT_BUILD}/Testing
+> ${PROJECTSRC}/utils/PyJuKe/generate_suite_runner.py ${SUITENAME} ${PROJECTSRC}/Testing/Parallel/${SUITENAME} ${PROJECTBIN}/Testing
 
 The Setup test creates the platform-specific script (called the *suite runner*) 
 that will execute the suite of parallel tests in its own batch script if required. The
 platform-specific suite runner will be written to:
 
-> ${PROJECT_BUILD}/Testing/parallel_${SUITENAME}.sh
+> ${PROJECTBIN}/Testing/parallel_${SUITENAME}.sh
 
 Following the creation of the suite runner script, *CMake* will execute
 the test named (Parallel:${SUITENAME}:Run), which executes the parallel
@@ -132,19 +137,19 @@ queue and running all the tests in the suite.
 
 The PASS/FAIL results of all tests in a parallel suite are collected to the file:
 
-> ${PROJECT_BUILD}/Testing/parallel_${SUITENAME}_results.txt
+> ${PROJECTBIN}/Testing/parallel_${SUITENAME}_results.txt
 
 After the suite runner completes, all tests inside the suite have been
 executed and their results stored to the results file.  For each of the
-tests named in (<project>/Parallel/${SUITENAME}/testlist.txt), The
+tests named in (${PROJECTSRC}/Parallel/${SUITENAME}/testlist.txt), The
 infrastructure then runs the test named (Parallel:${SUITENAME}:${TESTNAME})
 which simply checks the results with the following command:
 
-> python <project>/utils/Checker/CheckTest.py ${TESTNAME} ${PROJECT_BUILD}/Testing/parallel_${SUITENAME}_results.txt
+> python ${PROJECTSRC}/utils/Checker/CheckTest.py ${TESTNAME} ${PROJECTBIN}/Testing/parallel_${SUITENAME}_results.txt
 
 This command returns a 0 (pass), or a 1 (fail).  A message about the
 cause of failure is also written to the stdout/stderr for the testing
-and can be found in ${PROJECT_BUILD}/Testing/Temporary/LastTest.log.
+and can be found in ${PROJECTBIN}/Testing/Temporary/LastTest.log.
 
 # Testing configuration options
 
