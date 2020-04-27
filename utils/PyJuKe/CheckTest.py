@@ -1,26 +1,26 @@
 import sys
 import juketest
 
-numArgs = len(sys.argv)
-if(numArgs != 3):
+numargs = len(sys.argv)
+if(numargs != 3):
     sys.exit(1)
 
-testName = sys.argv[1]
-resultsFileName = sys.argv[2]
+testname = sys.argv[1]
+resultsfilename = sys.argv[2]
 
-print("CheckTest: Checking ", resultsFileName,
-      " for Test(", testName, ")")
+print("CheckTest: Checking ", resultsfilename,
+      " for Test(", testname, ")")
 
-testResults = juketest.ReadTestResults(resultsFileName)
-checkTest = juketest.CheckResult(testResults, testName)
+testresults = juketest.readtestresults(resultsfilename)
+checktest = juketest.checkresult(testresults, testname)
 
-if(checkTest == 0):
-    print("CheckTest: Test("+testName+") PASSED.")
+if(checktest == 0):
+    print("CheckTest: Test("+testname+") PASSED.")
     sys.exit(0)
 else:
-    if(checkTest > 0):
-        print("CheckTest: Test("+testName+") FAILED.")
+    if(checktest > 0):
+        print("CheckTest: Test("+testname+") FAILED.")
     else:
-        print("CheckTest: Test("+testName+") MISSING.")
+        print("CheckTest: Test("+testname+") MISSING.")
     sys.exit(1)
 sys.exit(1)

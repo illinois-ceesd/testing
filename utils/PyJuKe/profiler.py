@@ -1,223 +1,223 @@
 from mpi4py import MPI
-from time import perf_counter as GetTime
-import numpy as NUMPY
+from time import perf_counter as gettime
+import numpy
 import sys
 
 
 class Profiler:
-    def ResetTime(self):
-        self.t0 = GetTime()
+    def resettime(self):
+        self.t0 = gettime()
 
-    def SetBarrier(self, inOption):
-        self.timerBarrier = inOption
+    def setbarrier(self, inoption):
+        self.timerbarrier = inoption
 
-    def SetMPICommunicator(self, inMPICommunicator):
-        self.mpiCommObj = inMPICommunicator
-        self.myRank = self.mpiCommObj.Get_rank()
-        self.numProc = self.mpiCommObj.Get_size()
+    def setmpicommunicator(self, inmpicommunicator):
+        self.mpicommobj = inmpicommunicator
+        self.myrank = self.mpicommobj.Get_rank()
+        self.numproc = self.mpicommobj.Get_size()
 
-    def __init__(self, inMPICommunicator):
-        self.SetMPICommunicator(inMPICommunicator)
-        self.ResetTime()
-        self.openSections = []
-        self.sectionTimes = []
-        self.timerBarrier = True
+    def __init__(self, inmpicommunicator):
+        self.setmpicommunicator(inmpicommunicator)
+        self.resettime()
+        self.opensections = []
+        self.sectiontimes = []
+        self.timerbarrier = True
 
-    def StartTimer(self, sectionName="MAIN"):
+    def starttimer(self, sectionname="MAIN"):
 
-        if sectionName == "MAIN":
-            self.ResetTime()
+        if sectionname == "MAIN":
+            self.resettime()
 
-        numOpenSections = len(self.openSections)
+        numopensections = len(self.opensections)
 
-        openSection = [numOpenSections, sectionName, 1, 0, 0]
+        opensection = [numopensections, sectionname, 1, 0, 0]
 
-        if self.timerBarrier:
-            self.mpiCommObj.Barrier()
+        if self.timerbarrier:
+            self.mpicommobj.Barrier()
 
-        openSection[3] = GetTime()
+        opensection[3] = gettime()
 
-        self.openSections.append(openSection)
+        self.opensections.append(opensection)
 
-    def EndTimer(self, sectionName="MAIN"):
-        numOpenSections = len(self.openSections)
+    def endtimer(self, sectionname="MAIN"):
+        numopensections = len(self.opensections)
 
-        if numOpenSections <= 0:
+        if numopensections <= 0:
             print(
                 "Error: EndTimer(",
-                sectionName,
+                sectionname,
                 ") called with no matching StartTimer.",
             )
             1 / 0
 
-        sectionTime = GetTime()
+        sectiontime = gettime()
 
-        if self.timerBarrier:
-            self.mpiCommObj.Barrier()
+        if self.timerbarrier:
+            self.mpicommobj.Barrier()
 
-        openSectionIndex = numOpenSections - 1
+        opensectionindex = numopensections - 1
 
-        if sectionName != self.openSections[openSectionIndex][1]:
+        if sectionname != self.opensections[opensectionindex][1]:
             print(
                 "SectionName: Expected(",
-                self.openSections[openSectionIndex][1],
+                self.opensections[opensectionindex][1],
                 ")",
                 ", Got(",
-                sectionName,
+                sectionname,
                 ")",
             )
             1 / 0
 
-        openSection = self.openSections.pop()
-        sectionTime = sectionTime - openSection[3]
-        openSection[3] = sectionTime
-        openSectionIndex = openSectionIndex - 1
+        opensection = self.opensections.pop()
+        sectiontime = sectiontime - opensection[3]
+        opensection[3] = sectiontime
+        opensectionindex = opensectionindex - 1
 
         # Update parent's sub-timers
-        if openSectionIndex >= 0:
-            self.openSections[openSectionIndex][4] += sectionTime
+        if opensectionindex >= 0:
+            self.opensections[opensectionindex][4] += sectiontime
 
         # Update section if it exists
-        numSections = len(self.sectionTimes)
+        numsections = len(self.sectiontimes)
         match = False
 
-        for i in range(numSections):
-            if self.sectionTimes[i][1] == sectionName:
-                existingSection = self.sectionTimes[i]
-                existingSection[2] += 1
-                existingSection[3] += sectionTime
-                existingSection[4] += openSection[4]
+        for i in range(numsections):
+            if self.sectiontimes[i][1] == sectionname:
+                existingsection = self.sectiontimes[i]
+                existingsection[2] += 1
+                existingsection[3] += sectiontime
+                existingsection[4] += opensection[4]
                 match = True
                 break
 
         # Create new section if it didn't exist
         if not match:
-            self.sectionTimes.append(openSection)
+            self.sectiontimes.append(opensection)
 
-    def WriteSerialProfile(self, fileName=""):
+    def writeserialprofile(self, filename=""):
 
         # copy the timers to avoid destructing the list when printing
-        sectionTimers = list(self.sectionTimes)
+        sectiontimers = list(self.sectiontimes)
 
-        numSections = len(sectionTimers)
-        numCurrentSections = numSections
-        minLevel = 0
+        numsections = len(sectiontimers)
+        numcurrentsections = numsections
+        minlevel = 0
 
-        profileFile = sys.stdout
+        profilefile = sys.stdout
 
-        if fileName != "":
-            profileFile = open(fileName, "w")
+        if filename != "":
+            profilefile = open(filename, "w")
 
-        if numCurrentSections > 0:
+        if numcurrentsections > 0:
             print(
                 "# SectionName   NumCalls  TotalTime   ChildTime",
-                file=profileFile,
+                file=profilefile,
             )
 
-        while numCurrentSections > 0:
+        while numcurrentsections > 0:
             match = False
-            for i in range(numCurrentSections):
-                if sectionTimers[i][0] == minLevel:
-                    sectionTimer = sectionTimers.pop()
+            for i in range(numcurrentsections):
+                if sectiontimers[i][0] == minlevel:
+                    sectiontimer = sectiontimers.pop()
                     # print out SectionName NumCalls TotalTime ChildTime
                     print(
-                        sectionTimer[1],
-                        sectionTimer[2],
-                        sectionTimer[3],
-                        sectionTimer[4],
-                        file=profileFile,
+                        sectiontimer[1],
+                        sectiontimer[2],
+                        sectiontimer[3],
+                        sectiontimer[4],
+                        file=profilefile,
                     )
                     match = True
                     break
 
             if match is False:
-                minLevel += 1
+                minlevel += 1
 
-            numCurrentSections = len(sectionTimers)
+            numcurrentsections = len(sectiontimers)
 
-        if fileName != "":
-            profileFile.close()
+        if filename != "":
+            profilefile.close()
 
     # WriteParallelProfile is a collective call, must be called on all procs
-    def WriteParallelProfile(self, fileName=""):
+    def writeparallelprofile(self, filename=""):
 
-        sectionTimers = list(self.sectionTimes)
+        sectiontimers = list(self.sectiontimes)
 
-        numSections = len(sectionTimers)
-        myNumSections = NUMPY.zeros(1, dtype=int)
-        myCheck = NUMPY.zeros(1, dtype=int)
+        numsections = len(sectiontimers)
+        mynumsections = numpy.zeros(1, dtype=int)
+        mycheck = numpy.zeros(1, dtype=int)
 
-        self.mpiCommObj.Barrier()
-        numProc = self.mpiCommObj.Get_size()
+        self.mpicommobj.Barrier()
+        numproc = self.mpicommobj.Get_size()
 
-        if self.myRank == 0:
-            myNumSections[0] = numSections
+        if self.myrank == 0:
+            mynumsections[0] = numsections
 
-        self.mpiCommObj.Bcast(myNumSections, root=0)
+        self.mpicommobj.Bcast(mynumsections, root=0)
 
-        if numSections == myNumSections[0]:
-            myNumSections[0] = 0
+        if numsections == mynumsections[0]:
+            mynumsections[0] = 0
         else:
-            myNumSections[0] = 1
+            mynumsections[0] = 1
             print(
-                "(", self.myRank, "): ", numSections, " != ", myNumSections[0]
+                "(", self.myrank, "): ", numsections, " != ", mynumsections[0]
             )
             1 / 0
 
-        self.mpiCommObj.Reduce(myNumSections, myCheck, MPI.MAX, 0)
+        self.mpicommobj.Reduce(mynumsections, mycheck, MPI.MAX, 0)
 
-        if myCheck > 0:
+        if mycheck > 0:
             print(
                 "ReduceTimers:Error: Disparate number of sections ",
                 "across processors.",
             )
             1 / 0
 
-        mySectionTimes = NUMPY.zeros(numSections, dtype="float")
-        minTimes = NUMPY.zeros(numSections, dtype="float")
-        maxTimes = NUMPY.zeros(numSections, dtype="float")
-        sumTimes = NUMPY.zeros(numSections, dtype="float")
+        mysectiontimes = numpy.zeros(numsections, dtype="float")
+        mintimes = numpy.zeros(numsections, dtype="float")
+        maxtimes = numpy.zeros(numsections, dtype="float")
+        sumtimes = numpy.zeros(numsections, dtype="float")
 
-        for i in range(numSections):
-            mySectionTimes[i] = sectionTimers[i][3]
+        for i in range(numsections):
+            mysectiontimes[i] = sectiontimers[i][3]
 
-        self.mpiCommObj.Reduce(mySectionTimes, minTimes, MPI.MIN, 0)
-        self.mpiCommObj.Reduce(mySectionTimes, maxTimes, MPI.MAX, 0)
-        self.mpiCommObj.Reduce(mySectionTimes, sumTimes, MPI.SUM, 0)
+        self.mpicommobj.Reduce(mysectiontimes, mintimes, MPI.MIN, 0)
+        self.mpicommobj.Reduce(mysectiontimes, maxtimes, MPI.MAX, 0)
+        self.mpicommobj.Reduce(mysectiontimes, sumtimes, MPI.SUM, 0)
 
-        if self.myRank == 0:
+        if self.myrank == 0:
 
-            profileFile = sys.stdout
-            if fileName != "":
-                profileFile = open(fileName, "w")
-            print("# NumProcs: ", numProc, file=profileFile)
+            profilefile = sys.stdout
+            if filename != "":
+                profilefile = open(filename, "w")
+            print("# NumProcs: ", numproc, file=profilefile)
             print(
                 "# SectionName   MinTime   MaxTime   MeanTime",
-                file=profileFile,
+                file=profilefile,
             )
-            for i in range(numSections):
-                sectionTime = sectionTimers[i]
+            for i in range(numsections):
+                sectiontime = sectiontimers[i]
                 print(
-                    sectionTime[1],
-                    minTimes[i],
-                    maxTimes[i],
-                    sumTimes[i] / float(self.numProc),
-                    file=profileFile,
+                    sectiontime[1],
+                    mintimes[i],
+                    maxtimes[i],
+                    sumtimes[i] / float(self.numproc),
+                    file=profilefile,
                 )
 
-            if fileName != "":
-                profileFile.close()
+            if filename != "":
+                profilefile.close()
 
-        self.mpiCommObj.Barrier()
+        self.mpicommobj.Barrier()
 
-    def ParallelProfileFileName(self, rootName=""):
+    def makeparallelfilename(self, rootname=""):
 
-        myRootName = rootName
-        if myRootName == "":
-            myRootName = "Profiler"
+        myrootname = rootname
+        if myrootname == "":
+            myrootname = "Profiler"
 
-        numProc = self.mpiCommObj.Get_size()
+        numproc = self.mpicommobj.Get_size()
 
-        profileFileName = myRootName + "_ParTimes_" + str(numProc)
+        profilefilename = myrootname + "_ParTimes_" + str(numproc)
 
-        return profileFileName
+        return profilefilename

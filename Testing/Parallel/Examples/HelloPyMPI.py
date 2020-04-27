@@ -5,63 +5,63 @@ import time
 import sys
 import juketest
 
-testName = "HelloPyMPI"
-mpiCommObj = MPI.COMM_WORLD
-myRank = mpiCommObj.Get_rank()
-numProc = mpiCommObj.Get_size()
+testname = "HelloPyMPI"
+mpicommobj = MPI.COMM_WORLD
+myrank = mpicommobj.Get_rank()
+numproc = mpicommobj.Get_size()
 
-myProfiler = Profiler(mpiCommObj)
+myprofiler = Profiler(mpicommobj)
 
-myProfiler.StartTimer()
-myProfiler.StartTimer("Setup")
+myprofiler.starttimer()
+myprofiler.starttimer("Setup")
 
-if myRank == 0:
-    print(numProc, " processors ready.")
+if myrank == 0:
+    print(numproc, " processors ready.")
 
-myProfiler.EndTimer("Setup")
+myprofiler.endtimer("Setup")
 
 for j in range(4):
 
-    myProfiler.StartTimer("Hello")
+    myprofiler.starttimer("Hello")
 
-    for i in range(numProc):
-        if i == myRank:
-            print("(", myRank, ") Hello Python MPI Comm World!")
-            mpiCommObj.Barrier()
+    for i in range(numproc):
+        if i == myrank:
+            print("(", myrank, ") Hello Python MPI Comm World!")
+            mpicommobj.Barrier()
 
-    mpiCommObj.Barrier()
+    mpicommobj.Barrier()
 
     # introduce intentional time imbalance for > 3 procs
-    if myRank == 3:
+    if myrank == 3:
         time.sleep(1)
 
-    myProfiler.EndTimer("Hello")
+    myprofiler.endtimer("Hello")
 
-# myProfiler.EndTimer("ErrorTest")
-myProfiler.EndTimer()
+# myprofiler.endtimer("ErrorTest")
+myprofiler.endtimer()
 
-if myRank == 0:
+if myrank == 0:
     print("All done.")
     print("Rank 0 Profile:")
-    myProfiler.WriteSerialProfile()
+    myprofiler.writeserialprofile()
     # Could use this to write it to file:
-    # myProfiler.WriteSerialProfile(testName+"_rank0_"+str(numProc))
+    # myprofiler.WriteSerialProfile(testname+"_rank0_"+str(numproc))
     print("----- Parallel Profile -----")
 
 # this is a collective call to give parallel stats
 # stdout if optional filename argument is missing
-myProfiler.WriteParallelProfile()
+myprofiler.writeparallelprofile()
 # Profiler can help you form a filename if you want
 # to write the parallel profile to file:
-# parallelProfileFileName = myProfiler.ParallelProfileFileName(testName)
-# myProfiler.WriteParallelProfile(parallelProfileFileName)
+# parallelProfileFileName = myprofiler.ParallelProfileFileName(testname)
+# myprofiler.WriteParallelProfile(parallelProfileFileName)
 
-if myRank == 0:
-    numArgs = len(sys.argv)
-    outFileName = ""
+if myrank == 0:
+    numargs = len(sys.argv)
+    outfilename = ""
 
-    if numArgs > 1:
-        outFileName = sys.argv[1]
+    if numargs > 1:
+        outfilename = sys.argv[1]
 
-    testResult = {testName: "Pass"}
-    juketest.UpdateTestResults(testResult, outFileName)
+    testresult = {testname: "Pass"}
+    juketest.updatetestresults(testresult, outfilename)

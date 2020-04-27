@@ -1,3 +1,3 @@
-import numpy as NUMPY
+import numpy
 
-print(NUMPY.version)
+print(numpy.version)

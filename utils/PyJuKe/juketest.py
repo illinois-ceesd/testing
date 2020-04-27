@@ -1,57 +1,57 @@
-def ReadTestResults(fileName):
+def readtestresults(filename):
 
     from os import path
 
-    testResults = {}
+    testresults = {}
 
-    if fileName != "":
-        if path.exists(fileName):
-            myFile = open(fileName, "r")
-            for line in myFile:
-                testName, testResult = line.split()
-                testResults[testName] = testResult
-            myFile.close()
+    if filename != "":
+        if path.exists(filename):
+            myfile = open(filename, "r")
+            for line in myfile:
+                testname, testresult = line.split()
+                testresults[testname] = testresult
+            myfile.close()
 
-    return testResults
+    return testresults
 
 
-def WriteTestResults(testResults, fileName=""):
+def writetestresults(testresults, filename=""):
 
     import sys as mysys
 
-    resultFile = mysys.stdout
+    resultfile = mysys.stdout
 
-    if fileName != "":
-        resultFile = open(fileName, "w")
+    if filename != "":
+        resultfile = open(filename, "w")
 
-    for testName in testResults:
-        print(testName, testResults[testName], file=resultFile)
+    for testname in testresults:
+        print(testname, testresults[testname], file=resultfile)
 
-    if fileName != "":
-        resultFile.close()
-
-
-def UpdateTestResults(testResults, fileName=""):
-
-    allResults = ReadTestResults(fileName)
-
-    for testName in testResults:
-        allResults[testName] = testResults[testName]
-
-    WriteTestResults(allResults, fileName)
+    if filename != "":
+        resultfile.close()
 
 
-def CheckResult(testResults, testName):
+def updatetestresults(testresults, filename=""):
 
-    if testName in testResults:
-        testResult = testResults[testName]
+    allresults = readtestresults(filename)
+
+    for testname in testresults:
+        allresults[testname] = testresults[testname]
+
+    writetestresults(allresults, filename)
+
+
+def checkresult(testresults, testname):
+
+    if testname in testresults:
+        testresult = testresults[testname]
         if (
-            testResult.lower() == "pass"
-            or testResult.lower() == "passed"
-            or testResult.lower() == "yes"
-            or testResult.lower() == "true"
-            or testResult.lower() == ".true."
-            or testResult.lower() == "1"
+            testresult.lower() == "pass"
+            or testresult.lower() == "passed"
+            or testresult.lower() == "yes"
+            or testresult.lower() == "true"
+            or testresult.lower() == ".true."
+            or testresult.lower() == "1"
         ):
             return 0
         else:

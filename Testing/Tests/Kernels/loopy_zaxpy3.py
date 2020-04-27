@@ -11,83 +11,83 @@ import loopy as lp
 from profiler import Profiler
 import pyjuke
 
-mpiCommObj = MPI.COMM_WORLD
-myProfiler = Profiler(mpiCommObj)
+mpicommobj = MPI.COMM_WORLD
+myprofiler = Profiler(mpicommobj)
 
 
-def main(dataPath):
+def main(datapath):
 
-    global myProfiler
+    global myprofiler
 
-    fn = dataPath+"zaxpy3.f90"
+    fn = datapath+"zaxpy3.f90"
 
     with open(fn, "r") as inf:
         source = inf.read()
 
-    myProfiler.StartTimer("LoopyParse")
+    myprofiler.starttimer("LoopyParse")
 #    dgemm, = lp.parse_transformed_fortran(source, filename=fn)
     zaxpy3, = lp.parse_fortran(source, filename=fn)
     zaxpy3 = lp.set_options(zaxpy3, write_code=True)
-    myProfiler.EndTimer("LoopyParse")
+    myprofiler.endtimer("LoopyParse")
 
-    myProfiler.StartTimer("CLContext")
+    myprofiler.starttimer("CLContext")
 #    ctx = cl.create_some_context(False, pyjuke.cl_context_answers)
     ctx = cl.create_some_context(False)
     queue = cl.CommandQueue(ctx)
-    myProfiler.EndTimer("CLContext")
+    myprofiler.endtimer("CLContext")
 
-    iSize = 128
-    jSize = 128
-    kSize = 128
+    isize = 128
+    jsize = 128
+    ksize = 128
 
     imin = 1
     jmin = 1
     kmin = 1
 
-    imax = iSize
-    jmax = jSize
-    kmax = kSize
+    imax = isize
+    jmax = jsize
+    kmax = ksize
 
-    myProfiler.StartTimer("CLInit")
-    x = cl.array.empty(queue, (iSize, jSize, kSize),
+    myprofiler.starttimer("CLInit")
+    x = cl.array.empty(queue, (isize, jsize, ksize),
                        dtype=np.float64, order="F")
-    y = cl.array.empty(queue, (iSize, jSize, kSize),
+    y = cl.array.empty(queue, (isize, jsize, ksize),
                        dtype=np.float64, order="F")
-    z = cl.array.empty(queue, (iSize, jSize, kSize),
+    z = cl.array.empty(queue, (isize, jsize, ksize),
                        dtype=np.float64, order="F")
 
     cl.clrandom.fill_rand(x)
     cl.clrandom.fill_rand(y)
     a = 1.0
-    myProfiler.EndTimer("CLInit")
+    myprofiler.endtimer("CLInit")
 
-    myProfiler.StartTimer("zaxpy3")
+    myprofiler.starttimer("zaxpy3")
     zaxpy3(queue, imin=imin, imax=imax, jmin=jmin,
            jmax=jmax, kmin=kmin, kmax=kmax, a=a, x=x, y=y, z=z)
 #    dgemm(queue,roi=roi,a=1.0, x=x, y=y, z=z)
-    myProfiler.EndTimer("zaxpy3")
+    myprofiler.endtimer("zaxpy3")
 
-    myProfiler.StartTimer("CheckResult")
+    myprofiler.starttimer("CheckResult")
     z_ref = (x.get() + a*y.get())
-    errNorm = la.norm(z_ref - z.get())/la.norm(z_ref)
-    myProfiler.EndTimer("CheckResult")
+    errnorm = la.norm(z_ref - z.get())/la.norm(z_ref)
+    myprofiler.endtimer("CheckResult")
 
-    assert errNorm < 1e-10
+    assert errnorm < 1e-10
 
 
 if __name__ == "__main__":
 
-    myProfiler.StartTimer()
+    myprofiler.starttimer()
 
-    dataPath = "./"
-    numArgs = len(sys.argv)
-    if numArgs > 1:
-        dataPath = sys.argv[1]
-        dataPath += "/kernels/"
-        print("DataPath: ", dataPath)
+    datapath = "./"
+    numargs = len(sys.argv)
+    if numargs > 1:
+        datapath = sys.argv[1]
+        datapath += "/kernels/"
+        print("DataPath: ", datapath)
 
-    myProfiler.StartTimer("main")
-    main(dataPath)
-    myProfiler.EndTimer("main")
-    myProfiler.EndTimer()
-    myProfiler.WriteSerialProfile("LoopyZAXPY3_SerialTiming")
+    myprofiler.starttimer("main")
+    main(datapath)
+    myprofiler.endtimer("main")
+    myprofiler.endtimer()
+    myprofiler.writeserialprofile("LoopyZAXPY3_SerialTiming")
