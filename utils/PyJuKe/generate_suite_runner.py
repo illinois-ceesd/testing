@@ -58,7 +58,7 @@ def generate_suite_runner(suiteName, suitePath, outputPath):
         print("if [ ! -z ${1} ]; then numProcs=${1}; fi", file=outScript)
         print("set -x", file=outScript)
         print("export PYOPENCL_CTX='0'", file=outScript)
-        print("export PYTHONPATH=\"${jukePath}:${PYTHONPATH}\"",
+        print("export PYTHONPATH=\""+jukePath+":${PYTHONPATH}\"",
               file=outScript)
         print("rm -f ", resultsFileName, file=outScript)
         print("for testname in $(cat ", testListFile, ")\n", file=outScript)
