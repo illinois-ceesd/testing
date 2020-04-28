@@ -1,0 +1,16 @@
+module load StdEnv
+module load cmake/3.14.5
+module load xl/2020.03.18
+module load cmake
+module load spectrum-mpi
+module load cuda/10.1.243
+module load lalloc/2.0
+setenv AUTOTESTING_TARGET_PATH /p/gpfs1/mtcampbe/CEESD/AutomatedTesting
+setenv CONDA_ENVIRONMENT /usr/workspace/wsa/xpacc/Users/mtcampbe/CEESD/Lassen
+setenv CEESDTOOLS
+setenv PATH "${CEESDTOOLS}/bin:${PATH}"
+setenv LD_LIBRARY_PATH "${CEESDTOOLS}/lib:${LD_LIBRARY_PATH}"
+setenv CC mpicc
+setenv CXX mpicxx
+setenv FC mpif90
+conda activate ${CONDA_ENVIRONMENT}

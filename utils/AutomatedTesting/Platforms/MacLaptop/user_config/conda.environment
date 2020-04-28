@@ -1,0 +1,9 @@
+setenv CONDAHOME /Users/mtcampbe/opt/miniconda3
+source ${CONDAHOME}/etc/profile.d/conda.csh
+conda activate grudge.env
+setenv CC mpicc
+setenv CXX mpicxx
+setenv FC mpif90
+setenv MPICC mpicc
+setenv MPICXX mpicxx
+setenv MPIf90 mpif90
