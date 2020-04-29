@@ -1,0 +1,6 @@
+#!/bin/sh
+
+printf "=== DEINITIALIZE TEST ENVIRONMENT for JustKernels ===\n"
+export PROJECT_BUILD_TAG=""
+
+
