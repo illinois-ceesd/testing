@@ -73,6 +73,6 @@ else
     
 fi
 
-cp ${SRCPATH}/PyJuKe/*.py ${OUTDIR}
+cp ${SRCPATH}/utils/PyJuKe/*.py ${OUTDIR}
 
 cd ${ORIGPATH}

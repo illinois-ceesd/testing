@@ -31,6 +31,6 @@ ENDIF()
 
 add_custom_target(
   pyjuke
-  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/PyJuKe/pyjuke.sh ${CMAKE_CURRENT_SOURCE_DIR} ${PROJECT_BINARY_DIR} ${PROVOP}
+  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/PyJuKe/pyjuke.sh ${CMAKE_SOURCE_DIR} ${PROJECT_BINARY_DIR} ${PROVOP}
   COMMENT "${Cyan}${PROJECT_NAME}: Generating JuKe Python module ...${ColorReset}"
   )

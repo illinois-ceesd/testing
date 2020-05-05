@@ -1,3 +1,4 @@
+HaveJuKe
 HaveNUMPY
 HaveMPI4PY
 HaveLOOPY
@@ -5,5 +6,6 @@ HavePYOPENCL
 HaveFAILS
 HaveGrudge
 HaveProfiler
-HaveJuKe
+HaveMPI4Py
+HaveXML2Dict
 

@@ -1,4 +1,5 @@
 Examples
 Tests/Environment
 Tests/Kernels
-
+Tests/XML
+Tests/Gnuplot
