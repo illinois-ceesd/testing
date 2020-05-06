@@ -71,11 +71,14 @@ def main(datapath):
 
         myprofiler.endtimer(initname)
 
+        nruns = 10
         zaxpyname = "zaxpy3-"+gridsizestr
+        queue.finish()
         myprofiler.starttimer(zaxpyname)
-        zaxpy3(queue, imin=imin, imax=imax, jmin=jmin,
-               jmax=jmax, kmin=kmin, kmax=kmax, a=a, x=x, y=y, z=z)
-        z.get()
+        for i in range(nruns):
+            zaxpy3(queue, imin=imin, imax=imax, jmin=jmin,
+                   jmax=jmax, kmin=kmin, kmax=kmax, a=a, x=x, y=y, z=z)
+        queue.finish()
         myprofiler.endtimer(zaxpyname)
 
         checkname = "CheckResult-"+gridsizestr
