@@ -6,6 +6,5 @@ HavePYOPENCL
 HaveFAILS
 HaveGrudge
 HaveProfiler
-HaveMPI4Py
 HaveXML2Dict
 
