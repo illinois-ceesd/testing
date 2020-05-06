@@ -3,7 +3,7 @@ from mpi4py import MPI
 from profiler import Profiler
 import time
 import sys
-import juketest
+import ABaTe as abate
 
 testname = "HelloPyMPI"
 mpicommobj = MPI.COMM_WORLD
@@ -64,4 +64,4 @@ if myrank == 0:
         outfilename = sys.argv[1]
 
     testresult = {testname: "Pass"}
-    juketest.updatetestresults(testresult, outfilename)
+    abate.updatetestresults(testresult, outfilename)

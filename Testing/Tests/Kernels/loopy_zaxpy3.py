@@ -9,7 +9,7 @@ import pyopencl.clrandom
 from mpi4py import MPI
 import loopy as lp
 from profiler import Profiler
-import pyjuke
+#import pyjuke
 
 mpicommobj = MPI.COMM_WORLD
 myprofiler = Profiler(mpicommobj)

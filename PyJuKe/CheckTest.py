@@ -1,5 +1,5 @@
 import sys
-import juketest
+import ABaTe as abate
 
 numargs = len(sys.argv)
 if(numargs != 3):
@@ -11,8 +11,8 @@ resultsfilename = sys.argv[2]
 print("CheckTest: Checking ", resultsfilename,
       " for Test(", testname, ")")
 
-testresults = juketest.readtestresults(resultsfilename)
-checktest = juketest.checkresult(testresults, testname)
+testresults = abate.readtestresults(resultsfilename)
+checktest = abate.checkresult(testresults, testname)
 
 if(checktest == 0):
     print("CheckTest: Test("+testname+") PASSED.")

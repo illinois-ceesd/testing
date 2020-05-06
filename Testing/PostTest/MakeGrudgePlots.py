@@ -5,7 +5,6 @@ from os import path
 import sys
 import time
 import parjuke
-import juketest
 import ABaTe as abate
 
 cwd = os.getcwd()

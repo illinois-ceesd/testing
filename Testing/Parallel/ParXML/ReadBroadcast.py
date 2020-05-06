@@ -2,7 +2,7 @@ import sys
 import xmltodict
 from mpi4py import MPI
 import pyjuke as juke
-import juketest
+import ABaTe as abate
 import parjuke
 
 comm = MPI.COMM_WORLD
@@ -58,4 +58,4 @@ if __name__ == "__main__":
         testresult = {testname: "Fail"}
         
     if myrank == 0:
-        juketest.updatetestresults(testresult,resultsfilename)
+        abate.updatetestresults(testresult,resultsfilename)

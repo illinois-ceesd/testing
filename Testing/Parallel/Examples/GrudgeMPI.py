@@ -9,7 +9,7 @@ import pytest
 import numpy as np
 import pyopencl as cl
 import logging
-import juketest
+import ABaTe as abate
 
 __copyright__ = """
 Copyright (C) 2017 Ellis Hoag
@@ -419,6 +419,6 @@ if __name__ == "__main__":
 
     if myrank == 0:
         testresult = {testname: "PASS"}
-        juketest.updatetestresults(testresult, resultsfilename)
+        abate.updatetestresults(testresult, resultsfilename)
 
 # vim: fdm=marker

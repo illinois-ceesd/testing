@@ -73,6 +73,7 @@ else
     
 fi
 
-cp ${SRCPATH}/utils/PyJuKe/*.py ${OUTDIR}
+# =========== copy ALL the Python to the build/bin place =====
+cp ${SRCPATH}/PyJuKe/*.py ${OUTDIR}
 
 cd ${ORIGPATH}

@@ -22,15 +22,3 @@ ELSE()
   )
 ENDIF()
 
-IF(BUILD_PROVENANCE)
-  MESSAGE(STATUS "${Green}${PROJECT_NAME}: Enabling GIT provenance.${ColorReset}")
-  set(PROVOP YES)
-ELSE()
-  MESSAGE(STATUS "${BoldYellow}${PROJECT_NAME}: GIT provenance is OFF.${ColorReset}")
-ENDIF()
-
-add_custom_target(
-  pyjuke
-  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/PyJuKe/pyjuke.sh ${CMAKE_SOURCE_DIR} ${PROJECT_BINARY_DIR} ${PROVOP}
-  COMMENT "${Cyan}${PROJECT_NAME}: Generating JuKe Python module ...${ColorReset}"
-  )
