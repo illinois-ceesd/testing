@@ -6,11 +6,13 @@ import sys
 import time
 import parjuke
 import ABaTe as abate
+import subprocess
 
 cwd = os.getcwd()
-imagepath = cwd+"/grudgempi_partimes.png"
-datapath = cwd+"/GrudgeMPI_ParTimes_4"
-testname = "MakeImages"
+imagepath = cwd+"/zaxpy_gridscale.png"
+datapath = cwd+"/zaxpy_gridscale_timing"
+testname = "zaxpy_gridscale_plot"
+tmpdatapath = cwd+"/zaxpy_gridscale_data.txt"
 
 if path.exists(datapath) is False:
     print(testname+": Datapath("+datapath+") did not exist.")
@@ -18,16 +20,26 @@ if path.exists(datapath) is False:
     
 if path.exists(imagepath):
     os.remove(imagepath)
+if path.exists(tmpdatapath):
+    os.remove(tmpdatapath)
+    
+os.system("touch "+tmpdatapath)
+gridsize = 16
+while gridsize < 2048:
+    os.system('grep "zaxpy3\-'+str(gridsize)+
+              '" '+datapath+' >> '+tmpdatapath)
+    gridsize = 2*gridsize
+
 
 gp.default_term=''
 gp.c('set term png')
 gp.c('set boxwidth 0.5')
 gp.c('set style fill solid')
-gp.c('set title "Grudge Timing"')
+gp.c('set title "Loopy/ZAXPY grid scaling"')
 gp.c('set output "'+imagepath+'"')
 gp.c('set ylabel "time(s)"')
-gp.c('set xlabel "routine"')
-gp.c('plot "'+datapath+'" u 0:3:xtic(1) w boxes t ""')
+gp.c('set xlabel "gridsize"')
+gp.c('plot "'+tmpdatapath+'" u 0:3:xtic(1) w boxes t ""')
 
 time.sleep(1.0)
 
