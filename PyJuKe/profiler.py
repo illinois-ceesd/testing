@@ -2,7 +2,7 @@ from mpi4py import MPI
 from time import perf_counter as gettime
 import numpy
 import sys
-
+from contextlib import contextmanager
 
 class Profiler:
     def resettime(self):
@@ -93,6 +93,13 @@ class Profiler:
         # Create new section if it didn't exist
         if not match:
             self.sectiontimes.append(opensection)
+
+
+    @contextmanager
+    def contexttimer(self, contextname=""):
+        self.starttimer(contextname)
+        yield 
+        self.endtimer(contextname)
 
     def writeserialprofile(self, filename=""):
 

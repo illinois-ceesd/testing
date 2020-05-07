@@ -10,10 +10,7 @@ import ABaTe as abate
 import uuid
 
 cwd = os.getcwd()
-localrev = juke.localrev
-if localrev == "":
-    localrev = str(uuid.uuid4())
-localrev = localrev[0:7]
+localrev = juke.getrandkey(juke.localrev)
 
 imagepath = cwd + "/grudgempi_partimes_" + localrev + ".png"
 datapath = cwd + "/GrudgeMPI_ParTimes_4"

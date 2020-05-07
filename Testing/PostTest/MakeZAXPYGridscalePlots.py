@@ -10,11 +10,7 @@ import ABaTe as abate
 # import subprocess
 import uuid
 
-localrev = juke.localrev
-if localrev == "":
-    localrev = str(uuid.uuid4())
-localrev = localrev[0:7]
-
+localrev = juke.getrandkey(juke.localrev)
 cwd = os.getcwd()
 imagepath = cwd + "/zaxpy_gridscale_" + localrev + ".png"
 datapath = cwd + "/zaxpy_gridscale_timing"

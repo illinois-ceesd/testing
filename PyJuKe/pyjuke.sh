@@ -8,6 +8,8 @@ if [ ! -z ${2} ]; then
     OUTFILE=${OUTDIR}/pyjuke.py
 fi
 
+JUKESTUB=${SRCPATH}/PyJuKe/juke_stub.py
+
 if [ ! -z ${3} ]; then GETREPO=${3}; fi
 
 ORIGPATH=`pwd`
@@ -55,6 +57,10 @@ if [ "$OUTFILE" != "" ]; then
     printf "changed = \"${CHANGED}\"\n"         >> ${OUTFILE}
     printf "jukepath = \"${BINPATH}/PyJuKe\"\n" >> ${OUTFILE}
     printf "cl_context_answers = [0, 0]\n"      >> ${OUTFILE}
+
+    if [ -e ${JUKESTUB} ]; then
+        cat ${JUKESTUB} >> ${OUTFILE}
+    fi
     
 else
     
@@ -70,6 +76,11 @@ else
     printf "changed    = \"${CHANGED}\"\n"       
     printf "cl_context_answers = [0, 0]\n"    
     printf "jukepath = \"${BINPATH}/PyJuKe\"\n"
+    
+    if [ -e ${JUKESTUB} ]; then
+        printf " # ===== stub =======\n"
+        cat ${JUKESTUB} 
+    fi
     
 fi
 
