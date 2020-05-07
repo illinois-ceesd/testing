@@ -1,0 +1,10 @@
+HaveJuKe
+HaveNUMPY
+HaveMPI4PY
+HaveLOOPY
+HavePYOPENCL
+HaveFAILS
+HaveGrudge
+HaveProfiler
+HaveXML2Dict
+
