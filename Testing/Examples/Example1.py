@@ -5,16 +5,16 @@ import sys
 # import pyjuke
 
 
-def main(dataPath):
+def main(datapath):
 
     print("Example1: Success! Path(",
-          dataPath, ")")
+          datapath, ")")
 
 
 if __name__ == "__main__":
 
     print("TestName: Example1")
-    dataPath = "./"
+    datapath = "./"
     # Incoming sys.path should already include
     # /justkernels/build/path/PyJuke which was
     # added by justkernels/source/path/Testing/CMakeLists.txt
@@ -28,10 +28,10 @@ if __name__ == "__main__":
 
     # For example, data (and other stuff) can be found
     # relative to the incoming paths.
-    numArgs = len(sys.argv)
-    if numArgs > 1:
-        dataPath = sys.argv[1]
-        dataPath += "/kernels/"
-        print("Example1: DataPath: ", dataPath)
+    numargs = len(sys.argv)
+    if numargs > 1:
+        datapath = sys.argv[1]
+        datapath += "/kernels/"
+        print("Example1: DataPath: ", datapath)
 
-    main(dataPath)
+    main(datapath)

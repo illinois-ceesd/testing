@@ -9,7 +9,7 @@ do
         printf "Checking ${filename}...\n"
         flake8 ${filename}
     else
-        flake8 --ignore=F401,F841,W293 ${filename}
+        flake8 --extend-ignore=F401,F841,W293 ${filename}
     fi
 done
 

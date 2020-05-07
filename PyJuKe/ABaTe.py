@@ -58,6 +58,7 @@ def checkresult(testresults, testname):
             return 1
     return -1
 
+
 def output_dart_measurement_file(path_to_file,
                                  name="MeasurementFile",
                                  filetype="image/png"):
@@ -65,10 +66,11 @@ def output_dart_measurement_file(path_to_file,
     print(path_to_file)
     print('</DartMeasurementFile>')
 
-def output_dart_measurement(measurementData,name="measurement",
+
+def output_dart_measurement(measurementdata, name="measurement",
                             mdattype="numeric/double",
-                            encoding="none",compression="none"):
-    print('<DartMeasurement name="'+name+'" type="'+mdattype+'"'+
-          ' encoding="'+encoding+'" compression="'+compression+'">')
-    print(measurementData)
+                            encoding="none", compression="none"):
+    print('<DartMeasurement name="' + name + '" type="' + mdattype + '"' +
+          ' encoding="' + encoding + '" compression="' + compression + '">')
+    print(measurementdata)
     print('</DartMeasurement>')

@@ -29,8 +29,8 @@ def generate_suite_runner(suitename, suitepath, outputpath):
     resultsfilename = outputpath + "/serial_" + suitename + "_results.txt"
     testlistfile = suitepath + "/testlist.txt"
     jukepath = pyjuke.jukepath
-    jukesourcepath = pyjuke.sourcepath
-    jukebinpath = pyjuke.binpath
+#    jukesourcepath = pyjuke.sourcepath
+#    jukebinpath = pyjuke.binpath
 
     #    testNames = open(testlistfile).readlines()
     #    numTests = len(testNames)
@@ -140,7 +140,7 @@ def generate_suite_runner(suitename, suitepath, outputpath):
         outscript = open(scriptfilename, "w")
         numnodes = 1
         numprocjob = 1
-        numproctest = 1
+#        numproctest = 1
         timeout = 10
         # print("#!/bin/bash\n\nset -x\ndate", file=outscript)
         print("#!/bin/bash\n\ndate", file=outscript)

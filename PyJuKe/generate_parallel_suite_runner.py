@@ -29,8 +29,8 @@ def generate_suite_runner(suitename, suitepath, outputpath):
     resultsfilename = outputpath + "/parallel_" + suitename + "_results.txt"
     testlistfile = suitepath + "/testlist.txt"
     jukepath = pyjuke.jukepath
-    jukesourcepath = pyjuke.sourcepath
-    jukebinpath = pyjuke.binpath
+#    jukesourcepath = pyjuke.sourcepath
+#    jukebinpath = pyjuke.binpath
 
     #    testNames = open(testlistfile).readlines()
     #    numTests = len(testNames)
