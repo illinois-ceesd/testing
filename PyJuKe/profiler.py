@@ -4,6 +4,7 @@ import numpy
 import sys
 from contextlib import contextmanager
 
+
 class Profiler:
     def resettime(self):
         self.t0 = gettime()
@@ -94,11 +95,10 @@ class Profiler:
         if not match:
             self.sectiontimes.append(opensection)
 
-
     @contextmanager
     def contexttimer(self, contextname=""):
         self.starttimer(contextname)
-        yield 
+        yield contextname
         self.endtimer(contextname)
 
     def writeserialprofile(self, filename=""):
@@ -167,7 +167,12 @@ class Profiler:
         else:
             mynumsections[0] = 1
             print(
-                "(", self.myrank, "): ", numsections, " != ", mynumsections[0]
+                "(",
+                self.myrank,
+                "): ",
+                numsections,
+                " != ",
+                mynumsections[0],
             )
             1 / 0
 
