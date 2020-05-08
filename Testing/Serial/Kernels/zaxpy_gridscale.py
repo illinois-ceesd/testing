@@ -39,6 +39,7 @@ def main(datapath):
         myprofiler.starttimer("CLContext")
         ctx = cl.create_some_context(False)
         queue = cl.CommandQueue(ctx)
+        queue.finish()
         myprofiler.endtimer("CLContext")
 
         isize = gridsize
@@ -56,41 +57,56 @@ def main(datapath):
         gridsizestr = str(gridsize)
         initname = "CLInit-" + gridsizestr
 
-        myprofiler.starttimer(initname)
-        x = cl.array.empty(
-            queue, (isize, jsize, ksize), dtype=np.float64, order="F"
-        )
-        y = cl.array.empty(
-            queue, (isize, jsize, ksize), dtype=np.float64, order="F"
-        )
-        z = cl.array.empty(
-            queue, (isize, jsize, ksize), dtype=np.float64, order="F"
-        )
+        with myprofiler.contexttimer(initname) as timedsection:
+            x = cl.array.empty(
+                queue, (isize, jsize, ksize), dtype=np.float64, order="F"
+            )
+            y = cl.array.empty(
+                queue, (isize, jsize, ksize), dtype=np.float64, order="F"
+            )
+            z = cl.array.empty(
+                queue, (isize, jsize, ksize), dtype=np.float64, order="F"
+            )
+        
+            cl.clrandom.fill_rand(x)
+            cl.clrandom.fill_rand(y)
+            a = gridsize
+            z_ref = a * x.get() + y.get()
+            queue.finish()
 
-        cl.clrandom.fill_rand(x)
-        cl.clrandom.fill_rand(y)
-        a = gridsize
-        z_ref = a * x.get() + y.get()
 
-        myprofiler.endtimer(initname)
-
+        if gridsize == 16:
+            zaxpy3(
+                queue,
+                imin=imin,
+                imax=imax,
+                jmin=jmin,
+                jmax=jmax,
+                kmin=kmin,
+                kmax=kmax,
+                a=a,
+                x=x,
+                y=y,
+                z=z,
+            )
+            queue.finish()
+        
         zaxpyname = "zaxpy3-" + gridsizestr
-        myprofiler.starttimer(zaxpyname)
-        zaxpy3(
-            queue,
-            imin=imin,
-            imax=imax,
-            jmin=jmin,
-            jmax=jmax,
-            kmin=kmin,
-            kmax=kmax,
-            a=a,
-            x=x,
-            y=y,
-            z=z,
-        )
-        z.get()
-        myprofiler.endtimer(zaxpyname)
+        with myprofiler.contexttimer(zaxpyname) as timedsection:
+            zaxpy3(
+                queue,
+                imin=imin,
+                imax=imax,
+                jmin=jmin,
+                jmax=jmax,
+                kmin=kmin,
+                kmax=kmax,
+                a=a,
+                x=x,
+                y=y,
+                z=z,
+            )
+            queue.finish()
 
         checkname = "CheckResult-" + gridsizestr
         myprofiler.starttimer(checkname)
@@ -99,6 +115,7 @@ def main(datapath):
         myprofiler.endtimer(checkname)
 
         gridsize = 2 * gridsize
+    
 
 
 if __name__ == "__main__":
