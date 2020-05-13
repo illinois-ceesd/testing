@@ -32,7 +32,7 @@ def main(datapath):
     myprofiler.endtimer("LoopyParse")
 
     gridsize = 16
-    while gridsize < 2048:
+    while gridsize < 1024:
 
         print("Processing GridSize = ", gridsize)
 

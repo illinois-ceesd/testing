@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 streamsrc=${1}
 arraysize=${2}
