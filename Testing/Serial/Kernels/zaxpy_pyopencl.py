@@ -26,6 +26,9 @@ def main():
     size = 1024
 
     while size < maxsize:
+
+        print(testname+': Processing array size (' + str(size) + ')')
+        sys.stdout.flush()
         
         a_np = np.random.rand(size).astype(np.float64)
         b_np = np.random.rand(size).astype(np.float64)
@@ -65,16 +68,20 @@ def main():
         prg.sum(queue, a_np.shape, None, a_g, b_g, res_g)
         queue.finish()
 
+        
         queuename = 'zaxpy-' + str(size)
+        print (testname+': Queue warmed up starting '+queuename)
+        sys.stdout.flush()
+        
         myprofiler.starttimer(queuename)
         for i in range(10):
             prg.sum(queue, a_np.shape, None, a_g, b_g, res_g)
             queue.finish()
-
         myprofiler.endtimer(queuename)
-    myprofiler.endtimer(startname)
-    size *= 2
-    
+
+        myprofiler.endtimer(startname)
+        size *= 2
+
 # _get_time(queue, prg.sum)
 
 
