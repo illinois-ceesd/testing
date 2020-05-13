@@ -42,6 +42,9 @@ def main(datapath):
         queue.flush()
         myprofiler.endtimer("CLContext")
 
+        print(testname + ': Device info:')
+        print(queue.device)
+        
         isize = gridsize
         jsize = gridsize
         ksize = gridsize
