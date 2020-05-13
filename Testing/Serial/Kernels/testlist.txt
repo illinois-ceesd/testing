@@ -1,2 +1,3 @@
 zaxpy_gridscale
+zaxpy_pyopencl
 RunStream
