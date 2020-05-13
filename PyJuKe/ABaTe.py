@@ -23,12 +23,12 @@ def writetestresults(testresults, filename=""):
 
     if filename != "":
         resultfile = open(filename, "w")
-
-    for testname in testresults:
-        print(testname, testresults[testname], file=resultfile)
-
-    if filename != "":
+        for testname in testresults:
+            print(testname, testresults[testname], file=resultfile)
         resultfile.close()
+    else:
+        for testname in testresults:
+            print(testname,testresults[testname])
 
 
 def updatetestresults(testresults, filename=""):
