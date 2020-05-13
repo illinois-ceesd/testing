@@ -38,10 +38,10 @@ while gridsize < 1024:
 
 
 gp.default_term = ''
-gp.c('set ylabel font "Helvetica, 20"')
-gp.c('set xlabel font "Helvetica, 20"')
-gp.c('set key font "Helvetica, 16"')
-gp.c('set tic font "Arial, 15"')
+#gp.c('set ylabel font "Helvetica, 16"')
+#gp.c('set xlabel font "Helvetica, 16"')
+#gp.c('set key font "Helvetica, 12"')
+#gp.c('set tic font "Helvetica, 12"')
 gp.c('set logscale x 2')
 gp.c('set logscale y 2')
 gp.c('set term png')
