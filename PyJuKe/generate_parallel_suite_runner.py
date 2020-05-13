@@ -57,7 +57,7 @@ def generate_suite_runner(suitename, suitepath, outputpath):
         print('numProcs="4"', file=outscript)
         print("if [ ! -z ${1} ]; then numProcs=${1}; fi", file=outscript)
 #        print("set -x", file=outscript)
-        print("export PYOPENCL_CTX='0'", file=outscript)
+        print("export PYOPENCL_CTX=':'", file=outscript)
         print(
             'export PYTHONPATH="' + jukepath + ':${PYTHONPATH}"',
             file=outscript,
@@ -104,7 +104,7 @@ def generate_suite_runner(suitename, suitepath, outputpath):
         print('numProcs="4"', file=outscript)
         print("if [ ! -z ${1} ]; then numProcs=${1}; fi", file=outscript)
         print("set -x", file=outscript)
-        print("export PYOPENCL_CTX=''", file=outscript)
+        print("export PYOPENCL_CTX=':'", file=outscript)
         print(
             'export PYTHONPATH="' + jukepath + ':${PYTHONPATH}"',
             file=outscript,

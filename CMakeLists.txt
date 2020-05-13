@@ -21,7 +21,7 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
 
 # Project-specific Options
 OPTION(BUILD_STATIC "Build static libraries")
-OPTION(ENABLE_OPENMP "Build with OpenMP parallelism" OFF)
+OPTION(ENABLE_OPENMP "Build with OpenMP parallelism" ON)
 OPTION(BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" ON)
 OPTION(STATIC_KERNELS "Build static library for Fortran computation kernels" OFF)
 OPTION(ENABLE_COVERAGE "Enable coverage testing with gcov (GCC only)" OFF)
