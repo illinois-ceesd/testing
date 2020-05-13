@@ -51,7 +51,7 @@ gp.c('set title "Loopy/ZAXPY on ' + machinename + '"')
 gp.c('set output "' + imagepath + '"')
 gp.c('set ylabel "Bandwidth (GB/s)"')
 gp.c('set xlabel "DataSize (MB)"')
-gp.c('plot "' + tmpdatapath + '" u 1:(($1/1024.0)/$4) w lp t "Loopy/ZAXPY BW"')
+gp.c('plot "' + tmpdatapath + '" u 1:(($1/1024.0)/($4/10.0)) w lp t "Loopy/ZAXPY BW"')
 
 time.sleep(1.0)
 
