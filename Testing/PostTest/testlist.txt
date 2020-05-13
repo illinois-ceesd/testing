@@ -1,3 +1,4 @@
 MakeGrudgePlots
 MakeZAXPYGridscalePlots
 MakeStreamPlots
+MakeComparisonPlots
