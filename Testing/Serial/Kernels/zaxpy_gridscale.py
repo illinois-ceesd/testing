@@ -32,14 +32,14 @@ def main(datapath):
     myprofiler.endtimer("LoopyParse")
 
     gridsize = 16
-    while gridsize < 1024:
+    while gridsize < 2048:
 
         print("Processing GridSize = ", gridsize)
 
         myprofiler.starttimer("CLContext")
         ctx = cl.create_some_context(False)
         queue = cl.CommandQueue(ctx)
-        queue.finish()
+        queue.flush()
         myprofiler.endtimer("CLContext")
 
         isize = gridsize
@@ -93,19 +93,20 @@ def main(datapath):
         
         zaxpyname = "zaxpy3-" + gridsizestr
         with myprofiler.contexttimer(zaxpyname) as timedsection:
-            zaxpy3(
-                queue,
-                imin=imin,
-                imax=imax,
-                jmin=jmin,
-                jmax=jmax,
-                kmin=kmin,
-                kmax=kmax,
-                a=a,
-                x=x,
-                y=y,
-                z=z,
-            )
+            for trial in range(10):
+                zaxpy3(
+                    queue,
+                    imin=imin,
+                    imax=imax,
+                    jmin=jmin,
+                    jmax=jmax,
+                    kmin=kmin,
+                    kmax=kmax,
+                    a=a,
+                    x=x,
+                    y=y,
+                    z=z,
+                )
             queue.finish()
 
         checkname = "CheckResult-" + gridsizestr
