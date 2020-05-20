@@ -47,3 +47,6 @@ jobs:
         mkdir build
         cd build
         cmake ..
+        make
+    - name: Test
+      run: cmake test
