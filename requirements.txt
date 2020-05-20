@@ -1,0 +1,7 @@
+pyopencl
+numpy
+mpi4py
+loopy
+xmltodict
+h5py
+pymetis

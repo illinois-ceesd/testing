@@ -7,7 +7,7 @@ import pyopencl.clrandom
 
 from mpi4py import MPI
 import loopy as lp
-from profiler import Profiler
+# from profiler import Profiler
 import pyjuke as jk
 import ABaTe as abate
 
