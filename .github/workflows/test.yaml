@@ -20,6 +20,8 @@ jobs:
       run: conda info
     - name: Conda list
       run: conda list
+    - name: Conda install
+      run: conda install pocl islpy pyopencl
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2

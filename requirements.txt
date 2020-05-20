@@ -1,7 +1,14 @@
-pyopencl
 numpy
 mpi4py
-loopy
 xmltodict
 h5py
 pymetis
+git+https://gitlab.tiker.net/inducer/cgen
+git+https://gitlab.tiker.net/inducer/genpy
+git+https://gitlab.tiker.net/inducer/modepy
+git+https://gitlab.tiker.net/inducer/pyvisfile
+git+https://gitlab.tiker.net/inducer/loopy
+git+https://gitlab.tiker.net/inducer/meshmode
+git+https://gitlab.tiker.net/inducer/dagrt
+git+https://gitlab.tiker.net/inducer/leap
+git+https://gitlab.tiker.net/inducer/grudge
