@@ -44,13 +44,11 @@ jobs:
     #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Build JuKe
       run: |
-        pwd
         mkdir build
         cd build
         cmake ..
         make -j3
     - name: Test JuKe
       run: |
-        pwd
         cd build
-        make test
+        ctest --verbose

@@ -3,6 +3,9 @@ mpi4py
 xmltodict
 h5py
 pymetis
+matplotlib
+fparser
+pygnuplot
 git+https://gitlab.tiker.net/inducer/cgen
 git+https://gitlab.tiker.net/inducer/genpy
 git+https://gitlab.tiker.net/inducer/modepy
