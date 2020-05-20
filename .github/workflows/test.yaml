@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Install MPI
-      run: sudo apt-get install -y openmpi-bin libopenmpi-dev
+      run: sudo apt-get install -y openmpi-bin libopenmpi-dev gfortran cmake
     - uses: goanpeca/setup-miniconda@v1
       with:
         auto-update-conda: true
