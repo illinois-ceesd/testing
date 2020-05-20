@@ -12,6 +12,8 @@ jobs:
         python-version: [3.8]
 
     steps:
+    - name: Install MPI
+      run: sudo apt-get -y openmpi-bin libopenmpi-dev
     - uses: goanpeca/setup-miniconda@v1
       with:
         auto-update-conda: true
