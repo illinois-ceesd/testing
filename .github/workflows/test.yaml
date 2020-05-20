@@ -12,7 +12,7 @@ jobs:
         python-version: [3.8]
 
     steps:
-    - name: Install MPI
+    - name: Install MPI/Gfortran/CMake
       run: sudo apt-get install -y openmpi-bin libopenmpi-dev gfortran cmake
     - uses: goanpeca/setup-miniconda@v1
       with:
@@ -22,7 +22,7 @@ jobs:
       run: conda info
     - name: Conda list
       run: conda list
-    - name: Conda install
+    - name: Conda install dependencies
       run: |
         conda config --add channels conda-forge
         conda install pocl islpy pyopencl
@@ -31,7 +31,7 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+    - name: Pip install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install flake8 pytest
@@ -42,11 +42,11 @@ jobs:
     #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
     #     # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
     #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Build
+    - name: Build JuKe
       run: |
         mkdir build
         cd build
         cmake ..
-        make
-    - name: Test
-      run: cmake test
+        make -j3
+    - name: Test JuKe
+      run: make test
