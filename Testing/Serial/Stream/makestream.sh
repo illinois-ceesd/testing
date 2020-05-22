@@ -10,6 +10,11 @@ if [ "${streamsrc}" == "" ] || [ "${arraysize}" == "" ] || [ "${streambin}" == "
     exit 1
 fi
 
-printf "makestream: Building stream_src@(${streamsrc}) --> stream_bin@(${streambin})\n" 
+printf "makestream: Building stream_src@(${streamsrc}) --> stream_bin@(${streambin})\n"
+
+if [[ -z $CC ]]; then
+    # Use gcc by default
+    CC=gcc
+fi
 
 ${CC} -fopenmp -O3 ${streamsrc} -DSTREAM_ARRAY_SIZE=${arraysize} -o ${streambin}
