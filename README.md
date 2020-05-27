@@ -1,18 +1,18 @@
-# JustKernels
+# TEESD
 
-This is a stand-alone library of simple computational kernels used in _PlasCom2_. It includes a stand-alone library of kernels 
-and self-contained kernelized implementation of the _PlasCom2_ Equation of State (EOS). All kernels, including the EOS, are 
-available through a C and Fortran-compatible API. 
+This package is the testing submodule for the CEESD _emirge_ project. It is designed to encapsulate the automated build & test system for the remote HPC platforms.
+
+TEESD also includes a stand-alone library of F90 and C kernels used in NavierStokes flow solvers and EOS for ideal gases and mixtures. All kernels, including the EOS, are available through a C and Fortran-compatible API. These kernels are tested using Loopy code parsing and generated OpenCL code. 
 
 # Clone 
-> git clone https:://github.com/illinois-ceesd/justkernels
+> git clone https:://github.com/illinois-ceesd/teesd
 
 # Configure
 Configuration requires [_CMake_](https://cmake.org). Out-of-source builds are recommended. 
 
 > mkdir /path/to/build\
 > cd /path/to/build\
-> cmake /path/to/justkernels
+> cmake /path/to/teesd
 
 # Build the kernels
 Fortran and C++ compilers are required to build the kernels.
