@@ -32,12 +32,13 @@ $ make [-j]
 $ make test
 ```
 
--or-
+-or- 
 
+submit results to the [dashboard](https://my.cdash.org/index.php?project=JustKernels) with:
 ```
-$ make Experimental (submits results to the [dashboard](https://my.cdash.org/index.php?project=JustKernels))
+$ make Experimental 
 ```
-
+(submits results to the [here](https://my.cdash.org/index.php?project=JustKernels) 
 # Check Python Style & Syntax
 Python checks require [Flake8](https://flake8.pycqa.org/en/latest/).
 
