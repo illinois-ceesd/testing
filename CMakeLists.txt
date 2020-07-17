@@ -83,9 +83,11 @@ ELSE()
   MESSAGE(STATUS "${BoldYellow}${PROJECT_NAME}: GIT provenance is OFF.${ColorReset}")
 ENDIF()
 
+SET(PROJECT_PYTHON_PATH ${PROJECT_BINARY_DIR}/PyTEESD)
+SET(PROJECT_PYTHON_SOURCE ${PROJECT_SOURCE_DIR}/PyTEESD)
 add_custom_target(
   pyteesd
-  COMMAND ${CMAKE_SOURCE_DIR}/PyTEESD/generate_teesd_python_module.sh ${CMAKE_SOURCE_DIR} ${PROJECT_BINARY_DIR} ${PROVOP}
+  COMMAND ${PROJECT_PYTHON_SOURCE}/generate_teesd_python_module.sh ${CMAKE_SOURCE_DIR} ${PROJECT_BINARY_DIR} ${PROVOP}
   COMMENT "${Cyan}${PROJECT_NAME}: Generating TEESD Python module ...${ColorReset}"
   )
 

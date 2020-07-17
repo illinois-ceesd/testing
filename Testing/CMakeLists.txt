@@ -1,9 +1,16 @@
-
+# Global ABaTe testing setup - DO NOT REMOVE
 ADD_TEST(TestSetup ${CMAKE_CURRENT_SOURCE_DIR}/PreTest/testsetup.sh ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
 IF(SHOWTESTS) 
   MESSAGE(STATUS "${Cyan}${PROJECT_NAME}:\t Adding ABaTe pretest: TestSetup${ColorReset}")
 ENDIF()
 
+# Pretests are a user hook allowing stage-in of any testing data (if needed)
+# ALL subsquent tests will depend on pretests
+# Pretests DO NOT go through the batch system - they are executed on the submit host
+# TO ADD PRETESTS:
+# Stick your pretest(s) code in:
+# <project>/Testing/PreTest/<testname>.{sh,py}
+# Stick <testname> into <project>/Testing/PreTest/testlist.txt
 SET(PRETESTPATH ${CMAKE_CURRENT_SOURCE_DIR}/PreTest)
 MESSAGE(STATUS "${Blue}${PROJECT_NAME}: Checking for pretests in ${PRETESTPATH}...${ColorReset}")
 SET(LISTPATH ${PRETESTPATH}/testlist.txt)
@@ -24,7 +31,7 @@ IF(EXISTS ${LISTPATH})
           ADD_TEST(${TEST_NAME} python ${TEST_PYTHON_FILE}
             ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
           SET_TESTS_PROPERTIES(${TEST_NAME} PROPERTIES ENVIRONMENT
-            "PYTHONPATH=${PROJECT_BINARY_DIR}/PyTEESD:$ENV{PYTHONPATH}")
+            "PYTHONPATH=${PROJECT_PYTHON_PATH}:$ENV{PYTHONPATH}")
         ELSEIF(EXISTS ${TEST_SCRIPT_FILE})
           ADD_TEST(${TEST_NAME} ${TEST_SCRIPT_FILE}
             ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
@@ -37,6 +44,14 @@ IF(EXISTS ${LISTPATH})
   
 ENDIF()
 
+# SINGLE TESTS
+# The "Single Tests" DO NOT run through the batch systems
+# To ADD SINGLE TEST SUITE:
+# mkdir <project>/Testing/<suitepath>
+# Add <suitepath> to <project>/Testing/testdirectory.txt
+# To ADD TESTS TO SINGLE TEST SUITE:
+# Add code to implement your test in <project>/Testing/<suitepath>/<testname>.{py,sh}
+# Add <testname> to <project>/Testing/<suitepath>/testlist.txt
 FILE(READ ${CMAKE_CURRENT_SOURCE_DIR}/testdirectory.txt testPaths)
 STRING(REGEX REPLACE "\n" " " testPathList ${testPaths})
 SEPARATE_ARGUMENTS(testPathList)
@@ -56,10 +71,15 @@ FOREACH(TEST_SUBDIR ${testPathList})
         IF(SHOWTESTS) 
           MESSAGE(STATUS "${Cyan}${PROJECT_NAME}:\t Adding single test: ${TEST_NAME}${ColorReset}")
         ENDIF()
-        ADD_TEST(${TEST_NAME} python ${TEST_DIRECTORY}/${testName}.py
-          ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
-        SET_TESTS_PROPERTIES(${TEST_NAME} PROPERTIES ENVIRONMENT
-          "PYTHONPATH=${PROJECT_BINARY_DIR}/PyTEESD:$ENV{PYTHONPATH}")
+        SET(TEST_PYTHON_FILE ${TEST_DIRECTORY}/${testName}.py)
+        SET(TEST_SCRIPT_FILE ${TEST_DIRECTORY}/${testName}.sh)
+        IF(EXISTS ${TEST_PYTHON_FILE})
+          ADD_TEST(${TEST_NAME} python ${TEST_PYTHON_FILE} ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
+          SET_TESTS_PROPERTIES(${TEST_NAME} PROPERTIES ENVIRONMENT
+            "PYTHONPATH=${PROJECT_PYTHON_PATH}:$ENV{PYTHONPATH}")
+        ELSEIF(EXISTS ${TEST_SCRIPT_FILE})
+          ADD_TEST(${TEST_NAME} ${TEST_SCRIPT_FILE} ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
+        ENDIF()
         SET_TESTS_PROPERTIES(${TEST_NAME} PROPERTIES DEPENDS TestSetup)
         IF(${testName} MATCHES "FAILS")
           SET_TESTS_PROPERTIES(${TEST_NAME} PROPERTIES WILL_FAIL TRUE)
@@ -73,6 +93,15 @@ FOREACH(TEST_SUBDIR ${testPathList})
   ENDIF()
 ENDFOREACH()
 
+# SERIAL TESTS
+# A batch job (if needed) is created for every SERIAL SUITE.  All tests in the
+# suite will be run inside the batch job.
+# To ADD SERIAL TEST SUITE:
+# mkdir <project>/Testing/Serial/<suitepath>
+# Add <suitepath> to <project>/Testing/Serial/serialsuites.txt
+# To ADD TESTS TO EXISTING SERIAL TEST SUITE:
+# Add code to implement your test in <project>/Testing/Serial/<suitepath>/<testname>.{py,sh}
+# Add <testname> to <project>/Testing/Serial/<suitepath>/testlist.txt
 set(SERIALTESTPATH ${CMAKE_CURRENT_SOURCE_DIR}/Serial)
 set(SERIALSUITELIST ${SERIALTESTPATH}/serialsuites.txt)
 IF(EXISTS ${SERIALSUITELIST})
@@ -94,10 +123,10 @@ IF(EXISTS ${SERIALSUITELIST})
       MESSAGE(STATUS "${Blue}${PROJECT_NAME}: Discovering serial test suite in ${SUITE_DIRECTORY}...${ColorReset}")
       ADD_TEST(
         NAME ${SETUPNAME}
-        COMMAND python ${CMAKE_SOURCE_DIR}/PyTEESD/generate_serial_suite_runner.py ${SUITENAME} ${SUITE_DIRECTORY} ${PROJECT_BINARY_DIR}/Testing)
+        COMMAND python ${PROJECT_PYTHON_SOURCE}/generate_serial_suite_runner.py ${SUITENAME} ${SUITE_DIRECTORY} ${PROJECT_BINARY_DIR}/Testing)
       SET_TESTS_PROPERTIES(${SETUPNAME} PROPERTIES FIXTURES_SETUP ${FIXTURENAME})
       SET_TESTS_PROPERTIES(${SETUPNAME} PROPERTIES ENVIRONMENT
-        "PYTHONPATH=${PROJECT_BINARY_DIR}/PyTEESD:$ENV{PYTHONPATH}")
+        "PYTHONPATH=${PROJECT_PYTHON_PATH}:$ENV{PYTHONPATH}")
       ADD_TEST(
         NAME ${RUNSUITE}
         COMMAND ${PROJECT_BINARY_DIR}/Testing/serial_${SUITENAME}.sh)
@@ -115,9 +144,9 @@ IF(EXISTS ${SERIALSUITELIST})
         ENDIF()
         ADD_TEST(
           NAME ${FULL_TESTNAME}
-          COMMAND python ${CMAKE_SOURCE_DIR}/PyTEESD/CheckTest.py ${testName} ${RESULTSFILE})
+          COMMAND python ${PROJECT_PYTHON_SOURCE}/CheckTest.py ${testName} ${RESULTSFILE})
         SET_TESTS_PROPERTIES(${FULL_TESTNAME} PROPERTIES ENVIRONMENT
-          "PYTHONPATH=${PROJECT_BINARY_DIR}/PyTEESD:$ENV{PYTHONPATH}")
+          "PYTHONPATH=${PROJECT_PYTHON_PATH}:$ENV{PYTHONPATH}")
         SET_TESTS_PROPERTIES(${FULL_TESTNAME} PROPERTIES DEPENDS TestSetup)
         SET_TESTS_PROPERTIES(${FULL_TESTNAME} PROPERTIES FIXTURES_REQUIRED ${SETUPNAME})
         IF(${testName} MATCHES "FAILS")
@@ -130,6 +159,15 @@ IF(EXISTS ${SERIALSUITELIST})
   ENDFOREACH()
 ENDIF()
 
+# MPI PARALLEL TESTS - will automatically use a parallel spawner (e.g. mpiexec, srun, jsrun, etc)
+# A batch job (if needed) is created for every PARALLEL SUITE.  All tests in the
+# suite will be run inside the batch job.
+# To ADD PARALLEL TEST SUITE:
+# mkdir <project>/Testing/Parallel/<suitepath>
+# Add <suitepath> to <project>/Testing/Parallel/parallelsuites.txt
+# To ADD TESTS TO EXISTING PARALLEL TEST SUITE:
+# Add code to implement your test in <project>/Testing/Parallel/<suitepath>/<testname>.{py,sh}
+# Add <testname> to <project>/Testing/Parallel/<suitepath>/testlist.txt
 FILE(READ ${CMAKE_CURRENT_SOURCE_DIR}/Parallel/parallelsuites.txt suitePaths)
 STRING(REGEX REPLACE "\n" " " suitePathList ${suitePaths})
 SEPARATE_ARGUMENTS(suitePathList)
@@ -144,10 +182,10 @@ FOREACH(SUITE_SUBDIR ${suitePathList})
   SET(RESULTSFILE "${PROJECT_BINARY_DIR}/Testing/parallel_${SUITENAME}_results.txt")
   ADD_TEST(
     NAME ${SETUPNAME}
-    COMMAND python ${CMAKE_SOURCE_DIR}/PyTEESD/generate_parallel_suite_runner.py ${SUITENAME} ${SUITE_DIRECTORY} ${PROJECT_BINARY_DIR}/Testing)
+    COMMAND python ${PROJECT_PYTHON_SOURCE}/generate_parallel_suite_runner.py ${SUITENAME} ${SUITE_DIRECTORY} ${PROJECT_BINARY_DIR}/Testing)
   SET_TESTS_PROPERTIES(${SETUPNAME} PROPERTIES FIXTURES_SETUP ${FIXTURENAME})
   SET_TESTS_PROPERTIES(${SETUPNAME} PROPERTIES ENVIRONMENT
-    "PYTHONPATH=${PROJECT_BINARY_DIR}/PyTEESD:$ENV{PYTHONPATH}")
+    "PYTHONPATH=${PROJECT_PYTHON_PATH}:$ENV{PYTHONPATH}")
   ADD_TEST(
     NAME ${RUNSUITE}
     COMMAND ${PROJECT_BINARY_DIR}/Testing/parallel_${SUITENAME}.sh)
@@ -166,9 +204,9 @@ FOREACH(SUITE_SUBDIR ${suitePathList})
       ENDIF()
       ADD_TEST(
         NAME ${FULL_TESTNAME}
-        COMMAND python ${CMAKE_SOURCE_DIR}/PyTEESD/CheckTest.py ${testName} ${RESULTSFILE})
+        COMMAND python ${PROJECT_PYTHON_SOURCE}/CheckTest.py ${testName} ${RESULTSFILE})
       SET_TESTS_PROPERTIES(${FULL_TESTNAME} PROPERTIES ENVIRONMENT
-        "PYTHONPATH=${PROJECT_BINARY_DIR}/PyTEESD:$ENV{PYTHONPATH}")
+        "PYTHONPATH=${PROJECT_PYTHON_PATH}:$ENV{PYTHONPATH}")
         SET_TESTS_PROPERTIES(${FULL_TESTNAME} PROPERTIES DEPENDS TestSetup)
       SET_TESTS_PROPERTIES(${FULL_TESTNAME} PROPERTIES FIXTURES_REQUIRED ${SETUPNAME})
       IF(${testName} MATCHES "FAILS")
@@ -181,6 +219,13 @@ FOREACH(SUITE_SUBDIR ${suitePathList})
   
 ENDFOREACH()
 
+# Posttests are a user hook allowing post-processing of test data (if required/desired)
+# These are used for example to produce plots of performace data generated during testing
+# Posttests DO NOT go through the batch system; they are executed on the submit host
+# TO ADD POSTTESTS:
+# Stick your posttest(s) code in:
+# <project>/Testing/PostTest/<testname>.{sh,py}
+# Stick <testname> into <project>/Testing/PostTest/testlist.txt
 SET(POSTTESTPATH ${CMAKE_CURRENT_SOURCE_DIR}/PostTest)
 MESSAGE(STATUS "${Blue}${PROJECT_NAME}: Checking for posttests in ${POSTTESTPATH}...${ColorReset}")
 SET(LISTPATH ${POSTTESTPATH}/testlist.txt)
@@ -201,7 +246,7 @@ IF(EXISTS ${LISTPATH})
           ADD_TEST(${TEST_NAME} python ${TEST_PYTHON_FILE}
             ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
           SET_TESTS_PROPERTIES(${TEST_NAME} PROPERTIES ENVIRONMENT
-            "PYTHONPATH=${PROJECT_BINARY_DIR}/PyTEESD:$ENV{PYTHONPATH}")
+            "PYTHONPATH=${PROJECT_PYTHON_PATH}:$ENV{PYTHONPATH}")
         ELSEIF(EXISTS ${TEST_SCRIPT_FILE})
           ADD_TEST(${TEST_NAME} python ${TEST_SCRIPT_FILE}
             ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
