@@ -54,7 +54,7 @@ def generate_suite_runner(suitename, suitepath, outputpath):
         # Then it's an mpiexec situation
         outscript = open(scriptfilename, "w")
         print("#!/bin/sh\n\n", file=outscript)
-        print("export PYOPENCL_CTX=':'", file=outscript)
+        print("export PYOPENCL_CTX=''", file=outscript)
         print(
             'export PYTHONPATH="' + jukepath + ':${PYTHONPATH}"',
             file=outscript,
