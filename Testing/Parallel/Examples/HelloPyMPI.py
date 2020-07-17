@@ -3,7 +3,7 @@ from mpi4py import MPI
 from profiler import Profiler
 import time
 import sys
-import ABaTe as abate
+import abate
 
 testname = "HelloPyMPI"
 mpicommobj = MPI.COMM_WORLD

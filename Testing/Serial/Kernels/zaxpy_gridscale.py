@@ -8,8 +8,8 @@ import pyopencl.clrandom
 from mpi4py import MPI
 import loopy as lp
 from profiler import Profiler
-import pyjuke as jk
-import ABaTe as abate
+import teesd
+import abate
 
 mpicommobj = MPI.COMM_WORLD
 myprofiler = Profiler(mpicommobj)
@@ -127,7 +127,7 @@ if __name__ == "__main__":
     myprofiler.starttimer()
 
     datapath = "./"
-    datapath = jk.sourcepath + "/kernels/"
+    datapath = teesd.sourcepath + "/kernels/"
     print("DataPath: ", datapath)
 
     myprofiler.starttimer("runtest")

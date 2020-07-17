@@ -4,14 +4,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="PyJuKe",    # Replace with your own username
+    name="PyTEESD",
     version="0.0.1",
     author="Mike Campbell",
     author_email="mtcampbe@illinois.edu",
-    description="A small example package",
+    description="Run integrated testing on HPC platforms.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/illinois-ceesd/justkernels",
+    url="https://github.com/illinois-ceesd/teesd",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

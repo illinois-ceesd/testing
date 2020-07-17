@@ -25,7 +25,7 @@ CONFIGURE_FILE( ${doxyfile_in} ${doxyfile} @ONLY )
 ADD_CUSTOM_COMMAND( OUTPUT ${docdir}
                     COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
                     MAIN_DEPENDENCY ${doxyfile} ${doxyfile_in}
-                    DEPENDS JuKe ${doxy_extra_files} ${CMAKE_CURRENT_SOURCE_DIR}/*.dox
+                    DEPENDS TEESD ${doxy_extra_files} ${CMAKE_CURRENT_SOURCE_DIR}/*.dox
                     COMMENT "${PROJECT_NAME}: Generating documentation")
 
 ADD_CUSTOM_TARGET( documentation DEPENDS ${docdir} )

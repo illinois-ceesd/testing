@@ -19,23 +19,21 @@ def main():
     draw_2d_mesh(mesh, set_bounding_box=True)
 
     import os
-    import pyjuke as jk
-    randfilekey = jk.getrandkey(jk.localrev)
+    import teesd
+    randfilekey = teesd.getrandkey(teesd.localrev)
     fname = os.getcwd() + '/meshmode_simple_' + randfilekey + '.png'
-    
+
     import matplotlib.pyplot as pt
     # pt.show()
     pt.savefig(fname)
-    
+
     import sys
     if os.path.exists(fname) is False:
         sys.exit(1)
 
-    import ABaTe as abate
+    import abate
     abate.output_dart_measurement_file(fname)
 
-    
+
 if __name__ == "__main__":
     main()
-
-

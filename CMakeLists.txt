@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(JustKernels CXX C Fortran)
+project(TEESD CXX C Fortran)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake/Modules")
 include(SetColors)
 
@@ -38,7 +38,7 @@ OPTION(DISABLE_FAILING_TESTS "Disable running of tests that are known to fail." 
 OPTION(ENABLE_THREAD_SANITIZER "Enable thread sanitizer thread debugger." OFF)
 OPTION(ENABLE_CUDA "Enable CUDA kernels and tests." OFF)
 OPTION(NOISY_LINTING "Enable more messages when checking Python." OFF)
-OPTION(BUILD_PROVENANCE "Enable detailed repository info in PyJuKe" ON)
+OPTION(BUILD_PROVENANCE "Enable detailed repository info in TEESD" ON)
 
 SET(CMAKE_CXX_FLAGS_RELEASE "-g1 -O3 -DNDEBUG")
 SET(CMAKE_Fortran_FLAGS_RELEASE "-g1 -O2 -DNDEBUG")
@@ -84,9 +84,9 @@ ELSE()
 ENDIF()
 
 add_custom_target(
-  pyjuke
-  COMMAND ${CMAKE_SOURCE_DIR}/PyJuKe/pyjuke.sh ${CMAKE_SOURCE_DIR} ${PROJECT_BINARY_DIR} ${PROVOP}
-  COMMENT "${Cyan}${PROJECT_NAME}: Generating JuKe Python module ...${ColorReset}"
+  pyteesd
+  COMMAND ${CMAKE_SOURCE_DIR}/PyTEESD/generate_teesd_python_module.sh ${CMAKE_SOURCE_DIR} ${PROJECT_BINARY_DIR} ${PROVOP}
+  COMMENT "${Cyan}${PROJECT_NAME}: Generating TEESD Python module ...${ColorReset}"
   )
 
 #OPTION(ENABLE_AGGRESSIVE "Aggressive opt" OFF)
@@ -504,16 +504,16 @@ MESSAGE(STATUS "${Green}${PROJECT_NAME}: Kernel Sources: ${JK_KernelSources}${Co
 
 IF(STATIC_KERNELS) 
   if(ENABLE_HYDRA)
-    CUDA_ADD_LIBRARY(JuKe STATIC ${JK_KernelSources})
+    CUDA_ADD_LIBRARY(TEESD STATIC ${JK_KernelSources})
   else()
-    ADD_LIBRARY(JuKe STATIC ${JK_KernelSources})
+    ADD_LIBRARY(TEESD STATIC ${JK_KernelSources})
   endif()
 ELSE()
-  ADD_LIBRARY(JuKe SHARED ${JK_KernelSources})
+  ADD_LIBRARY(TEESD SHARED ${JK_KernelSources})
 ENDIF()
-ADD_DEPENDENCIES(JuKe pyjuke)
-SET_TARGET_PROPERTIES(JuKe PROPERTIES Fortran_MODULE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/include")
-INSTALL(TARGETS JuKe LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+ADD_DEPENDENCIES(TEESD pyteesd)
+SET_TARGET_PROPERTIES(TEESD PROPERTIES Fortran_MODULE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/include")
+INSTALL(TARGETS TEESD LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
 
 if(ENABLE_HYDRA)
   ADD_LIBRARY(Hydra STATIC ${JK_HydraSources})

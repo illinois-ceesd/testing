@@ -3,15 +3,15 @@ import os.path
 from os import path
 import sys
 import time
-import pyjuke as juke
-import ABaTe as abate
-import uuid
+import teesd
+import abate
+# import uuid
 
-localrev = juke.getrandkey(juke.localrev)
+localrev = teesd.getrandkey(teesd.localrev)
 cwd = os.getcwd()
 datapath = cwd + "/stream_data.txt"
 testname = "make_stream_plot"
-machinename = juke.buildhost
+machinename = teesd.buildhost
 imagepath = cwd + "/stream_" + machinename + "_bw_" + localrev + ".png"
 
 if path.exists(datapath) is False:

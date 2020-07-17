@@ -1,8 +1,8 @@
 import sys
-# the pyjuke module loads some JuKe environment stuff
-# It comes from /justkernels/build/directory/PyJuke
-# PyJuke/pyjuke.py is created at justkernesl build-time
-# import pyjuke
+# the teesd module loads some TEESD environment stuff
+# It comes from /teesd/build/directory/PyTEESD
+# PyTEESD/teesd.py is created at TEESD build-time
+# import teesd
 
 
 def main(datapath):
@@ -16,14 +16,14 @@ if __name__ == "__main__":
     print("TestName: Example1")
     datapath = "./"
     # Incoming sys.path should already include
-    # /justkernels/build/path/PyJuke which was
-    # added by justkernels/source/path/Testing/CMakeLists.txt
+    # /teesd/build/path/PyTEESD which was
+    # added by teesd/source/path/Testing/CMakeLists.txt
     # from whence this example is called.
     print("Example1: System Paths: ", sys.path)
 
     # Arguments to all Python tests are:
-    # (1) The full path to the JustKernels source code
-    # (2) The full path to the JustKernels top-level build
+    # (1) The full path to the TEESD source code
+    # (2) The full path to the TEESD top-level build
     print("Example1: Incoming Paths: ", sys.argv[1:])
 
     # For example, data (and other stuff) can be found

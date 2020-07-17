@@ -1,15 +1,14 @@
 import sys
-import sys
 import os
 import subprocess
-import pyjuke as jk
-import ABaTe as abate
+import teesd
+import abate
 
 testname = "RunStream"
 arraysize = 1024
 maxarraysize = pow(1024,3) / 10
 mypwd = os.getcwd()
-srcpath = jk.sourcepath
+srcpath = teesd.sourcepath
 testpath = srcpath + '/Testing/Serial/Stream'
 streampath = testpath + '/stream.c'
 makestream = testpath + '/makestream.sh'

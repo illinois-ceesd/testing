@@ -1,9 +1,9 @@
 import sys
 import xmltodict
 from mpi4py import MPI
-import pyjuke as juke
-import ABaTe as abate
-import parjuke
+import teesd
+import abate
+import parteesd
 
 comm = MPI.COMM_WORLD
 myrank = comm.Get_rank()
@@ -13,7 +13,7 @@ testname = "ReadBroadcast"
 
 def runtest():
 
-    path_to_datafile = juke.sourcepath + "/Testing/Data/XML/parxml.xml"
+    path_to_datafile = teesd.sourcepath + "/Testing/Data/XML/parxml.xml"
 
     if myrank == 0:
         filedesc = open(path_to_datafile, "r")
@@ -32,14 +32,14 @@ def runtest():
         )
 
     check_value = 0
-    if mydict["juke_config"]["config1"]["value1"] != expected_data:
+    if mydict["teesd_config"]["config1"]["value1"] != expected_data:
         check_value = 1
         print("ReadBroadcast(", myrank, "): Failed test.")
 # print("ReadBroadcast(", myrank, "): Expected: ", expected_data)
 # print("ReadBroadcast(", myrank, "): Got: ",
-#       mydict['juke_config']['config1']['value1'])
+#       mydict['teesd_config']['config1']['value1'])
 
-    check_value = parjuke.checkerror(check_value)
+    check_value = parteesd.checkerror(check_value)
 
     return check_value
 

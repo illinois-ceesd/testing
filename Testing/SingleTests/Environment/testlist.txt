@@ -1,4 +1,4 @@
-HaveJuKe
+HaveTEESD
 HaveNUMPY
 HaveMPI4PY
 HaveLOOPY

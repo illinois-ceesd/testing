@@ -5,12 +5,12 @@ from os import path
 import sys
 import time
 # import parjuke
-import pyjuke as juke
-import ABaTe as abate
-import uuid
+import teesd
+import abate
+# import uuid
 
 cwd = os.getcwd()
-localrev = juke.getrandkey(juke.localrev)
+localrev = teesd.getrandkey(teesd.localrev)
 
 imagepath = cwd + "/grudgempi_partimes_" + localrev + ".png"
 datapath = cwd + "/GrudgeMPI_ParTimes_4"

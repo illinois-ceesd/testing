@@ -9,7 +9,6 @@ import pyopencl.clrandom
 from mpi4py import MPI
 import loopy as lp
 from profiler import Profiler
-#import pyjuke
 
 mpicommobj = MPI.COMM_WORLD
 myprofiler = Profiler(mpicommobj)
@@ -24,14 +23,11 @@ def main(datapath):
     with open(fn, "r") as inf:
         source = inf.read()
     with myprofiler.contexttimer("LoopyParse"):
-#    myprofiler.starttimer("LoopyParse")
-#    dgemm, = lp.parse_transformed_fortran(source, filename=fn)
+        #    dgemm, = lp.parse_transformed_fortran(source, filename=fn)
         zaxpy3, = lp.parse_fortran(source, filename=fn)
         zaxpy3 = lp.set_options(zaxpy3, write_code=True)
-#    myprofiler.endtimer("LoopyParse")
 
     myprofiler.starttimer("CLContext")
-#    ctx = cl.create_some_context(False, pyjuke.cl_context_answers)
     ctx = cl.create_some_context(False)
     queue = cl.CommandQueue(ctx)
     myprofiler.endtimer("CLContext")

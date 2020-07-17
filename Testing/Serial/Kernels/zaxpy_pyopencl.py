@@ -3,20 +3,17 @@
 from __future__ import absolute_import, print_function
 import numpy as np
 import pyopencl as cl
-import time
 import sys
 
 
 from mpi4py import MPI
-import loopy as lp
 from profiler import Profiler
-import pyjuke as jk
-import ABaTe as abate
+import abate
 
 mpicommobj = MPI.COMM_WORLD
 myprofiler = Profiler(mpicommobj)
 testname = "zaxpy_pyopencl"
-maxsize = pow(1024,3) / 10
+maxsize = pow(1024, 3) / 10
 
 
 def main():
@@ -29,7 +26,7 @@ def main():
 
         print(testname+': Processing array size (' + str(size) + ')')
         sys.stdout.flush()
-        
+
         a_np = np.random.rand(size).astype(np.float64)
         b_np = np.random.rand(size).astype(np.float64)
 
@@ -42,18 +39,18 @@ def main():
         mf = cl.mem_flags
         a_g = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=a_np)
         b_g = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=b_np)
-        
+
         startname = 'start-'+str(size)
         myprofiler.starttimer(startname)
-        
+
         cl.enqueue_copy(queue, a_g, a_np)
         cl.enqueue_copy(queue, b_g, b_np)
 
-
-
         prg = cl.Program(ctx, """
         __kernel void sum(
-        __global const double *a_g, __global const double *b_g, __global double *res_g)
+        __global const double *a_g,
+        __global const double *b_g,
+        __global double *res_g)
         {
         int gid = get_global_id(0);
         res_g[gid] = 23.0 * a_g[gid] + b_g[gid];
@@ -68,11 +65,10 @@ def main():
         prg.sum(queue, a_np.shape, None, a_g, b_g, res_g)
         queue.finish()
 
-        
         queuename = 'zaxpy-' + str(size)
-        print (testname+': Queue warmed up starting '+queuename)
+        print(testname + ': Queue warmed up starting ' + queuename)
         sys.stdout.flush()
-        
+
         myprofiler.starttimer(queuename)
         for i in range(10):
             prg.sum(queue, a_np.shape, None, a_g, b_g, res_g)

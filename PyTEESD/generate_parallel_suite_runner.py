@@ -2,7 +2,7 @@ import sys
 import os
 import platform
 import stat
-import pyjuke
+import teesd
 
 
 def generate_suite_runner(suitename, suitepath, outputpath):
@@ -28,9 +28,9 @@ def generate_suite_runner(suitename, suitepath, outputpath):
     spawnerpath = outputpath + "/" + spawnername
     resultsfilename = outputpath + "/parallel_" + suitename + "_results.txt"
     testlistfile = suitepath + "/testlist.txt"
-    jukepath = pyjuke.jukepath
-#    jukesourcepath = pyjuke.sourcepath
-#    jukebinpath = pyjuke.binpath
+    teesdpath = teesd.teesdpath
+#    teesdsourcepath = teesd.sourcepath
+#    teesdbinpath = teesd.binpath
 
     #    testNames = open(testlistfile).readlines()
     #    numTests = len(testNames)
@@ -59,7 +59,7 @@ def generate_suite_runner(suitename, suitepath, outputpath):
 #        print("set -x", file=outscript)
         print("export PYOPENCL_CTX=''", file=outscript)
         print(
-            'export PYTHONPATH="' + jukepath + ':${PYTHONPATH}"',
+            'export PYTHONPATH="' + teesdpath + ':${PYTHONPATH}"',
             file=outscript,
         )
         print("rm -f ", resultsfilename, file=outscript)
@@ -106,7 +106,7 @@ def generate_suite_runner(suitename, suitepath, outputpath):
         print("set -x", file=outscript)
         print("export PYOPENCL_CTX=':'", file=outscript)
         print(
-            'export PYTHONPATH="' + jukepath + ':${PYTHONPATH}"',
+            'export PYTHONPATH="' + teesdpath + ':${PYTHONPATH}"',
             file=outscript,
         )
         print("rm -f ", resultsfilename, file=outscript)
@@ -179,7 +179,7 @@ def generate_suite_runner(suitename, suitepath, outputpath):
         print("set -x", file=outscript)
         print("export PYOPENCL_CTX=''", file=outscript)
         print(
-            'export PYTHONPATH="' + jukepath + ':${PYTHONPATH}"',
+            'export PYTHONPATH="' + teesdpath + ':${PYTHONPATH}"',
             file=outscript,
         )
         print("rm -f ", resultsfilename, file=outscript)
@@ -246,7 +246,7 @@ if __name__ == "__main__":
 
     suitepath = "./"
     outputpath = "./"
-    suitename = "ParJuKe"
+    suitename = "ParTEESD"
 
     numargs = len(sys.argv)
     if numargs > 1:

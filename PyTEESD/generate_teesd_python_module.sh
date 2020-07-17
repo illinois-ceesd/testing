@@ -4,11 +4,11 @@ SRCPATH=${1}
 
 if [ ! -z ${2} ]; then
     BINPATH=${2}
-    OUTDIR=${BINPATH}/PyJuKe
-    OUTFILE=${OUTDIR}/pyjuke.py
+    OUTDIR=${BINPATH}/PyTEESD
+    OUTFILE=${OUTDIR}/teesd.py
 fi
 
-JUKESTUB=${SRCPATH}/PyJuKe/juke_stub.py
+TEESDSTUB=${SRCPATH}/PyTEESD/teesd_stub.py
 
 if [ ! -z ${3} ]; then GETREPO=${3}; fi
 
@@ -55,11 +55,11 @@ if [ "$OUTFILE" != "" ]; then
     printf "buildhost = \"${BUILDHOST}\"\n"     >> ${OUTFILE}
     printf "builddate = \"${BUILDDATE}\"\n"     >> ${OUTFILE}
     printf "changed = \"${CHANGED}\"\n"         >> ${OUTFILE}
-    printf "jukepath = \"${BINPATH}/PyJuKe\"\n" >> ${OUTFILE}
+    printf "teesdpath = \"${BINPATH}/PyTEESD\"\n" >> ${OUTFILE}
     printf "cl_context_answers = [0, 0]\n"      >> ${OUTFILE}
 
-    if [ -e ${JUKESTUB} ]; then
-        cat ${JUKESTUB} >> ${OUTFILE}
+    if [ -e ${TEESDSTUB} ]; then
+        cat ${TEESDSTUB} >> ${OUTFILE}
     fi
     
 else
@@ -75,16 +75,16 @@ else
     printf "builddate  = \"${BUILDDATE}\"\n"   
     printf "changed    = \"${CHANGED}\"\n"       
     printf "cl_context_answers = [0, 0]\n"    
-    printf "jukepath = \"${BINPATH}/PyJuKe\"\n"
+    printf "teesdpath = \"${BINPATH}/PyTEESD\"\n"
     
-    if [ -e ${JUKESTUB} ]; then
+    if [ -e ${TEESDSTUB} ]; then
         printf " # ===== stub =======\n"
-        cat ${JUKESTUB} 
+        cat ${TEESDSTUB} 
     fi
     
 fi
 
 # =========== copy ALL the Python to the build/bin place =====
-cp ${SRCPATH}/PyJuKe/*.py ${OUTDIR}
+cp ${SRCPATH}/PyTEESD/*.py ${OUTDIR}
 
 cd ${ORIGPATH}

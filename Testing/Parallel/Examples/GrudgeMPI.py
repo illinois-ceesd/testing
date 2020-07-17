@@ -9,7 +9,7 @@ import pytest
 import numpy as np
 import pyopencl as cl
 import logging
-import ABaTe as abate
+import abate
 
 __copyright__ = """
 Copyright (C) 2017 Ellis Hoag

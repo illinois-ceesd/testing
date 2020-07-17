@@ -1,22 +1,20 @@
 import PyGnuplot as gp
 
-# import numpy as np
 import os.path
 from os import path
 import sys
 import time
 
-# import parjuke
-import pyjuke as juke
-import ABaTe as abate
+import teesd
+import abate
 
 # import subprocess
-import uuid
+# import uuid
 
-localrev = juke.getrandkey(juke.localrev)
+localrev = teesd.getrandkey(teesd.localrev)
 cwd = os.getcwd()
 testname = "make_stream_plot"
-machinename = juke.buildhost
+machinename = teesd.buildhost
 
 imagepath = cwd + "/loopy.c.bw.comparison_" + localrev + ".png"
 
@@ -47,7 +45,7 @@ while gridsize < 1024:
     numbytes = pow(gridsize, 3) * 24.0 / (pow(1024, 2))
     os.system('printf "' + str(numbytes) + ' " >> ' + tmpdatapath)
     os.system(
-        'grep "zaxpy3\-'
+        r'grep "zaxpy3\-'
         + str(gridsize)
         + '" '
         + zaxpydatapath

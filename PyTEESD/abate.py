@@ -28,7 +28,7 @@ def writetestresults(testresults, filename=""):
         resultfile.close()
     else:
         for testname in testresults:
-            print(testname,testresults[testname])
+            print(testname, testresults[testname])
 
 
 def updatetestresults(testresults, filename=""):
