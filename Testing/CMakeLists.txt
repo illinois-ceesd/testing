@@ -119,7 +119,7 @@ IF(EXISTS ${SERIALSUITELIST})
       SET(SETUPNAME "Serial:${SUITENAME}:Setup")
       SET(RUNSUITE "Serial:${SUITENAME}:Run")
       SET(FIXTURENAME "Serial_${SUITENAME}_Fixture")
-      SET(RESULTSFILE "${PROJECT_BINARY_DIR}/Testing/serial_${SUITENAME}_results.txt")
+      SET(RESULTSFILE "${PROJECT_BINARY_DIR}/Testing/${SUITENAME}_results.txt")
       MESSAGE(STATUS "${Blue}${PROJECT_NAME}: Discovering serial test suite in ${SUITE_DIRECTORY}...${ColorReset}")
       ADD_TEST(
         NAME ${SETUPNAME}
@@ -129,7 +129,7 @@ IF(EXISTS ${SERIALSUITELIST})
         "PYTHONPATH=${PROJECT_PYTHON_PATH}:$ENV{PYTHONPATH}")
       ADD_TEST(
         NAME ${RUNSUITE}
-        COMMAND ${PROJECT_BINARY_DIR}/Testing/serial_${SUITENAME}.sh)
+        COMMAND ${PROJECT_BINARY_DIR}/Testing/${SUITENAME}.sh)
       SET_TESTS_PROPERTIES(${RUNSUITE} PROPERTIES FIXTURES_SETUP ${FIXTURENAME})
       SET_TESTS_PROPERTIES(${RUNSUITE} PROPERTIES DEPENDS ${SETUPNAME})
       #  IF(EXISTS ${SUITE_DIRECTORY}/testlist.txt )
@@ -179,7 +179,7 @@ FOREACH(SUITE_SUBDIR ${suitePathList})
   SET(SETUPNAME "Parallel:${SUITENAME}:Setup")
   SET(RUNSUITE "Parallel:${SUITENAME}:Run")
   SET(FIXTURENAME "Parallel_${SUITENAME}_Fixture")
-  SET(RESULTSFILE "${PROJECT_BINARY_DIR}/Testing/parallel_${SUITENAME}_results.txt")
+  SET(RESULTSFILE "${PROJECT_BINARY_DIR}/Testing/${SUITENAME}_results.txt")
   ADD_TEST(
     NAME ${SETUPNAME}
     COMMAND python ${PROJECT_PYTHON_SOURCE}/generate_parallel_suite_runner.py ${SUITENAME} ${SUITE_DIRECTORY} ${PROJECT_BINARY_DIR}/Testing)
@@ -188,7 +188,7 @@ FOREACH(SUITE_SUBDIR ${suitePathList})
     "PYTHONPATH=${PROJECT_PYTHON_PATH}:$ENV{PYTHONPATH}")
   ADD_TEST(
     NAME ${RUNSUITE}
-    COMMAND ${PROJECT_BINARY_DIR}/Testing/parallel_${SUITENAME}.sh)
+    COMMAND ${PROJECT_BINARY_DIR}/Testing/${SUITENAME}.sh)
   SET_TESTS_PROPERTIES(${RUNSUITE} PROPERTIES FIXTURES_SETUP ${FIXTURENAME})
   SET_TESTS_PROPERTIES(${RUNSUITE} PROPERTIES DEPENDS ${SETUPNAME})
   IF(EXISTS ${SUITE_DIRECTORY}/testlist.txt )
@@ -218,6 +218,68 @@ FOREACH(SUITE_SUBDIR ${suitePathList})
   ENDIF()
   
 ENDFOREACH()
+
+# PyTest tests - will automatically use pytest inside a serial batch environment
+# A batch job (if needed) is created for every PyTest suite.  All tests in the
+# suite will be run inside the batch job.
+# To ADD PyTest TEST SUITE:
+# Add <suitepath> to <project>/Testing/PyTest/pytestsuites.txt
+# To ADD TESTS TO EXISTING PARALLEL TEST SUITE:
+# Add code to implement your test in <project>/Testing/Parallel/<suitepath>/<testname>.{py,sh}
+# Add <testname> to <project>/Testing/Parallel/<suitepath>/testlist.txt
+IF(EXISTS(${CMAKE_CURRENT_SOURCE_DIR}/PyTest/pytestsuites.txt)) 
+  FILE(READ ${CMAKE_CURRENT_SOURCE_DIR}/PyTest/pytestsuites.txt suitePaths)
+  STRING(REGEX REPLACE "\n" " " suitePathList ${suitePaths})
+  SEPARATE_ARGUMENTS(suitePathList)
+
+  FOREACH(SUITE_SUBDIR ${suitePathList})
+    
+    MESSAGE(STATUS "${Blue}${PROJECT_NAME}: Found pytest test suite in ${SUITE_DIRECTORY}...${ColorReset}")
+    SET(SUITENAME ${SUITE_SUBDIR})
+    SET(SUITE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/PyTest/${SUITE_SUBDIR}")
+    SET(SETUPNAME "PyTest:${SUITENAME}:Setup")
+    SET(RUNSUITE "PyTest:${SUITENAME}:Run")
+    SET(FIXTURENAME "PyTest_${SUITENAME}_Fixture")
+    SET(RESULTSFILE "${PROJECT_BINARY_DIR}/Testing/pytest_${SUITENAME}_results.txt")
+    ADD_TEST(
+      NAME ${SETUPNAME}
+      COMMAND python ${PROJECT_PYTHON_SOURCE}/generate_pytest_suite_runner.py pytest_${SUITENAME} ${SUITE_DIRECTORY} ${PROJECT_BINARY_DIR}/Testing)
+    SET_TESTS_PROPERTIES(${SETUPNAME} PROPERTIES FIXTURES_SETUP ${FIXTURENAME})
+    SET_TESTS_PROPERTIES(${SETUPNAME} PROPERTIES ENVIRONMENT
+      "PYTHONPATH=${PROJECT_PYTHON_PATH}:$ENV{PYTHONPATH}")
+    ADD_TEST(
+      NAME ${RUNSUITE}
+      COMMAND ${PROJECT_BINARY_DIR}/Testing/pytest_${SUITENAME}.sh)
+    SET_TESTS_PROPERTIES(${RUNSUITE} PROPERTIES FIXTURES_SETUP ${FIXTURENAME})
+    SET_TESTS_PROPERTIES(${RUNSUITE} PROPERTIES DEPENDS ${SETUPNAME})
+    SET(FULL_TESTNAME "PyTest:${SUITENAME}")
+    #  IF(EXISTS ${SUITE_DIRECTORY}/testlist.txt )
+    #    MESSAGE(STATUS "${Blue}${PROJECT_NAME}: Discovering pytest test suite in ${SUITE_DIRECTORY}...${ColorReset}")
+    #    FILE(READ ${SUITE_DIRECTORY}/testlist.txt dirTests)
+    #    STRING(REGEX REPLACE "\n" " " testList ${dirTests})
+    #    SEPARATE_ARGUMENTS(testList)
+    #
+    #    FOREACH(testName ${testList})
+    #      #      SET(FULL_TESTNAME "Parallel:${SUITENAME}:${testName}")
+    #      IF(SHOWTESTS) 
+    #        MESSAGE(STATUS "${Cyan}${PROJECT_NAME}:\t Adding parallel test: ${FULL_TESTNAME}${ColorReset}")
+    #      ENDIF()
+    #      ADD_TEST(
+    #        NAME ${FULL_TESTNAME}
+    #        COMMAND python ${PROJECT_PYTHON_SOURCE}/CheckTest.py ${testName} ${RESULTSFILE})
+    #      SET_TESTS_PROPERTIES(${FULL_TESTNAME} PROPERTIES ENVIRONMENT
+    #        "PYTHONPATH=${PROJECT_PYTHON_PATH}:$ENV{PYTHONPATH}")
+    #        SET_TESTS_PROPERTIES(${FULL_TESTNAME} PROPERTIES DEPENDS TestSetup)
+    #      SET_TESTS_PROPERTIES(${FULL_TESTNAME} PROPERTIES FIXTURES_REQUIRED ${SETUPNAME})
+    #      IF(${testName} MATCHES "FAILS")
+    #        SET_TESTS_PROPERTIES(${FULL_TESTNAME} PROPERTIES WILL_FAIL TRUE)
+    #      ENDIF()
+    #  ENDFOREACH()
+    #ELSE()
+    #    MESSAGE(STATUS "${BoldYellow}${PROJECT_NAME}: Warning: PyTest ${SUITE_DIRECTORY}/testlist.txt not found.${ColorReset}")  
+    #  ENDIF()
+  ENDFOREACH()
+ENDIF()
 
 # Posttests are a user hook allowing post-processing of test data (if required/desired)
 # These are used for example to produce plots of performace data generated during testing

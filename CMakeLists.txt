@@ -370,10 +370,7 @@ else()
 endif()
 
 # this is an order that satisfies build order dependence
-SET(JK_KernelSources kernels/Limits.f90 kernels/barebones.f90 kernels/Simple.f90 kernels/Special.f90
-                     kernels/NavierStokesUtil.f90 kernels/EOS.f90 ${kernel_prefix}/Operators.f90 
-                     kernels/Grid.f90 kernels/Euler.f90 kernels/Viscid.f90 ${kernel_prefix}/MetricOps.f90 
-                     ${kernel_prefix}/Roe.f90 kernels/SATUtil.f90 ${kernel_prefix}/NavierStokesRHSWENO.f90)
+SET(JK_KernelSources kernels/barebones.f90 kernels/Simple.f90 kernels/Special.f90)
 
 #if(ENABLE_HYDRA)
 #  # Add Tangram kernels
