@@ -1,0 +1,4 @@
+[submodule "emirge"]
+	path = emirge
+	url = git@github.com:/illinois-ceesd/emirge
+        branch = teesd
