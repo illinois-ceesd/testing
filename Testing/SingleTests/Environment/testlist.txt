@@ -7,6 +7,5 @@ HaveFAILS
 HaveGrudge
 HaveProfiler
 HaveXML2Dict
-HaveHDF5
 HavePyMetis
 

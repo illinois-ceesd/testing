@@ -15,8 +15,8 @@ def python_path_environment(path):
 def teesd_environment(systemtype):
     environment = 'export PYOPENCL_CTX='
     ctx_string = "''"
-    if systemtype == 'quartz':
-        ctx_string = "':'"
+    #    if systemtype == 'quartz':
+    #        ctx_string = "''"
     environment += ctx_string
     return environment
 
