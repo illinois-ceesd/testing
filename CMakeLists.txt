@@ -90,7 +90,12 @@ add_custom_target(
   COMMAND ${PROJECT_PYTHON_SOURCE}/generate_teesd_python_module.sh ${CMAKE_SOURCE_DIR} ${PROJECT_BINARY_DIR} ${PROVOP}
   COMMENT "${Cyan}${PROJECT_NAME}: Generating TEESD Python module ...${ColorReset}"
   )
-
+add_custom_target(
+  emirge
+  COMMAND ${PROJECT_SOURCE_DIR}/emirge/install.sh --prefix=$ENV{CEESD_CONDA_ENV}
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/emirge
+  COMMENT "${Cyan}${PROJECT_NAME}: Generating TEESD Python module ...${ColorReset}"
+  )
 #OPTION(ENABLE_AGGRESSIVE "Aggressive opt" OFF)
 
 # Dynamic kernels on mac os x automatically
@@ -510,6 +515,7 @@ IF(STATIC_KERNELS)
 ELSE()
   ADD_LIBRARY(TEESD SHARED ${JK_KernelSources})
 ENDIF()
+ADD_DEPENDENCIES(TEESD emirge)
 ADD_DEPENDENCIES(TEESD pyteesd)
 SET_TARGET_PROPERTIES(TEESD PROPERTIES Fortran_MODULE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/include")
 INSTALL(TARGETS TEESD LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
