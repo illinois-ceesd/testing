@@ -2,3 +2,15 @@
 	path = emirge
 	url = git@github.com:/illinois-ceesd/emirge
         branch = teesd
+[submodule "mirgecom"]
+	path = mirgecom
+	url = git@github.com:/illinois-ceesd/mirgecom
+	branch = mtc/euler
+[submodule "meshmode"]
+	path = meshmode
+	url = git@github.com:/inducer/meshmode
+	branch = master
+[submodule "grudge"]
+	path = grudge
+	url = git@github.com:/inducer/grudge
+	branch = master
