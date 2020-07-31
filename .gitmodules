@@ -5,7 +5,7 @@
 [submodule "mirgecom"]
 	path = mirgecom
 	url = git@github.com:/illinois-ceesd/mirgecom
-	branch = mtc/euler
+	branch = teesd
 [submodule "meshmode"]
 	path = meshmode
 	url = git@github.com:/inducer/meshmode
