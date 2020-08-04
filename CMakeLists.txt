@@ -92,7 +92,7 @@ add_custom_target(
   )
 add_custom_target(
   mirgecom
-  COMMAND ${PROJECT_SOURCE_DIR}/emirge/install-mirgecom ${PROJECT_BINARY_DIR}/mirgecom mtc/euler
+  COMMAND ${PROJECT_SOURCE_DIR}/install-mirgecom ${PROJECT_BINARY_DIR}/mirgecom mtc/euler
   WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
   COMMENT "${Cyan}${PROJECT_NAME}: Generating TEESD Python module ...${ColorReset}"
   )
