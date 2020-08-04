@@ -1,7 +1,7 @@
 #!/bin/bash
 
 resultsfile=${1}
-rm -f wave*vtu
+rm -f fld-wave*vtu
 python ./wave-eager.py
 result=$?
 if [ $result -eq 0 ]; then
@@ -14,3 +14,4 @@ if [ -z "${resultsfile}" ]; then
 else
     printf "${test_result}\n" >> $resultsfile
 fi
+rm -f fld-wave*vtu

@@ -14,3 +14,4 @@ if [ -z "${resultsfile}" ]; then
 else
     printf "${test_result}\n" >> $resultsfile
 fi
+rm -f vortex*vtu
