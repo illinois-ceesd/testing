@@ -1,0 +1,13 @@
+#!/bin/bash
+
+install_location=$1
+branch=$2
+if [ -z "${branch}" ]; then branch="master"; fi
+if [ ! -d ${install_location} ]
+then
+    mkdir -p ${install_location}
+fi
+printf "Cloning mirgecom(${branch}) to (${install_location})...\n"
+git clone -b ${branch} git@github.com:/illinois-ceesd/mirgecom ${install_location}
+cd ${install_location}
+python setup.py develop
