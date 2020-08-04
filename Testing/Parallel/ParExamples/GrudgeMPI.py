@@ -1,6 +1,7 @@
 from __future__ import division, absolute_import, print_function
 from mpi4py import MPI
 from profiler import Profiler
+from meshmode.array_context import PyOpenCLArrayContext
 from grudge import sym, bind, DGDiscretizationWithBoundaries
 from grudge.shortcuts import set_up_rk4
 import pytest
@@ -47,9 +48,9 @@ myprofiler.starttimer()
 def simple_mpi_communication_entrypoint():
 
     cl_ctx = cl.create_some_context(False, [0, 0])
-
     queue = cl.CommandQueue(cl_ctx)
-
+    actx = PyOpenCLArrayContext(queue)
+    
     from meshmode.distributed import MPIMeshDistributor
     from meshmode.distributed import get_partition_by_pymetis
 
@@ -74,7 +75,7 @@ def simple_mpi_communication_entrypoint():
         local_mesh = mesh_dist.receive_mesh_part()
 
     vol_discr = DGDiscretizationWithBoundaries(
-        cl_ctx, local_mesh, order=5, mpi_communicator=comm
+        actx, local_mesh, order=5, mpi_communicator=comm
     )
 
     sym_x = sym.nodes(local_mesh.dim)
@@ -104,7 +105,7 @@ def simple_mpi_communication_entrypoint():
     # print(bound_face_swap)
     # 1/0
 
-    hopefully_zero = bound_face_swap(queue, myfunc=myfunc)
+    hopefully_zero = bound_face_swap(actx, myfunc=myfunc)
     import numpy.linalg as la
 
     error = la.norm(hopefully_zero.get())
@@ -124,7 +125,10 @@ def mpi_communication_entrypoint():
     myprofiler.starttimer("CLContext")
     cl_ctx = cl.create_some_context()
     queue = cl.CommandQueue(cl_ctx)
+    actx = PyOpenCLArrayContext(queue)
+
     myprofiler.endtimer("CLContext")
+    
 
     #    from mpi4py import MPI
     comm = mpicommobj
@@ -161,7 +165,7 @@ def mpi_communication_entrypoint():
 
     myprofiler.starttimer("DGDiscretization")
     vol_discr = DGDiscretizationWithBoundaries(
-        cl_ctx, local_mesh, order=order, mpi_communicator=comm
+        actx, local_mesh, order=order, mpi_communicator=comm
     )
     myprofiler.endtimer("DGDiscretization")
 
@@ -196,8 +200,8 @@ def mpi_communication_entrypoint():
     from pytools.obj_array import join_fields
 
     fields = join_fields(
-        vol_discr.zeros(queue),
-        [vol_discr.zeros(queue) for i in range(vol_discr.dim)],
+        vol_discr.zeros(actx),
+        [vol_discr.zeros(actx) for i in range(vol_discr.dim)],
     )
 
     # FIXME
@@ -253,7 +257,7 @@ def mpi_communication_entrypoint():
 
     def rhs(t, w):
         val, rhs.profile_data = bound_op(
-            queue,
+            actx,
             profile_data=rhs.profile_data,
             log_quantities=log_quantities,
             t=t,
