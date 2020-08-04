@@ -1,7 +1,7 @@
 #!/bin/bash
 
 resultsfile=${1}
-rm -f Vortex*vtu
+rm -f vortex*vtu
 python ./vortex.py
 result=$?
 if [ $result -eq 0 ]; then

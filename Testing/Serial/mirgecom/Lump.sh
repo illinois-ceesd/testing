@@ -1,8 +1,8 @@
 #!/bin/bash
 
 resultsfile=${1}
-rm -f Lump*vtu
-python ./lump2.py
+rm -f lump*vtu
+python ./lump.py
 result=$?
 if [ $result -eq 0 ]; then
     test_result="Lump Pass"
