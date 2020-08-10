@@ -6,8 +6,8 @@ bindir=${2}
 printf "get_mirgecom_examples: SourcePath = ${sourcedir}\n"
 printf "get_mirgecom_examples: BinPath    = ${bindir}\n"
 
-cp ${bindir}/mirgecom/examples/lump.py .
-cp ${bindir}/mirgecom/examples/vortex.py .
-cp ${bindir}/mirgecom/examples/lump-mpi.py .
-cp ${bindir}/mirgecom/examples/vortex-mpi.py .
-cp ${bindir}/mirgecom/examples/wave-eager.py .
+cp ${sourcedir}/mirgecom/examples/lump.py .
+cp ${sourcedir}/mirgecom/examples/vortex.py .
+cp ${sourcedir}/mirgecom/examples/lump-mpi.py .
+cp ${sourcedir}/mirgecom/examples/vortex-mpi.py .
+cp ${sourcedir}/mirgecom/examples/wave-eager.py .
