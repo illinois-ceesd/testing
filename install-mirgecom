@@ -2,12 +2,17 @@
 
 install_location=$1
 branch=$2
+export CEESD_CONDA_PREFIX=/g/g17/mtcampbe/ceesd/Lassen/conda-install
 if [ -z "${branch}" ]; then branch="master"; fi
 if [ ! -d ${install_location} ]
 then
     mkdir -p ${install_location}
 fi
-printf "Cloning mirgecom(${branch}) to (${install_location})...\n"
-git clone -b ${branch} git@github.com:/illinois-ceesd/mirgecom ${install_location}
-cd ${install_location}
-python setup.py develop
+cd mirgecom && git checkout ${branch} && git pull
+git clone git@github.com:/illinois-ceesd/emirge ${install_location}/emirge
+cd ${install_location}/emirge
+./install.sh --conda-prefix=${CEESD_CONDA_PREFIX} --env-name=abate.${branch}.env --install-prefix=${install_location}/miregcom-${branch}-install
+#printf "Cloning mirgecom(${branch}) to (${install_location})...\n"
+#git clone -b ${branch} git@github.com:/illinois-ceesd/mirgecom ${install_location}/mirgecom
+#cd ${install_location}
+#python setup.py develop
