@@ -23,7 +23,8 @@ def teesd_environment(systemtype):
 
 def open_shell_script(scriptfilename):
     outscript = open(scriptfilename, "w")
-    print("#!/bin/sh\n\n", file=outscript)
+    print("#!/bin/bash --login\n\n", file=outscript)
+    print("conda activate euler.env", file=outscript)
     return outscript
 
 
