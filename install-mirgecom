@@ -10,13 +10,18 @@ then
     mkdir -p ${install_location}
 fi
 branchname_safe=`printf "${branch}" | sed 's/\//_/g'`
-mcinstall_loc=${install_location}/mirgecom-${branchname_safe}-install
-eminstall_loc=${install_location}/emirge-mc-${branchname_safe}-install
-rm -rf ${mcinstall_loc}
-cd mirgecom && git checkout ${branch} && git pull
-git clone git@github.com:/illinois-ceesd/emirge ${eminstall_loc}
-git clone -b ${branch} git@github.com:/illinois-ceesd/mirgecom ${mcinstall_loc}
-cd ${mcinstall_loc} && python setup.py develop
+#mcinstall_loc=${install_location}/mirgecom-${branchname_safe}-install
+#eminstall_loc=${install_location}/emirge-mc-${branchname_safe}-install
+#rm -rf ${mcinstall_loc}
+if [ -d "${install_location}/mirgecom" ]
+then    
+    cd ${install_location}/mirgecom && git checkout ${branch} && git pull
+else
+    git clone -b ${branch} git@github.com:/illinois-ceesd/mirgecom ${install_location}/mirgecom 
+fi
+#git clone git@github.com:/illinois-ceesd/emirge ${eminstall_loc}
+#git clone -b ${branch} git@github.com:/illinois-ceesd/mirgecom ${mcinstall_loc}
+#cd ${mcinstall_loc} && python setup.py develop
 #cd ${install_location}/emirge
 #./install.sh --conda-prefix=${CEESD_CONDA_PREFIX} --env-name=abate.${branchname_safe}.env --install-prefix=${install_location}/miregcom-${branchname_safe}-install
 #printf "Cloning mirgecom(${branch}) to (${install_location})...\n"
