@@ -1,8 +1,0 @@
-module load StdEnv
-module load cmake/3.12.1
-setenv BUILD_DIRECTORY /p/lscratchh/mtcampbe/CEESD/AutomatedTesting
-setenv CC mpicc
-setenv CXX mpicxx
-setenv FC mpif90
-setenv CONDA_ENVIRONMENT /usr/workspace/wsa/xpacc/Users/mtcampbe/CEESD/Quartz/env
-conda activate ${CONDA_ENVIRONMENT}

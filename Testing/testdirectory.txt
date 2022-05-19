@@ -1,6 +1,0 @@
-Examples
-SingleTests/Environment
-SingleTests/Kernels
-SingleTests/XML
-SingleTests/Gnuplot
-SingleTests/MeshMode

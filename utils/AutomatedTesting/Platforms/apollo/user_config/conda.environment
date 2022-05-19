@@ -1,7 +1,0 @@
-conda activate grudge.env
-setenv CC mpicc
-setenv CXX mpicxx
-setenv FC mpif90
-setenv MPICC mpicc
-setenv MPICXX mpicxx
-setenv MPIf90 mpif90

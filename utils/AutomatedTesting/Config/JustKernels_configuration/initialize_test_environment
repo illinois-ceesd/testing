@@ -1,6 +1,0 @@
-#!/bin/sh
-
-printf "=== INITIALIZE TEST ENVIRONMENT for JustKernels ===\n"
-
-set -x
-export PROJECT_BUILD_TAG="grudge.env"

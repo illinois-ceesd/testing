@@ -1,4 +1,0 @@
-MakeGrudgePlots
-MakeZAXPYGridscalePlots
-MakeStreamPlots
-MakeComparisonPlots
