@@ -1,7 +1,7 @@
 #!/bin/bash
 
 platform_path=${1}
-test_pattern=${3}
+test_pattern=${2}
 
 latest_logfile=$(ls -t ${platform_path}/testing-log* | head -1)
 latest_resultsfile=$(ls -t ${platform_path}/testing-results* | head -1)

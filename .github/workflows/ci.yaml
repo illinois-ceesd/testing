@@ -10,7 +10,7 @@ on:
 
 jobs:
 
-    examples@lassen:
+    examples_lassen:
         name: examples-on-lassen
         runs-on: ubuntu-latest
 
