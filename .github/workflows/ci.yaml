@@ -19,3 +19,19 @@ jobs:
         - name: Examples result
           run: |
              . .ci-support/check-test-result.sh lassen mirgecom-examples
+
+    isolator_lassen:
+        name: isolator-on-lassen
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v2
+        - name: Serial injection-3d-combustion
+          run: |
+             . .ci-support/check-test-result.sh lassen serial-injection-3d
+        - name: Parallel2 injection-3d-combustion
+          run: |
+             . .ci-support/check-test-result.sh lassen parallel2-injection-3d
+        - name: Parallel4 injection-3d-combustion
+          run: |
+             . .ci-support/check-test-result.sh lassen parallel4-injection-3d
