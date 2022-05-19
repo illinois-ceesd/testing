@@ -10,15 +10,18 @@ on:
 
 jobs:
 
-    examples_lassen:
-        name: examples-on-lassen
+    mirgecom_lassen:
+        name: mirgecom-on-lassen
         runs-on: ubuntu-latest
 
         steps:
         - uses: actions/checkout@v2
-        - name: Examples result
+        - name: testing-ouput
           run: |
-             . .ci-support/check-test-result.sh lassen mirgecom-examples
+             . .ci-support/get-package-testing-log.sh lassen mirgecom
+        - name: examples
+          run: |
+             . .ci-support/check-test-result.sh lassen mirgecom mirgecom-examples
 
     isolator_lassen:
         name: isolator-on-lassen
@@ -26,6 +29,9 @@ jobs:
 
         steps:
         - uses: actions/checkout@v2
+        - name: testing-output
+          run: |
+             . .ci-support/get-package-testing-log.sh lassen mirgecom
         - name: Serial injection-3d-combustion
           run: |
              . .ci-support/check-test-result.sh lassen serial-injection-3d
