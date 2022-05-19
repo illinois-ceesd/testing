@@ -101,7 +101,8 @@ fi
 
 printf "Testing with testing script (./${TESTING_SCRIPT_NAME}).\n"
 printf "# Automated testing logfile for testing script (${TESTING_SCRIPT_NAME})\n" > ${TESTING_LOGFILE_NAME} 
-./${TESTING_SCRIPT_NAME} ${EMIRGE_HOME} ${TESTING_LOGFILE_NAME} ${TESTING_RESULTSFILE_NAME}
+printf "# Automated testing resultsfile for testing script (${TESTING_SCRIPT_NAME})\n" > ${TESTING_RESULTSFILE_NAME}
+./${TESTING_SCRIPT_NAME} ${EMIRGE_HOME} ${TESTING_RESULTSFILE_NAME} ${TESTING_LOGFILE_NAME}
 TESTING_SCRIPT_STATUS=$?
 
 printf "Testing done for all packages.\n"
