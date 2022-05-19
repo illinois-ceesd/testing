@@ -1,0 +1,2 @@
+# Automated testing logfile for testing script (test-lassen.sh)
+mirgecom-examples: 
