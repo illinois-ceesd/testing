@@ -37,22 +37,11 @@ TESTING_PKG_FORK="illinois-ceesd"
 TESTING_PKG_REPO="${TESTING_PKG_FORK}/${TESTING_PKG_NAME}"
 TESTING_PKG_BRANCH="production"
 
-# PKG_MIRGE_BRANCH="production"
-# DRIVER_REPO="illinois-ceesd/drivers_y2-isolator"
-# DRIVER_BRANCH="slim-faster"
-# DRIVER_NAME="y2-isolator"
-# SUMMARY_FILE_ROOT="${exename}_lazy"
-# YAML_FILE_NAME="${exename}-timings.yaml"
-# BATCH_OUTPUT_FILE="${SUMMARY_FILE_ROOT}_${timestamp}.out"
-# LOGDIR="${exename}_logs"
-# EXEOPTS="--lazy --log"
-# SQL_PATH="./log_data"
-
 # -- Install conda env, dependencies and MIRGE-Com via *emirge*
 # --- remove old run if it exists
-if [ -f "INSTALL_MIRGECOM" ]
+if [ -f "INSTALL_MIRGECOM" ] || [ ! -d "emirge" ];
 then
-    if [ -d "emirge" ]
+    if [ -d "emirge" ];
     then
         echo "Removing old timing run."
         mv -f emirge emirge.old
