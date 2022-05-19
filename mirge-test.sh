@@ -114,7 +114,7 @@ cp ${TESTING_LOGFILE_NAME} testing-run-results/${TESTING_RUN_HOST}
 cp ${TESTING_RESULTSFILE_NAME} testing-run-results/${TESTING_RUN_HOST}
 cd testing-run-results
 git add ${TESTING_RUN_HOST}
-(git commit -am "Automatic commit: ${TIMING_HOST} ${TIMING_DATE}" && git push)
+(git commit -am "Automatic commit: ${TESTING_RUN_HOST} ${TESTING_RUN_DATE}" && git push)
 cd ../
 
 exit ${TESTING_SCRIPT_STATUS}
