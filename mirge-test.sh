@@ -116,5 +116,6 @@ cd testing-run-results
 git add ${TESTING_RUN_HOST}
 (git commit -am "Automatic commit: ${TESTING_RUN_HOST} ${TESTING_RUN_DATE}" && git push)
 cd ../
+rm -rf testing-run-results
 
 exit ${TESTING_SCRIPT_STATUS}
