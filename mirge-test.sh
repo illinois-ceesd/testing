@@ -18,10 +18,6 @@ fi
 TESTING_RUN_DATE=$(date "+%Y-%m-%d %H:%M")
 TESTING_RUN_PLATFORM=$(uname)
 TESTING_RUN_ARCH=$(uname -m)
-TESTING_LOGFILE_NAME="${TESTING_RUN_HOME}/testing-log-${TESTING_RUN_HOST}-${timestamp}.txt"
-TESTING_RESULTSFILE_NAME="${TESTING_RUN_HOME}/testing-results-${TESTING_RUN_HOST}-${timestamp}.txt"
-printf "# ----- Automated testing logfile ($TESTING_RUN_DATE)----\n" > ${TESTING_LOGFILE_NAME} 
-printf "# ----- Automated testing resultsfile ($TESTING_RUN_DATE) ----\n" > ${TESTING_RESULTSFILE_NAME}
 
 # Individual developers should set this to their
 # own pkg-specific or fork-specific repo.
@@ -69,6 +65,11 @@ do
     TESTING_PKG_REPO=$(printf "${line}" | cut -d "|" -f 2)
     TESTING_PKG_BRANCH=$(printf "${line}" | cut -d "|" -f 3)
 
+    rm -f ${TESTING_LOGFILE_NAME} ${TESTING_RESULTSFILE_NAME}
+    TESTING_LOGFILE_NAME="${TESTING_RUN_HOME}/testing-log-${TESTING_PKG_NAME}-${TESTING_RUN_HOST}-${timestamp}.txt"
+    TESTING_RESULTSFILE_NAME="${TESTING_RUN_HOME}/testing-results-${TESTING_PKG_NAME}-${TESTING_RUN_HOST}-${timestamp}.txt"
+    printf "# ----- Automated testing logfile ($TESTING_RUN_DATE) ----\n" > ${TESTING_LOGFILE_NAME} 
+    printf "# ----- Automated testing resultsfile ($TESTING_RUN_DATE) ----\n" > ${TESTING_RESULTSFILE_NAME}
 
     # --- Grab the case driver repo
     if [ "${TESTING_PKG_NAME}" != "mirgecom" ]
@@ -123,8 +124,8 @@ date
 
 git clone -b ${TESTING_RESULTS_BRANCH} git@github.com:/${TESTING_RESULTS_REPO} testing-run-results
 mkdir -p testing-run-results/${TESTING_RUN_HOST}
-cp ${TESTING_LOGFILE_NAME} testing-run-results/${TESTING_RUN_HOST}
-cp ${TESTING_RESULTSFILE_NAME} testing-run-results/${TESTING_RUN_HOST}
+cp testing-log*${timestamp}* testing-run-results/${TESTING_RUN_HOST}
+cp testing-results*${timestamp}* testing-run-results/${TESTING_RUN_HOST}
 cd testing-run-results
 git add ${TESTING_RUN_HOST}
 (git commit -am "Automatic commit: ${TESTING_RUN_HOST} ${TESTING_RUN_DATE}" && git push)
