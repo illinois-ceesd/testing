@@ -4,6 +4,7 @@ set -e
 set -x
 set -o pipefail
 
+testing_configfile=${1}
 date
 timestamp=$(date "+%Y.%m.%d-%H.%M.%S")
 TIME_SINCE_EPOCH=$(date +%s)
@@ -17,25 +18,20 @@ fi
 TESTING_RUN_DATE=$(date "+%Y-%m-%d %H:%M")
 TESTING_RUN_PLATFORM=$(uname)
 TESTING_RUN_ARCH=$(uname -m)
+TESTING_LOGFILE_NAME="${TESTING_RUN_HOME}/testing-log-${TESTING_RUN_HOST}-${timestamp}.txt"
+TESTING_RESULTSFILE_NAME="${TESTING_RUN_HOME}/testing-results-${TESTING_RUN_HOST}-${timestamp}.txt"
+printf "# ----- Automated testing logfile ($TESTING_RUN_DATE)----\n" > ${TESTING_LOGFILE_NAME} 
+printf "# ----- Automated testing resultsfile ($TESTING_RUN_DATE) ----\n" > ${TESTING_RESULTSFILE_NAME}
 
 # Individual developers should set this to their
 # own pkg-specific or fork-specific repo.
 # CEESD nightly testing writes here:
 TESTING_RESULTS_REPO="illinois-ceesd/testing.git"
-TESTING_RESULTS_BRANCH="main"
-TESTING_LOGFILE_NAME="${TESTING_RUN_HOME}/testing-log-${TESTING_RUN_HOST}-${timestamp}.txt"
-TESTING_RESULTSFILE_NAME="${TESTING_RUN_HOME}/testing-results-${TESTING_RUN_HOST}-${timestamp}.txt"
+TESTING_RESULTS_BRANCH="add-isolator-test"
 TESTING_ENV_NAME="ceesd.testing.env"
 MIRGE_PKG_FORK="illinois-ceesd"
 MIRGE_PKG_REPO="${MIRGE_PKG_FORK}/mirgecom"
 MIRGE_PKG_BRANCH="production"
-
-# For each "driver package" to test
-#TESTING_PKG_NAME="y2-isolator"
-TESTING_PKG_NAME="mirgecom"
-TESTING_PKG_FORK="illinois-ceesd"
-TESTING_PKG_REPO="${TESTING_PKG_FORK}/${TESTING_PKG_NAME}"
-TESTING_PKG_BRANCH="production"
 
 # -- Install conda env, dependencies and MIRGE-Com via *emirge*
 # --- remove old run if it exists
@@ -43,7 +39,7 @@ if [ -f "INSTALL_MIRGECOM" ] || [ ! -d "emirge" ];
 then
     if [ -d "emirge" ];
     then
-        echo "Removing old timing run."
+        echo "Removing old installation."
         mv -f emirge emirge.old
         rm -rf emirge.old &
     fi
@@ -63,47 +59,64 @@ source ${EMIRGE_HOME}/config/activate_env.sh
 cd emirge/mirgecom
 git pull
 
-# --- Grab the case driver repo
-if [ "${TESTING_PKG_NAME}" != "mirgecom" ]
-then
-    if [ -f "INSTALL_${TESTING_PKG_NAME}" ]
+
+# For each "driver package" to test
+
+while read -r line
+do
+    printf "Testing config: ${line}\n"
+    TESTING_PKG_NAME=$(printf "${line}" | cut -d "|" -f 1)
+    TESTING_PKG_REPO=$(printf "${line}" | cut -d "|" -f 2)
+    TESTING_PKG_BRANCH=$(printf "${line}" | cut -d "|" -f 3)
+
+
+    # --- Grab the case driver repo
+    if [ "${TESTING_PKG_NAME}" != "mirgecom" ]
     then
-        rm -Rf ${TESTING_PKG_NAME}
-        git clone -b ${TESTING_PKG_BRANCH} git@github.com:/${TESTING_PKG_REPO} ${TESTING_PKG_NAME}
+        if [ -f "INSTALL_${TESTING_PKG_NAME}" ]
+        then
+            rm -Rf ${TESTING_PKG_NAME}
+            git clone -b ${TESTING_PKG_BRANCH} git@github.com:/${TESTING_PKG_REPO} ${TESTING_PKG_NAME}
+        fi
+        cd ${TESTING_PKG_NAME}
     fi
-    cd ${TESTING_PKG_NAME}
-fi
 
-TESTING_PKG_HASH=$(git rev-parse HEAD)
-
-# automatically look for the 'testing' directory
-if [ ! -d "testing" ]
-then
-    printf "Testing error: did not find testing directory for testing runs. Aborting tests for ${TESTING_PKG_NAME}.\n"
-    exit 1
-fi
-
-cd testing
-printf "Running ${TESTING_PKG_NAME} tests on Host: ${TESTING_RUN_HOST}\n"
-date
-
-TESTING_SCRIPT_NAME="test-${TESTING_RUN_HOST}.sh"
-if [ ! -f "${TESTING_SCRIPT_NAME}" ]
-then
-    printf "Testing script (${TESTING_SCRIPT_NAME}) not found.\n"
-    TESTING_SCRIPT_NAME="test-${TESTING_RUN_PLATFORM}.sh"
+    TESTING_PKG_HASH=$(git rev-parse HEAD)
+    
+    # automatically look for the 'testing' directory
+    if [ ! -d "testing" ]
+    then
+        printf "Testing error: did not find testing directory for testing runs. Aborting tests for ${TESTING_PKG_NAME}.\n"
+        printf "${TESTING_PKG_NAME}-package-testing: 1\n" >> ${TESTING_RESULTSFILE_NAME}
+        continue        
+    fi
+    
+    cd testing
+    printf "Running ${TESTING_PKG_NAME} tests on Host: ${TESTING_RUN_HOST}\n"
+    date
+    
+    TESTING_SCRIPT_NAME="test-${TESTING_RUN_HOST}.sh"
     if [ ! -f "${TESTING_SCRIPT_NAME}" ]
     then
-        printf "Testing script (${TESTING_SCRIPT_NAME}) not found, aborting test.\n"
-        exit 1
+        printf "Testing script (${TESTING_SCRIPT_NAME}) not found.\n"
+        TESTING_SCRIPT_NAME="test-${TESTING_RUN_PLATFORM}.sh"
+        if [ ! -f "${TESTING_SCRIPT_NAME}" ]
+        then
+            printf "Testing script (${TESTING_SCRIPT_NAME}) not found, aborting test.\n"
+            printf "${TESTING_PKG_NAME}-package-testing: 1\n" >> ${TESTING_RESULTSFILE_NAME}
+            continue
+        fi
     fi
-fi
 
-printf "Testing with testing script (./${TESTING_SCRIPT_NAME}).\n"
-printf "# Automated testing logfile for testing script (${TESTING_SCRIPT_NAME})\n" > ${TESTING_LOGFILE_NAME} 
-printf "# Automated testing resultsfile for testing script (${TESTING_SCRIPT_NAME})\n" > ${TESTING_RESULTSFILE_NAME}
-./${TESTING_SCRIPT_NAME} ${EMIRGE_HOME} ${TESTING_RESULTSFILE_NAME} ${TESTING_LOGFILE_NAME}
-TESTING_SCRIPT_STATUS=$?
+    printf "Testing with testing script (./${TESTING_SCRIPT_NAME}).\n"
+    printf "# Automated testing logging for testing script (${TESTING_SCRIPT_NAME})\n" >> ${TESTING_LOGFILE_NAME} 
+    printf "# Automated testing resultsfile capture for testing script (${TESTING_SCRIPT_NAME})\n" >> ${TESTING_RESULTSFILE_NAME}
+    ./${TESTING_SCRIPT_NAME} ${EMIRGE_HOME} ${TESTING_RESULTSFILE_NAME} ${TESTING_LOGFILE_NAME}
+    TESTING_SCRIPT_STATUS=$?
+    printf "# Return status for testing script (${TESTING_SCRIPT_NAME}): ${TESTING_SCRIPT_STATUS}\n" >> ${TESTING_LOGFILE_NAME}
+    printf "${TESTING_PKG_NAME}-package-testing: ${TESTING_SCRIPT_STATUS}\n" >> ${TESTING_RESULTSFILE_NAME}
+
+done < ${testing_configfile}
 
 printf "Testing done for all packages.\n"
 date
@@ -118,4 +131,3 @@ git add ${TESTING_RUN_HOST}
 cd ../
 rm -rf testing-run-results
 
-exit ${TESTING_SCRIPT_STATUS}
