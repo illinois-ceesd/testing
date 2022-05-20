@@ -1,0 +1,4 @@
+# ----- Automated testing resultsfile (2022-05-20 14:28) ----
+# Automated testing resultsfile capture for testing script (test-lassen.sh)
+serial-isolator-3d-mixture: 
+isolator-package-testing: 0
