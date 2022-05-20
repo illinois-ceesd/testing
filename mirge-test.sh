@@ -9,6 +9,8 @@ date
 timestamp=$(date "+%Y.%m.%d-%H.%M.%S")
 TIME_SINCE_EPOCH=$(date +%s)
 TESTING_RUN_HOME=$(pwd)
+testing_configfile="${TESTING_RUN_HOME}/${testing_configfile}"
+
 TESTING_RUN_HOSTNAME=$(hostname)
 if [[ "$TESTING_RUN_HOSTNAME" == "lassen"* ]]; then
     TESTING_RUN_HOST="lassen"
