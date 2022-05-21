@@ -1,32 +1,57 @@
 #!/bin/bash
 
-platform_path=${1}
-test_pattern=${2}
+testing_host=${1}
+suite_name=${2}
+test_name=${3}
 
-latest_resultsfile=$(ls -t ${platform_path}/testing-results*${test_pattern}* | head -1)
+data_path=${testing_host}
 
-if [ "${latest_resultsfile}" == "" ];
+origin=$(pwd)
+
+if [ ! -d ${data_path} ];
 then
-    printf "Test did not run.\n"
+    printf "Data path (${data_path}) does not exist.\n"
     exit 1
 fi
 
-return_code=$(grep ${test_pattern} ${latest_resultsfile} | cut -d ":" -f 2)
+timestamp_filename="${data_path}/testing-latest-timestamp.txt"
 
-if [ "${return_code}" == "" ];
+if [ ! -f "${timestamp_filename}" ];
 then
-    printf "Test did not generate a return code."
+    printf "Testing timestamp file (${timestamp_filename}) not found.\n"
     exit 1
 fi
 
-if [ "${return_code}" == "0" ];
-then 
-    printf "Test passed.\n"
+timestamp=$(cat ${timestamp_filename})
+
+if [ "${timestamp}" == "" ];
+then
+    echo "Testing timestamp is missing."
+    exit 1
+fi
+
+printf "Found testing timestamp: ${timestamp}\n"
+
+testing_resultsfile="${data_path}/testing-results-${suite_name}-${testing_host}-${timestamp}.txt"
+
+if [ ! -f "${testing_resultsfile}" ];
+then
+    printf "Testing results file (${testing_resultsfile}) not found.\n"
+    exit 1
+fi
+
+printf "Found latest test results file: (${testing_resultsfile}).\n"
+printf "Grabbing results for test (${test_name}).\n"
+
+test_result_line=$(grep "^${test_name}:" ${testing_resultsfile})
+
+printf "Testing results line: ($test_result_line).\n"
+
+if [ "${test_result_line}" == "${test_name}: 0" ];
+then
+    echo "Test passed."
     exit 0
-else
-    printf "Test failed.\n"
-    exit 1
 fi
 
-printf "Unknown error.\n"
+echo "Test failed."
 exit 1

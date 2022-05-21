@@ -1,14 +1,40 @@
 #!/bin/bash
 
-platform_path=${1}
-package_pattern=${2}
+data_path=${1}
+suite_name=${2}
+testing_host=${data_path}
 
-latest_logfile=$(ls -t ${platform_path}/testing-log*${package_pattern}* | head -1)
-
-if [ "${latest_logfile}" == "" ];
+if [ ! -d ${data_path} ];
 then
-    printf "Test did not run.\n"
+    printf "Data path (${data_path}) does not exist.\n"
     exit 1
 fi
 
-cat $latest_logfile
+timestamp_filename="${data_path}/testing-latest-timestamp.txt"
+
+if [ ! -f "${timestamp_filename}" ];
+then
+    printf "Testing timestamp file (${timestamp_filename}) not found.\n"
+    exit 1
+fi
+
+timestamp=$(cat ${timestamp_filename})
+
+if [ "${timestamp}" == "" ];
+then
+    echo "Testing timestamp is missing."
+    exit 1
+fi
+
+printf "Found testing timestamp: ${timestamp}\n"
+
+testing_logfile="${data_path}/testing-log-${suite_name}-${testing_host}-${timestamp}.txt"
+
+if [ ! -f "${testing_logfile}" ];
+then
+    printf "Testing output log ($testing_logfile) not found.\n"
+    exit 1
+fi
+
+printf "Found testing output log: ($testing_logfile).\n"
+cat $testing_logfile

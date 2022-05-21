@@ -131,6 +131,8 @@ date
 rm -rf testing-run-results
 git clone -b ${TESTING_RESULTS_BRANCH} git@github.com:/${TESTING_RESULTS_REPO} testing-run-results
 mkdir -p testing-run-results/${TESTING_RUN_HOST}
+rm -f testing-run-results/${TESTING_RUN_HOST}/testing-latest-timestamp.txt
+printf "${timestamp}" > testing-run-results/${TESTING_RUN_HOST}/testing-latest-timestamp.txt
 cp ${TESTING_RUN_HOME}/testing-log*${timestamp}* testing-run-results/${TESTING_RUN_HOST}
 cp ${TESTING_RUN_HOME}/testing-results*${timestamp}* testing-run-results/${TESTING_RUN_HOST}
 cd testing-run-results
