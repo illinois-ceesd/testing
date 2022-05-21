@@ -16,14 +16,17 @@ return_code=$(grep ${test_pattern} ${latest_resultsfile} | cut -d ":" -f 2)
 if [ "${return_code}" == "" ];
 then
     printf "Test did not generate a return code."
-    return_code="1"
+    exit 1
 fi
 
 if [ "${return_code}" == "0" ];
 then 
     printf "Test passed.\n"
+    exit 0
 else
     printf "Test failed.\n"
+    exit 1
 fi
 
-exit $(($return_code+0))
+printf "Unknown error.\n"
+exit 1
