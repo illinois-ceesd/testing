@@ -57,29 +57,32 @@ source ${EMIRGE_HOME}/config/activate_env.sh
 cd emirge/mirgecom
 git pull
 
-
 # For each "driver package" to test
-
 while read -r line
 do
+    cd ${TESTING_RUN_HOME}/emirge/mirgecom
+
     printf "Testing config: ${line}\n"
     TESTING_PKG_NAME=$(printf "${line}" | cut -d "|" -f 1)
     TESTING_PKG_REPO=$(printf "${line}" | cut -d "|" -f 2)
     TESTING_PKG_BRANCH=$(printf "${line}" | cut -d "|" -f 3)
 
-    rm -f ${TESTING_LOGFILE_NAME} ${TESTING_RESULTSFILE_NAME}
     TESTING_LOGFILE_NAME="${TESTING_RUN_HOME}/testing-log-${TESTING_PKG_NAME}-${TESTING_RUN_HOST}-${timestamp}.txt"
     TESTING_RESULTSFILE_NAME="${TESTING_RUN_HOME}/testing-results-${TESTING_PKG_NAME}-${TESTING_RUN_HOST}-${timestamp}.txt"
+
+    rm -f ${TESTING_LOGFILE_NAME} ${TESTING_RESULTSFILE_NAME}
+
     printf "# ----- Automated testing logfile ($TESTING_RUN_DATE) ----\n" > ${TESTING_LOGFILE_NAME} 
     printf "# ----- Automated testing resultsfile ($TESTING_RUN_DATE) ----\n" > ${TESTING_RESULTSFILE_NAME}
 
     # --- Grab the case driver repo
     if [ "${TESTING_PKG_NAME}" != "mirgecom" ]
     then
-        if [ -f "INSTALL_${TESTING_PKG_NAME}" ]
+        if [ -f "${TESTING_RUN_HOME}/INSTALL_${TESTING_PKG_NAME}" ] || [ ! -d "${TESTING_PKG_NAME}" ];
         then
             rm -Rf ${TESTING_PKG_NAME}
             git clone -b ${TESTING_PKG_BRANCH} git@github.com:/${TESTING_PKG_REPO} ${TESTING_PKG_NAME}
+            rm "${TESTING_RUN_HOME}/INSTALL_${TESTING_PKG_NAME}"
         fi
         cd ${TESTING_PKG_NAME}
     fi
@@ -118,16 +121,18 @@ do
     TESTING_SCRIPT_STATUS=$?
     printf "# Return status for testing script (${TESTING_SCRIPT_NAME}): ${TESTING_SCRIPT_STATUS}\n" >> ${TESTING_LOGFILE_NAME}
     printf "${TESTING_PKG_NAME}-package-testing: ${TESTING_SCRIPT_STATUS}\n" >> ${TESTING_RESULTSFILE_NAME}
+    cd ../../
 
 done < ${testing_configfile}
 
 printf "Testing done for all packages.\n"
 date
 
+rm -rf testing-run-results
 git clone -b ${TESTING_RESULTS_BRANCH} git@github.com:/${TESTING_RESULTS_REPO} testing-run-results
 mkdir -p testing-run-results/${TESTING_RUN_HOST}
-cp testing-log*${timestamp}* testing-run-results/${TESTING_RUN_HOST}
-cp testing-results*${timestamp}* testing-run-results/${TESTING_RUN_HOST}
+cp ${TESTING_RUN_HOME}/testing-log*${timestamp}* testing-run-results/${TESTING_RUN_HOST}
+cp ${TESTING_RUN_HOME}/testing-results*${timestamp}* testing-run-results/${TESTING_RUN_HOST}
 cd testing-run-results
 git add ${TESTING_RUN_HOST}
 (git commit -am "Automatic commit: ${TESTING_RUN_HOST} ${TESTING_RUN_DATE}" && git push)
