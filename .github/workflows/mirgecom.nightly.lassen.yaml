@@ -1,0 +1,24 @@
+name: mirgecom-nightly-lassen
+
+on:
+  pull_request:
+  push:
+    branches: main
+  schedule:
+  - cron:  '5 0 * * *'
+
+
+jobs:
+
+    mirgecom-examples:
+        name: mirgecom-examples
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v2
+        - name: testing-ouput
+          run: |
+             .ci-support/get-package-testing-log.sh lassen mirgecom
+        - name: examples
+          run: |
+             .ci-support/check-test-result.sh lassen mirgecom mirgecom-examples
