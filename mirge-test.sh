@@ -25,7 +25,7 @@ TESTING_RUN_ARCH=$(uname -m)
 # own pkg-specific or fork-specific repo.
 # CEESD nightly testing writes here:
 TESTING_RESULTS_REPO="illinois-ceesd/testing.git"
-TESTING_RESULTS_BRANCH="add-isolator-test"
+TESTING_RESULTS_BRANCH="main"
 TESTING_ENV_NAME="ceesd.testing.env"
 MIRGE_PKG_FORK="illinois-ceesd"
 MIRGE_PKG_REPO="${MIRGE_PKG_FORK}/mirgecom"
