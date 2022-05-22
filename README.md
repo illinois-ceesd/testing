@@ -1,8 +1,9 @@
 # Lassen nightly testing results:
 
+[![mirgecom-nightly-lassen](https://github.com/illinois-ceesd/testing/actions/workflows/mirgecom.nightly.lassen.yaml/badge.svg)](https://github.com/illinois-ceesd/testing/actions/workflows/mirgecom.nightly.lassen.yaml)
+
 [![isolator-nightly-lassen](https://github.com/illinois-ceesd/testing/actions/workflows/isolator-nightly-lassen.yaml/badge.svg)](https://github.com/illinois-ceesd/testing/actions/workflows/isolator-nightly-lassen.yaml)
 
-[![mirgecom-nightly-lassen](https://github.com/illinois-ceesd/testing/actions/workflows/ci.yaml/badge.svg)](https://github.com/illinois-ceesd/testing/actions/workflows/mirgecom-nightly-lassen.yaml)
 
 # Testing - nightly testing for *MIRGE-Com*
 
