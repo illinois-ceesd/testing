@@ -18,10 +18,10 @@ jobs:
         - uses: actions/checkout@v2
         - name: testing-ouput
           run: |
-             . .ci-support/get-package-testing-log.sh lassen mirgecom
+             .ci-support/get-package-testing-log.sh lassen mirgecom
         - name: examples
           run: |
-             . .ci-support/check-test-result.sh lassen mirgecom mirgecom-examples
+             .ci-support/check-test-result.sh lassen mirgecom mirgecom-examples
 
     isolator_lassen:
         name: isolator-on-lassen
@@ -31,13 +31,13 @@ jobs:
         - uses: actions/checkout@v2
         - name: testing-output
           run: |
-             . .ci-support/get-package-testing-log.sh lassen isolator
+             .ci-support/get-package-testing-log.sh lassen isolator
         - name: Serial isolator-3d-mixture
           run: |
-             . .ci-support/check-test-result.sh lassen isolator serial-isolator-3d-mixture
+             .ci-support/check-test-result.sh lassen isolator serial-3d-combustion
         # - name: Parallel2 injection-3d-combustion
         #  run: |
-        #     . .ci-support/check-test-result.sh lassen parallel2-injection-3d
+        #     .ci-support/check-test-result.sh lassen parallel2-injection-3d
         # - name: Parallel4 injection-3d-combustion
         #  run: |
-        #     . .ci-support/check-test-result.sh lassen parallel4-injection-3d
+        #     .ci-support/check-test-result.sh lassen parallel4-injection-3d

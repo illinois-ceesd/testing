@@ -45,6 +45,12 @@ printf "Grabbing results for test (${test_name}).\n"
 
 test_result_line=$(grep "^${test_name}:" ${testing_resultsfile})
 
+if [ "${test_result_line}" == "" ];
+then
+    printf "Result for test (${test_name}) not found.\n"
+    exit 1
+fi
+
 printf "Testing results line: ($test_result_line).\n"
 
 if [ "${test_result_line}" == "${test_name}: 0" ];
