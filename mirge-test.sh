@@ -104,7 +104,6 @@ fi
 
 # -- Activate the env we just created above
 export EMIRGE_HOME="${TESTING_RUN_HOME}/emirge"
-source ${EMIRGE_HOME}/config/activate_env.sh
 
 cd emirge/mirgecom
 # update mirgecom just in case it was not installed just now
@@ -187,11 +186,13 @@ printf "Testing done for all packages.\n"
 date
 
 # Update github with the results from all the package's testing results
+ls -lat
 rm -rf testing-run-results
 git clone -b ${TESTING_RESULTS_BRANCH} git@github.com:/${TESTING_RESULTS_REPO} testing-run-results
 mkdir -p testing-run-results/${TESTING_RUN_HOST}
 rm -f testing-run-results/${TESTING_RUN_HOST}/testing-latest-timestamp.txt
 printf "${timestamp}" > testing-run-results/${TESTING_RUN_HOST}/testing-latest-timestamp.txt
+
 cp ${TESTING_RUN_HOME}/testing-log*${timestamp}* testing-run-results/${TESTING_RUN_HOST}
 cp ${TESTING_RUN_HOME}/testing-results*${timestamp}* testing-run-results/${TESTING_RUN_HOST}
 cd testing-run-results
@@ -199,4 +200,3 @@ git add ${TESTING_RUN_HOST}
 (git commit -am "Automatic commit: ${TESTING_RUN_HOST} ${TESTING_RUN_DATE}" && git push)
 cd ../
 rm -rf testing-run-results
-
