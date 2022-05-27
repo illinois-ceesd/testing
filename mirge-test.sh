@@ -138,7 +138,7 @@ do
         then
             rm -Rf ${TESTING_PKG_NAME}
             git clone -b ${TESTING_PKG_BRANCH} git@github.com:/${TESTING_PKG_REPO} ${TESTING_PKG_NAME}
-            rm "${TESTING_RUN_HOME}/INSTALL_${TESTING_PKG_NAME}"
+            rm -f "${TESTING_RUN_HOME}/INSTALL_${TESTING_PKG_NAME}"
         fi
         cd ${TESTING_PKG_NAME}
     fi
