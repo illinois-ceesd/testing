@@ -1,0 +1,4 @@
+# ----- Automated testing resultsfile (2022-05-27 13:41) ----
+# Automated testing resultsfile capture for testing script (test-lassen.sh)
+mirgecom-examples: 2
+mirgecom-package-testing: 0
