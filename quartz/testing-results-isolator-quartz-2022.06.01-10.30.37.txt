@@ -1,0 +1,6 @@
+# ----- Automated testing resultsfile (2022-06-01 10:30) ----
+# Automated testing resultsfile capture for testing script (test-quartz.sh)
+serial-3d-combustion: 0
+parallel-3d-combustion_2: 0
+parallel-3d-combustion_4: 0
+isolator-package-testing: 0
