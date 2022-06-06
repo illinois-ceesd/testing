@@ -24,7 +24,7 @@ jobs:
              .ci-support/check-test-result.sh quartz isolator serial-3d-combustion
         - name: parallel (2) injection-3d-combustion
           run: |
-             .ci-support/check-test-result.sh quartz parallel-3d-combustion_2
+             .ci-support/check-test-result.sh quartz isolator parallel-3d-combustion_2
         - name: parallel (4) injection-3d-combustion
           run: |
-             .ci-support/check-test-result.sh quartz parallel-3d-combustion_4
+             .ci-support/check-test-result.sh quartz isolator parallel-3d-combustion_4
