@@ -1,0 +1,4 @@
+# ----- Automated testing resultsfile (2022-06-08 07:25) ----
+# Automated testing resultsfile capture for testing script (test-lassen.sh)
+serial-3d-combustion: 0
+isolator-package-testing: 0
